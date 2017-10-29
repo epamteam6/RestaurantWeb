@@ -37,6 +37,13 @@ public class UserDAOTest
     }
 
     @Test
+    public void removeUser()
+    {
+        System.out.println(userDAO.removeUser("Temp")); //true
+        System.out.println(userDAO.removeUser("Temp")); //false
+    }
+
+    @Test
     public void getAllUsers() throws Exception
     {
         Statement statement = con.createStatement();
