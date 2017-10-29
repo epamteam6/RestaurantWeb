@@ -26,7 +26,16 @@ public class UserDAO
             isPresent = rs.next();
         } catch (SQLException e)
         {
-            e.printStackTrace();
+
+        } finally
+        {
+            try
+            {
+                connection.close();
+            } catch (SQLException e)
+            {
+                e.printStackTrace();
+            }
         }
 
         return isPresent;
@@ -40,21 +49,60 @@ public class UserDAO
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(
                     String.format("SELECT * FROM users WHERE BINARY user_name = '%s' " +
-                            "AND BINARY password_hash = '%s'", userName, password));
+                            "AND BINARY password_hash = '%s'",userName, password));
 
             isPresent = rs.next();
         } catch (SQLException e)
         {
-            e.printStackTrace();
+
+        } finally
+        {
+            try
+            {
+                connection.close();
+            } catch (SQLException e)
+            {
+                e.printStackTrace();
+            }
         }
 
         return isPresent;
     }
 
-//    public User getUser(String userName)
-//    {
-//
-//    }
+    public User getUserByName(String userName)
+    {
+        User user = null;
+
+        try
+        {
+            Statement statement = connection.createStatement();
+
+            String query = String.format("SELECT * FROM users WHERE user_name = '%s'", userName);
+            ResultSet rs = statement.executeQuery(query);
+
+            if (rs.next())
+            {
+                user = new User(
+                        rs.getInt("id"),
+                        rs.getString("user_name"),
+                        rs.getBoolean("is_admin"));
+            }
+        } catch (SQLException e)
+        {
+
+        } finally
+        {
+            try
+            {
+                connection.close();
+            } catch (SQLException e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+        return user;
+    }
 
     public boolean addUser(String userName, String password, boolean isAdmin)
     {
@@ -75,7 +123,16 @@ public class UserDAO
             isCreated = true;
         } catch (SQLException e)
         {
-            e.printStackTrace();
+
+        } finally
+        {
+            try
+            {
+                connection.close();
+            } catch (SQLException e)
+            {
+                e.printStackTrace();
+            }
         }
 
         return isCreated;
@@ -98,7 +155,16 @@ public class UserDAO
             isRemoved = true;
         } catch (SQLException e)
         {
-            e.printStackTrace();
+
+        } finally
+        {
+            try
+            {
+                connection.close();
+            } catch (SQLException e)
+            {
+                e.printStackTrace();
+            }
         }
 
         return isRemoved;
@@ -120,13 +186,23 @@ public class UserDAO
 
             String query = String.format("UPDATE users SET is_admin = %1d, " +
                             "password_hash = '%s' WHERE user_name = '%s'",
-                            adminSetter, password, userName);
+                    adminSetter, password, userName);
+
             statement.executeUpdate(query);
 
             isUpdated = true;
         } catch (SQLException e)
         {
-            e.printStackTrace();
+
+        } finally
+        {
+            try
+            {
+                connection.close();
+            } catch (SQLException e)
+            {
+                e.printStackTrace();
+            }
         }
 
         return isUpdated;
@@ -138,4 +214,6 @@ public class UserDAO
 
         return null;
     }
+
+
 }
