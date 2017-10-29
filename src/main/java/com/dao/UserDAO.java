@@ -32,6 +32,25 @@ public class UserDAO
         return isPresent;
     }
 
+    public boolean validateUser(String userName, String password)
+    {
+        boolean isPresent = false;
+        try
+        {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(
+                    String.format("SELECT * FROM users WHERE BINARY user_name = '%s' " +
+                            "AND BINARY password_hash = '%s'", userName, password));
+
+            isPresent = rs.next();
+        } catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+
+        return isPresent;
+    }
+
     public boolean addUser(String userName, String password)
     {
         if (isUserExist(userName))
@@ -43,7 +62,8 @@ public class UserDAO
             Statement statement = connection.createStatement();
 
             String query =
-                    String.format("INSERT INTO users VALUES (NULL, '%s', '%s', 0)", userName, password);
+                    String.format("INSERT INTO users " +
+                            "VALUES (NULL, '%s', '%s', 0)", userName, password);
             statement.executeUpdate(query);
 
             isCreated = true;
@@ -77,6 +97,29 @@ public class UserDAO
 
         return isRemoved;
     }
+
+//    public boolean updateUser(String userName)
+//    {
+//        if (!isUserExist(userName))
+//            return false;
+//
+//        boolean isRemoved = false;
+//        try
+//        {
+//            Statement statement = connection.createStatement();
+//
+//            String query =
+//                    String.format("DELETE FROM users WHERE user_name = '%s'", userName);
+//            statement.executeUpdate(query);
+//
+//            isRemoved = true;
+//        } catch (SQLException e)
+//        {
+//            e.printStackTrace();
+//        }
+//
+//        return isRemoved;
+//    }
 
     public List<User> getAllUsers()
     {

@@ -30,6 +30,13 @@ public class UserDAOTest
     }
 
     @Test
+    public void validateUser() throws Exception
+    {
+        System.out.println(userDAO.validateUser("Admin", "admin")); //true
+        System.out.println(userDAO.validateUser("Admin", "aDmin")); //false
+    }
+
+    @Test
     public void addUser()
     {
         System.out.println(userDAO.addUser("Temp", "temp")); //true
@@ -41,6 +48,12 @@ public class UserDAOTest
     {
         System.out.println(userDAO.removeUser("Temp")); //true
         System.out.println(userDAO.removeUser("Temp")); //false
+    }
+
+    @Test
+    public void updateUser()
+    {
+
     }
 
     @Test
