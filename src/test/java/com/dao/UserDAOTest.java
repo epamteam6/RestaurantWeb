@@ -39,8 +39,8 @@ public class UserDAOTest
     @Test
     public void addUser()
     {
-        System.out.println(userDAO.addUser("Temp", "temp")); //true
-        System.out.println(userDAO.addUser("Temp", "temp")); //false
+        System.out.println(userDAO.addUser("Temp", "temp", true)); //true
+        System.out.println(userDAO.addUser("Temp", "temp", true)); //false
     }
 
     @Test
@@ -53,7 +53,7 @@ public class UserDAOTest
     @Test
     public void updateUser()
     {
-
+        userDAO.updateUser("Temp", "temp1", false);
     }
 
     @Test
