@@ -6,7 +6,6 @@ import org.junit.Test;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
@@ -34,6 +33,13 @@ public class UserDAOTest
     {
         System.out.println(userDAO.validateUser("Admin", "admin")); //true
         System.out.println(userDAO.validateUser("Admin", "aDmin")); //false
+    }
+
+    @Test
+    public void getUser() throws Exception
+    {
+        System.out.println(userDAO.getUserByName("Admin"));
+        System.out.println(userDAO.getUserByName("Temp"));
     }
 
     @Test
