@@ -1,6 +1,6 @@
 package com.dao;
 
-import com.entity.User;
+import com.model.User;
 import org.junit.Before;
 import org.junit.Test;
 

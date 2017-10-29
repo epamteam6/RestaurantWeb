@@ -1,6 +1,6 @@
 package com.dao;
 
-import com.entity.User;
+import com.model.User;
 
 import java.sql.*;
 import java.util.ArrayList;
