@@ -3,6 +3,7 @@ package com.dao;
 import com.entity.User;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAO
@@ -49,7 +50,7 @@ public class UserDAO
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(
                     String.format("SELECT * FROM users WHERE BINARY user_name = '%s' " +
-                            "AND BINARY password_hash = '%s'",userName, password));
+                            "AND BINARY password_hash = '%s'", userName, password));
 
             isPresent = rs.next();
         } catch (SQLException e)
@@ -210,9 +211,37 @@ public class UserDAO
 
     public List<User> getAllUsers()
     {
+        List<User> users = new ArrayList<>();
 
+        try
+        {
+            Statement statement = connection.createStatement();
 
-        return null;
+            String query = String.format("SELECT * FROM users");
+            ResultSet rs = statement.executeQuery(query);
+
+            while (rs.next())
+            {
+                users.add(new User(
+                        rs.getInt("id"),
+                        rs.getString("user_name"),
+                        rs.getBoolean("is_admin")));
+            }
+        } catch (SQLException e)
+        {
+
+        } finally
+        {
+            try
+            {
+                connection.close();
+            } catch (SQLException e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+        return users;
     }
 
 
