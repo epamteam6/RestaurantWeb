@@ -30,6 +30,13 @@ public class UserDAOTest
     }
 
     @Test
+    public void addUser()
+    {
+        System.out.println(userDAO.addUser("Temp", "temp")); //true
+        System.out.println(userDAO.addUser("Temp", "temp")); //false
+    }
+
+    @Test
     public void getAllUsers() throws Exception
     {
         Statement statement = con.createStatement();

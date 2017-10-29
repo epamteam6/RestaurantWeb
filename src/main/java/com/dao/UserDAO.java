@@ -24,13 +24,35 @@ public class UserDAO
                     String.format("SELECT * FROM users WHERE BINARY user_name = '%s'", userName));
 
             isPresent = rs.next();
-        }
-        catch (SQLException e)
+        } catch (SQLException e)
         {
             e.printStackTrace();
         }
 
         return isPresent;
+    }
+
+    public boolean addUser(String userName, String password)
+    {
+        if (isUserExist(userName))
+            return false;
+
+        boolean isCreated = false;
+        try
+        {
+            Statement statement = connection.createStatement();
+
+            String query =
+                    String.format("INSERT INTO users VALUES (NULL, '%s', '%s', 0)", userName, password);
+            statement.executeUpdate(query);
+
+            isCreated = true;
+        } catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+
+        return isCreated;
     }
 
     public List<User> getAllUsers()
