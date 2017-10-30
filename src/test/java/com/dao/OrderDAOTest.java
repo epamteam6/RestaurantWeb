@@ -3,7 +3,11 @@ package com.dao;
 import com.model.Order;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -16,7 +20,7 @@ public class OrderDAOTest {
 
     @Before
     public void init(){
-        orderDAO = new OrderDAO(getConnection());
+        orderDAO = new OrderDAO(getDataSource());
     }
 
     @Test
@@ -41,7 +45,7 @@ public class OrderDAOTest {
         System.out.println(orderDAO.getOrderById(9));
     }
 
-    private Connection getConnection() {
+    /*private Connection getConnection() {
         Connection conn = null;
 
         try {
@@ -55,13 +59,24 @@ public class OrderDAOTest {
         }
         return conn;
 
-    }
+    }*/
 
 
     @Test
     public void createOrder() throws Exception {
         orderDAO.createOrder(new Order(6,2, LocalDateTime.now(), 505, Order.status.CREATED));
 
+    }
+
+    private DataSource getDataSource() {
+        EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
+        EmbeddedDatabase db = builder
+                .setType(EmbeddedDatabaseType.H2)
+                .addScript("init.sql")
+                .addScript("data.sql")
+                .build();
+
+        return db;
     }
 
 }

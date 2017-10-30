@@ -2,6 +2,7 @@ package com.dao;
 
 import com.model.Order;
 
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,15 +10,23 @@ import java.util.List;
 
 public class OrderDAO {
 
-    private Connection connection;
+    private DataSource dataSource;
+
+    public OrderDAO(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
+
+   /* private Connection connection;
 
     public OrderDAO(Connection connection) {
         this.connection = connection;
-    }
+    }*/
 
     public void createOrder(Order order) {
 
-        try {
+        try (Connection connection  = dataSource.getConnection()){
+
             final PreparedStatement sql = connection.prepareStatement("INSERT INTO orders(user_id, date_time, total_sum, status)  values (?,?,?,?)");
             sql.setInt(1, order.getUserId());
             sql.setTimestamp(2, Timestamp.valueOf(order.getDateTime()));
@@ -28,20 +37,14 @@ public class OrderDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        finally {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+
     }
 
 
     public Order getOrderById(int id) {
         Order order = null;
 
-        try {
+        try (Connection connection  = dataSource.getConnection()){
             final PreparedStatement sql = connection.prepareStatement("Select * from orders where id = ?");
             sql.setInt(1, id);
 
@@ -61,19 +64,13 @@ public class OrderDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        finally {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+
         return order;
 
     }
 
     public void cancelOrder(int id) {
-        try {
+        try (Connection connection  = dataSource.getConnection()){
             final PreparedStatement sql = connection.prepareStatement("DELETE from orders where id=?");
             sql.setInt(1, id);
             sql.executeUpdate();
@@ -81,17 +78,11 @@ public class OrderDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        finally {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+
     }
 
     public void updateOrder(Order order) {
-        try {
+        try(Connection connection  = dataSource.getConnection()) {
             final PreparedStatement sql = connection.prepareStatement("UPDATE orders SET user_id=?, date_time=?, total_sum=?, status=? where id=?");
             sql.setInt(1, order.getUserId());
             sql.setTimestamp(2, Timestamp.valueOf(order.getDateTime()));
@@ -103,19 +94,13 @@ public class OrderDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        finally {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+
     }
 
     public List<Order> getAllOrders() {
         List<Order> res = new ArrayList<>();
         Statement statement;
-        try {
+        try (Connection connection  = dataSource.getConnection()){
             statement = connection.createStatement();
 
             ResultSet rs = statement.executeQuery("SELECT * FROM orders");
