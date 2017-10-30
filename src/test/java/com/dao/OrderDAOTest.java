@@ -1,11 +1,13 @@
 package com.dao;
 
 import com.model.Order;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
@@ -14,26 +16,14 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
+
 public class OrderDAOTest {
 
     private OrderDAO orderDAO;
 
     @Before
-    public void init(){
+    public  void init() {
         orderDAO = new OrderDAO(getDataSource());
-    }
-
-    @Test
-    public void cancelOrder() throws Exception {
-        orderDAO.cancel(3);
-    }
-
-    @Test
-    public void updateOrder() throws Exception {
-        Order toAdd = new Order(4,2, LocalDateTime.now(), 7005, Order.status.CONFIRMED);
-        System.out.println(orderDAO.update(toAdd));
-        //assertEquals(toAdd, orderDAO.getById(4));
-
     }
 
 
@@ -53,7 +43,12 @@ public class OrderDAOTest {
 
     @Test
     public void getOrderById() throws Exception {
-        System.out.println(orderDAO.getById(9));
+        Order actual = orderDAO.getById(1);
+
+        Order expected = new Order(1,1,LocalDateTime.of(2017,10,25,
+                13,54,19),475,Order.status.CREATED);
+
+        assertEquals(actual, expected);
     }
 
     /*private Connection getConnection() {
@@ -76,10 +71,24 @@ public class OrderDAOTest {
     @Test
     public void createOrder() throws Exception {
         Order toAdd = new Order(4,2, LocalDateTime.now(), 7005, Order.status.CONFIRMED);
-        System.out.println(orderDAO.update(toAdd));
+        orderDAO.create(toAdd);
         assertEquals(toAdd, orderDAO.getById(4));
 
 
+    }
+
+    @Test
+    public void updateOrder() throws Exception {
+        Order toUpdate = new Order(2,2,LocalDateTime.of(2017,10,25,13,54,19),690,Order.status.CONFIRMED);
+        orderDAO.update(toUpdate);
+        assertEquals(toUpdate, orderDAO.getById(2));
+
+    }
+
+    @Test
+    public void cancelOrder() throws Exception {
+        orderDAO.cancel(3);
+        assertEquals(null, orderDAO.getById(3));
     }
 
     private DataSource getDataSource() {

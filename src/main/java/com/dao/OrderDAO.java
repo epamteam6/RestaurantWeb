@@ -10,6 +10,7 @@ import java.util.List;
 
 public class OrderDAO {
 
+    public static final String UPDATE_QUERY = "UPDATE orders SET user_id=?, date_time=?, total_sum=?, status=? where id=?";
     private DataSource dataSource;
 
     public OrderDAO(DataSource dataSource) {
@@ -88,7 +89,7 @@ public class OrderDAO {
     public boolean update(Order order) {
         boolean isUpdated = false;
         try(Connection connection  = dataSource.getConnection()) {
-            final PreparedStatement sql = connection.prepareStatement("UPDATE orders SET user_id=?, date_time=?, total_sum=?, status=? where id=?");
+            final PreparedStatement sql = connection.prepareStatement(UPDATE_QUERY);
             sql.setInt(1, order.getUserId());
             sql.setTimestamp(2, Timestamp.valueOf(order.getDateTime()));
             sql.setInt(3, order.getTotalSum());
