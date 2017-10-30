@@ -23,8 +23,8 @@ public class OrderDAO {
         this.connection = connection;
     }*/
 
-    public void createOrder(Order order) {
-
+    public boolean createOrder(Order order) {
+        boolean isCreated = false;
         try (Connection connection  = dataSource.getConnection()){
 
             final PreparedStatement sql = connection.prepareStatement("INSERT INTO orders(user_id, date_time, total_sum, status)  values (?,?,?,?)");
@@ -33,11 +33,12 @@ public class OrderDAO {
             sql.setInt(3, order.getTotalSum());
             sql.setString(4, order.getSt().toString());
             sql.executeUpdate();
+            isCreated = true;
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+        return isCreated;
     }
 
 
@@ -69,19 +70,23 @@ public class OrderDAO {
 
     }
 
-    public void cancelOrder(int id) {
+    public boolean cancelOrder(int id) {
+        boolean isCanceled = false;
         try (Connection connection  = dataSource.getConnection()){
             final PreparedStatement sql = connection.prepareStatement("DELETE from orders where id=?");
             sql.setInt(1, id);
             sql.executeUpdate();
+            isCanceled = true;
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return isCanceled;
 
     }
 
-    public void updateOrder(Order order) {
+    public boolean updateOrder(Order order) {
+        boolean isUpdated = false;
         try(Connection connection  = dataSource.getConnection()) {
             final PreparedStatement sql = connection.prepareStatement("UPDATE orders SET user_id=?, date_time=?, total_sum=?, status=? where id=?");
             sql.setInt(1, order.getUserId());
@@ -90,11 +95,12 @@ public class OrderDAO {
             sql.setString(4, order.getSt().toString());
             sql.setInt(5, order.getId());
             sql.executeUpdate();
+            isUpdated = true;
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+        return isUpdated;
     }
 
     public List<Order> getAllOrders() {
