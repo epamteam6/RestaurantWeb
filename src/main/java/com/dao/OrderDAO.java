@@ -23,7 +23,7 @@ public class OrderDAO {
         this.connection = connection;
     }*/
 
-    public boolean createOrder(Order order) {
+    public boolean create(Order order) {
         boolean isCreated = false;
         try (Connection connection  = dataSource.getConnection()){
 
@@ -42,7 +42,7 @@ public class OrderDAO {
     }
 
 
-    public Order getOrderById(int id) {
+    public Order getById(int id) {
         Order order = null;
 
         try (Connection connection  = dataSource.getConnection()){
@@ -70,7 +70,7 @@ public class OrderDAO {
 
     }
 
-    public boolean cancelOrder(int id) {
+    public boolean cancel(int id) {
         boolean isCanceled = false;
         try (Connection connection  = dataSource.getConnection()){
             final PreparedStatement sql = connection.prepareStatement("DELETE from orders where id=?");
@@ -85,7 +85,7 @@ public class OrderDAO {
 
     }
 
-    public boolean updateOrder(Order order) {
+    public boolean update(Order order) {
         boolean isUpdated = false;
         try(Connection connection  = dataSource.getConnection()) {
             final PreparedStatement sql = connection.prepareStatement("UPDATE orders SET user_id=?, date_time=?, total_sum=?, status=? where id=?");
@@ -103,7 +103,7 @@ public class OrderDAO {
         return isUpdated;
     }
 
-    public List<Order> getAllOrders() {
+    public List<Order> getAll() {
         List<Order> res = new ArrayList<>();
         Statement statement;
         try (Connection connection  = dataSource.getConnection()){
