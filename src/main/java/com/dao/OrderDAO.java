@@ -10,7 +10,11 @@ import java.util.List;
 
 public class OrderDAO {
 
-    public static final String UPDATE_QUERY = "UPDATE orders SET user_id=?, date_time=?, total_sum=?, status=? where id=?";
+    public static final String UPDATE_QUERY = "UPDATE orders SET user_id=?, date_time=?, total_sum=?, status=? WHERE id=?";
+    public static final String INSERT_QUERY = "INSERT INTO orders(user_id, date_time, total_sum, status)  values (?,?,?,?)";
+    public static final String SELECT_QUERY = "SELECT * FROM orders WHERE id = ?";
+    public static final String DELETE_QUERY = "DELETE FROM orders WHERE id=?";
+    public static final String SELECT_ALL_QUERY = "SELECT * FROM orders";
     private DataSource dataSource;
 
     public OrderDAO(DataSource dataSource) {
@@ -28,7 +32,7 @@ public class OrderDAO {
         boolean isCreated = false;
         try (Connection connection  = dataSource.getConnection()){
 
-            final PreparedStatement sql = connection.prepareStatement("INSERT INTO orders(user_id, date_time, total_sum, status)  values (?,?,?,?)");
+            final PreparedStatement sql = connection.prepareStatement(INSERT_QUERY);
             sql.setInt(1, order.getUserId());
             sql.setTimestamp(2, Timestamp.valueOf(order.getDateTime()));
             sql.setInt(3, order.getTotalSum());
@@ -47,19 +51,12 @@ public class OrderDAO {
         Order order = null;
 
         try (Connection connection  = dataSource.getConnection()){
-            final PreparedStatement sql = connection.prepareStatement("Select * from orders where id = ?");
+            final PreparedStatement sql = connection.prepareStatement(SELECT_QUERY);
             sql.setInt(1, id);
 
-            ResultSet rs = sql.executeQuery();
+            final ResultSet rs = sql.executeQuery();
             if (rs.next()) {
-                order = new Order(
-                        rs.getInt("id"),
-                        rs.getInt("user_id"),
-                        rs.getTimestamp("date_time").toLocalDateTime(),
-                        rs.getInt("total_sum"),
-                        Order.status.valueOf(rs.getString("status"))
-
-                );
+                order = createOrder(rs);
             }
 
 
@@ -74,7 +71,7 @@ public class OrderDAO {
     public boolean cancel(int id) {
         boolean isCanceled = false;
         try (Connection connection  = dataSource.getConnection()){
-            final PreparedStatement sql = connection.prepareStatement("DELETE from orders where id=?");
+            final PreparedStatement sql = connection.prepareStatement(DELETE_QUERY);
             sql.setInt(1, id);
             sql.executeUpdate();
             isCanceled = true;
@@ -110,21 +107,25 @@ public class OrderDAO {
         try (Connection connection  = dataSource.getConnection()){
             statement = connection.createStatement();
 
-            ResultSet rs = statement.executeQuery("SELECT * FROM orders");
+            final ResultSet rs = statement.executeQuery(SELECT_ALL_QUERY);
             while (rs.next()) {
-                Order order = new Order(rs.getInt("id"),
-                        rs.getInt("user_id"),
-                        rs.getTimestamp("date_time").toLocalDateTime(),
-                        rs.getInt("total_sum"),
-                        Order.status.valueOf(rs.getString("status"))
-                );
-
-                res.add(order);
+                res.add(createOrder(rs));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return res;
+    }
+
+    private Order createOrder(ResultSet rs) throws SQLException {
+        return new Order(
+                rs.getInt("id"),
+                rs.getInt("user_id"),
+                rs.getTimestamp("date_time").toLocalDateTime(),
+                rs.getInt("total_sum"),
+                Order.status.valueOf(rs.getString("status"))
+
+        );
     }
 
 }
