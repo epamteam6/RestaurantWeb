@@ -2,50 +2,45 @@ package com.dao;
 
 import com.model.User;
 
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAO
 {
-    private Connection connection;
+    private DataSource dataSource;
 
-    public UserDAO(Connection connection)
+    public UserDAO(DataSource dataSource)
     {
-        this.connection = connection;
+        this.dataSource = dataSource;
     }
 
-    public boolean isUserExist(String userName)
+    public boolean isExist(String userName)
     {
         boolean isPresent = false;
-        try
+
+        try (Connection connection = dataSource.getConnection())
         {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(
                     String.format("SELECT * FROM users WHERE BINARY user_name = '%s'", userName));
 
             isPresent = rs.next();
+
         } catch (SQLException e)
         {
-
-        } finally
-        {
-            try
-            {
-                connection.close();
-            } catch (SQLException e)
-            {
-                e.printStackTrace();
-            }
+            e.printStackTrace();
         }
 
         return isPresent;
     }
 
-    public boolean validateUser(String userName, String password)
+    public boolean validate(String userName, String password)
     {
         boolean isPresent = false;
-        try
+
+        try (Connection connection = dataSource.getConnection())
         {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(
@@ -53,28 +48,20 @@ public class UserDAO
                             "AND BINARY password_hash = '%s'", userName, password));
 
             isPresent = rs.next();
+
         } catch (SQLException e)
         {
-
-        } finally
-        {
-            try
-            {
-                connection.close();
-            } catch (SQLException e)
-            {
-                e.printStackTrace();
-            }
+            e.printStackTrace();
         }
 
         return isPresent;
     }
 
-    public User getUserByName(String userName)
+    public User getByName(String userName)
     {
         User user = null;
 
-        try
+        try (Connection connection = dataSource.getConnection())
         {
             Statement statement = connection.createStatement();
 
@@ -82,70 +69,47 @@ public class UserDAO
             ResultSet rs = statement.executeQuery(query);
 
             if (rs.next())
-            {
-                user = new User(
-                        rs.getInt("id"),
-                        rs.getString("user_name"),
-                        rs.getBoolean("is_admin"));
-            }
+                user = createUser(rs);
+
         } catch (SQLException e)
         {
-
-        } finally
-        {
-            try
-            {
-                connection.close();
-            } catch (SQLException e)
-            {
-                e.printStackTrace();
-            }
+            e.printStackTrace();
         }
 
         return user;
     }
 
-    public boolean addUser(String userName, String password, boolean isAdmin)
+    public boolean add(String userName, String password, boolean isAdmin)
     {
-        if (isUserExist(userName))
-            return false;
+        //in service class check if user exists
 
         boolean isCreated = false;
-        try
+        try (Connection connection = dataSource.getConnection())
         {
-            int adminSetter = isAdmin ? 1 : 0;
             Statement statement = connection.createStatement();
 
             String query =
                     String.format("INSERT INTO users " +
-                            "VALUES (NULL, '%s', '%s', %1d)", userName, password, adminSetter);
+                            "VALUES (NULL, '%s', '%s', %b)", userName, password, isAdmin);
             statement.executeUpdate(query);
 
             isCreated = true;
+
         } catch (SQLException e)
         {
-
-        } finally
-        {
-            try
-            {
-                connection.close();
-            } catch (SQLException e)
-            {
-                e.printStackTrace();
-            }
+            e.printStackTrace();
         }
 
         return isCreated;
     }
 
-    public boolean removeUser(String userName)
+    public boolean remove(String userName)
     {
-        if (userName.equals("Admin") || !isUserExist(userName))
-            return false;
+        //in service class check if user exists or admin
 
         boolean isRemoved = false;
-        try
+
+        try (Connection connection = dataSource.getConnection())
         {
             Statement statement = connection.createStatement();
 
@@ -154,95 +118,67 @@ public class UserDAO
             statement.executeUpdate(query);
 
             isRemoved = true;
+
         } catch (SQLException e)
         {
-
-        } finally
-        {
-            try
-            {
-                connection.close();
-            } catch (SQLException e)
-            {
-                e.printStackTrace();
-            }
+            e.printStackTrace();
         }
 
         return isRemoved;
     }
 
-    public boolean updateUser(String userName, String password, boolean isAdmin)
+    public boolean update(String userName, String password, boolean isAdmin)
     {
-        if (!isUserExist(userName))
-        {
-            addUser(userName, password, isAdmin);
-            return true;
-        }
+        //in service class check if user exists
 
         boolean isUpdated = false;
-        try
+
+        try (Connection connection = dataSource.getConnection())
         {
-            int adminSetter = isAdmin ? 1 : 0;
             Statement statement = connection.createStatement();
 
-            String query = String.format("UPDATE users SET is_admin = %1d, " +
+            String query = String.format("UPDATE users SET is_admin = %b, " +
                             "password_hash = '%s' WHERE user_name = '%s'",
-                    adminSetter, password, userName);
+                    isAdmin, password, userName);
 
             statement.executeUpdate(query);
 
             isUpdated = true;
+
         } catch (SQLException e)
         {
-
-        } finally
-        {
-            try
-            {
-                connection.close();
-            } catch (SQLException e)
-            {
-                e.printStackTrace();
-            }
+            e.printStackTrace();
         }
 
         return isUpdated;
     }
 
-    public List<User> getAllUsers()
+    public List<User> getAll()
     {
         List<User> users = new ArrayList<>();
 
-        try
+        try (Connection connection = dataSource.getConnection())
         {
             Statement statement = connection.createStatement();
 
-            String query = String.format("SELECT * FROM users");
-            ResultSet rs = statement.executeQuery(query);
+            ResultSet rs = statement.executeQuery("SELECT * FROM users");
 
             while (rs.next())
-            {
-                users.add(new User(
-                        rs.getInt("id"),
-                        rs.getString("user_name"),
-                        rs.getBoolean("is_admin")));
-            }
+                users.add(createUser(rs));
+
         } catch (SQLException e)
         {
-
-        } finally
-        {
-            try
-            {
-                connection.close();
-            } catch (SQLException e)
-            {
-                e.printStackTrace();
-            }
+            e.printStackTrace();
         }
 
         return users;
     }
 
-
+    private User createUser(ResultSet rs) throws SQLException
+    {
+        return new User(
+                rs.getInt("id"),
+                rs.getString("user_name"),
+                rs.getBoolean("is_admin"));
+    }
 }
