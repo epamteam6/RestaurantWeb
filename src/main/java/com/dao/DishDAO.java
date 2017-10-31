@@ -75,7 +75,6 @@ public class DishDAO {
     }
 
     public boolean update(Dish dish) {
-        boolean isUpdated = false;
         try (Connection connection = dataSource.getConnection()) {
             final PreparedStatement sql = connection.prepareStatement(UPDATE_QUERY);
             sql.setString(1, dish.getDish().toString());
@@ -83,12 +82,12 @@ public class DishDAO {
             sql.setLong(3, dish.getPrice());
             sql.setLong(4, dish.getId());
             sql.executeUpdate();
-            isUpdated = true;
+            return true;
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return isUpdated;
+        return false;
     }
 
     public boolean delete(long id) {
