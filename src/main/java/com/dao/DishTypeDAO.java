@@ -10,8 +10,8 @@ import java.util.List;
 
 public class DishTypeDAO {
 
-    private static final String UPDATE_QUERY = "UPDATE Dish_Types SET dish_type=?, where id=?";
-    private static final String INSERT_QUERY = "INSERT INTO Dish_Types(id, dish_type)  values (?,?)";
+    private static final String UPDATE_QUERY = "UPDATE Dish_Types SET dish_type=? WHERE id=?";
+    private static final String INSERT_QUERY = "INSERT INTO Dish_Types(id, dish_type)  VALUES (?,?)";
     private static final String SELECT_QUERY = "SELECT * FROM Dish_Types WHERE id = ?";
     private static final String DELETE_QUERY = "DELETE FROM Dish_Types WHERE id=?";
     private static final String SELECT_ALL_QUERY = "SELECT * FROM Dish_Types";
@@ -39,7 +39,7 @@ public class DishTypeDAO {
 
             final PreparedStatement sql = connection.prepareStatement(INSERT_QUERY);
             sql.setLong(1, dishType.getId());
-            sql.setString(2, dishType.getDishType().toString());
+            sql.setString(2, dishType.getDishType());
             sql.executeUpdate();
             isCreated = true;
 
@@ -68,14 +68,14 @@ public class DishTypeDAO {
     private DishType createDishType(ResultSet rs) throws SQLException {
         return new DishType(
                 rs.getLong("id"),
-                rs.getString("dish"));
+                rs.getString("dish_type"));
     }
 
     public boolean update(DishType dishType) {
         boolean isUpdated = false;
         try (Connection connection = dataSource.getConnection()) {
             final PreparedStatement sql = connection.prepareStatement(UPDATE_QUERY);
-            sql.setString(1, dishType.getDishType().toString());
+            sql.setString(1, dishType.getDishType());
             sql.setLong(2, dishType.getId());
             sql.executeUpdate();
             isUpdated = true;
