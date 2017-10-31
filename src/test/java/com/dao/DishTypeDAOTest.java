@@ -27,12 +27,12 @@ public class DishTypeDAOTest {
 
     @Test
     public void getAll() throws Exception {
-        List<DishType> actual = DishTypeDAO.getAll();
+        List<DishType> actual = dishTypeDAO.getAll();
 
         List<DishType> expected = Arrays.asList(
-                new DishType(1, "Borsch"),
-                new DishType(2, "Kharcho"),
-                new DishType(3, "Solyanka")
+                new DishType(1, "Soups"),
+                new DishType(2, "Desserts"),
+                new DishType(3, "Drinks")
         );
         assertThat(actual, is(expected));
     }
@@ -40,28 +40,28 @@ public class DishTypeDAOTest {
     @Test
     public void getById() throws Exception {
         DishType actual = dishTypeDAO.getById(1);
-        DishType expected = new DishType(1, "Borsch");
+        DishType expected = new DishType(1, "Soups");
         assertEquals(actual, expected);
     }
 
     @Test
     public void create() throws Exception {
-        DishTypeDAO toAdd = new DishType(5, "Greek");
-        DishTypeDAO.create(toAdd);
-        assertEquals(toAdd, DishTypeDAO.getById(5));
+        DishType toAdd = new DishType(4, "Salads");
+        dishTypeDAO.create(toAdd);
+        assertEquals(toAdd, dishTypeDAO.getById(4));
     }
 
     @Test
     public void update() throws Exception {
-        DishTypeDAO toUpdate = new DishTypeDAO(1, "Chiken Soup");
-        DishTypeDAO.update(toUpdate);
-        assertEquals(toUpdate, DishTypeDAO.getById(1));
+        DishType toUpdate = new DishType(1, "Salads");
+        dishTypeDAO.update(toUpdate);
+        assertEquals(toUpdate, dishTypeDAO.getById(1));
     }
 
     @Test
     public void delete() throws Exception {
-        DishTypeDAO.delete(4);
-        assertEquals(null, DishTypeDAO.getById(4));
+        dishTypeDAO.delete(2);
+        assertEquals(null, dishTypeDAO.getById(2));
     }
 
     private DataSource getDataSource() {
