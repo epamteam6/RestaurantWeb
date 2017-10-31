@@ -17,6 +17,7 @@ public class UserDAO {
     private static final String GET_BY_NAME_QUERY = "SELECT * FROM users WHERE user_name = ?";
     private static final String ADD_QUERY = "INSERT INTO users VALUES (NULL, ?, ?, ?)";
     private static final String REMOVE_QUERY = "DELETE FROM users WHERE user_name = ?";
+    private static final String UPDQTE_QUERY = "UPDATE users SET is_admin = ?, password_hash = ? WHERE user_name = ?";
 
     private UserDAO() {
     }
@@ -155,13 +156,12 @@ public class UserDAO {
 
         try (Connection connection = dataSource.getConnection()) {
 
-            Statement statement = connection.createStatement();
+            PreparedStatement sql = connection.prepareStatement(UPDQTE_QUERY);
+            sql.setBoolean(1, isAdmin);
+            sql.setString(2, password);
+            sql.setString(3, userName);
 
-            String query = String.format("UPDATE users SET is_admin = %b, " +
-                            "password_hash = '%s' WHERE user_name = '%s'",
-                    isAdmin, password, userName);
-
-            statement.executeUpdate(query);
+            sql.executeUpdate();
 
             isUpdated = true;
 
