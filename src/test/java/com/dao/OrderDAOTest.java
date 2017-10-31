@@ -86,8 +86,8 @@ public class OrderDAOTest {
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
         EmbeddedDatabase db = builder
                 .setType(EmbeddedDatabaseType.H2)
-                .addScript("init.sql")
-                .addScript("data.sql")
+                .addScript("init_order.sql")
+                .addScript("data_order.sql")
                 .build();
 
         return db;

@@ -5,7 +5,7 @@ import lombok.Data;
 
 @AllArgsConstructor
 @Data
-public class OrderDetail {
+public class DishOrder {
 
     private int id;
     private int orderId;

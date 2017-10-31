@@ -1,6 +1,12 @@
 package com.dao;
 
+import com.model.DishOrder;
+
 import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class DishOrderDAO {
 
@@ -29,5 +35,29 @@ public class DishOrderDAO {
         this.dataSource = dataSource;
     }
 
+    public DishOrder getByOrderId(int id) {
+        DishOrder dishOrder = null;
 
+        try (Connection con = dataSource.getConnection()) {
+
+            PreparedStatement sql = con.prepareStatement(SELECT_BY_ORDER_ID_QUERY);
+            sql.setInt(1, id);
+            ResultSet rs = sql.executeQuery();
+
+            if (rs.next())
+            {
+                dishOrder = new DishOrder(
+                        rs.getInt("id"),
+                        rs.getInt("order_id"),
+                        rs.getInt("dish_id"),
+                        rs.getInt("amount"),
+                        rs.getInt("sum"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return dishOrder;
+    }
 }
