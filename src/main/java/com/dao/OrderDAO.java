@@ -15,9 +15,24 @@ public class OrderDAO {
     public static final String SELECT_QUERY = "SELECT * FROM orders WHERE id = ?";
     public static final String DELETE_QUERY = "DELETE FROM orders WHERE id=?";
     public static final String SELECT_ALL_QUERY = "SELECT * FROM orders";
+
     private DataSource dataSource;
+    private static OrderDAO instance;
 
     public OrderDAO(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
+    private OrderDAO() { }
+
+    public static OrderDAO getInstance() {
+        if (instance == null) {
+            instance = new OrderDAO();
+        }
+        return instance;
+    }
+
+    public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 

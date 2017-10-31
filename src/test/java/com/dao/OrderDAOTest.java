@@ -19,11 +19,11 @@ import java.util.List;
 
 public class OrderDAOTest {
 
-    private OrderDAO orderDAO;
+    private OrderDAO orderDAO = OrderDAO.getInstance();
 
     @Before
     public  void init() {
-        orderDAO = new OrderDAO(getDataSource());
+        orderDAO.setDataSource(getDataSource());
     }
 
 
