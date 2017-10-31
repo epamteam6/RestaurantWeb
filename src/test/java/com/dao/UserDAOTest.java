@@ -10,6 +10,7 @@ import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
 import javax.sql.DataSource;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAOTest {
@@ -56,30 +57,45 @@ public class UserDAOTest {
     @Test
     public void addUser() {
 
-        userDAO.add("Temp", "temp", true);
+        User act = userDAO.add("Temp", "temp", true);
+        User exp = new User(7, "Temp", true);
 
-
+        assertThat(act, is(exp));
     }
 
     @Test
     public void removeUser() {
 
-        System.out.println(userDAO.remove("Temp")); //true
-        System.out.println(userDAO.remove("Temp")); //false
+        assertThat(userDAO.isExist("Ivanov"), is(true));
+        userDAO.remove("Ivanov");
+        assertThat(userDAO.isExist("Ivanov"), is(false));
     }
 
     @Test
     public void updateUser() {
 
-        userDAO.update("Temp", "temp1", false);
+        boolean act1 = userDAO.getByName("Admin").isAdmin();
+        assertThat(act1, is(true));
+
+        userDAO.update("Admin", "aaaaa", false);
+        boolean act2 = userDAO.getByName("Admin").isAdmin();
+        assertThat(act2, is(false));
     }
 
     @Test
     public void getAllUsers() throws Exception {
 
-        List<User> users = userDAO.getAll();
+        List<User> act = userDAO.getAll();
 
-        users.forEach(System.out::println);
+        List<User> exp = new ArrayList<>();
+        exp.add(new User(1, "Petrov", false));
+        exp.add(new User(2, "Ivanov", false));
+        exp.add(new User(3, "Admin", true));
+        exp.add(new User(4, "Rustam", false));
+        exp.add(new User(5, "Sergei", false));
+        exp.add(new User(6, "Yulia", false));
+
+        assertThat(act, is(exp));
     }
 
     //real localhost connection

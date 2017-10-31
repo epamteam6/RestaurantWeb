@@ -93,11 +93,12 @@ public class UserDAO {
         return user;
     }
 
-    public boolean add(String userName, String password, boolean isAdmin) {
+    public User add(String userName, String password, boolean isAdmin) {
 
         //in service class check if user exists
 
-        boolean isCreated = false;
+        User user = null;
+
         try (Connection connection = dataSource.getConnection()) {
 
             Statement statement = connection.createStatement();
@@ -107,13 +108,14 @@ public class UserDAO {
                             "VALUES (NULL, '%s', '%s', %b)", userName, password, isAdmin);
             statement.executeUpdate(query);
 
-            isCreated = true;
+            user = getByName(userName);
 
         } catch (SQLException e) {
+
             e.printStackTrace();
         }
 
-        return isCreated;
+        return user;
     }
 
     public boolean remove(String userName) {
