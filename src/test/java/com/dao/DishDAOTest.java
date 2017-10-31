@@ -26,12 +26,6 @@ public class DishDAOTest {
     }
 
     @Test
-    public void delete() throws Exception {
-        dishDAO.delete(4);
-        assertEquals(null, dishDAO.getById(4));
-    }
-
-    @Test
     public void getAll() throws Exception {
         List<Dish> actual = dishDAO.getAll();
 
@@ -44,22 +38,33 @@ public class DishDAOTest {
         assertThat(actual, is(expected));
     }
 
-
-    /*
-
     @Test
-    public void updateDish() throws Exception {
-        dishDAO.updateDish(new Dish(10,"RedMilk",3, 80));
+    public void getById() throws Exception {
+        Dish actual = dishDAO.getById(1);
+        Dish expected = new Dish(1, "Borsch", 1, 150);
+        assertEquals(actual, expected);
     }
 
-
     @Test
-    public void getAllDishes() throws Exception {
-        List<Dish> allDishes = dishDAO.getAllDishes();
-        allDishes.forEach(System.out::println);
+    public void create() throws Exception {
+        Dish toAdd = new Dish(5, "Greek", 4, 220);
+        dishDAO.create(toAdd);
+        assertEquals(toAdd, dishDAO.getById(5));
     }
 
-*/
+    @Test
+    public void update() throws Exception {
+        Dish toUpdate = new Dish(1, "Chiken Soup", 1, 200);
+        dishDAO.update(toUpdate);
+        assertEquals(toUpdate, dishDAO.getById(1));
+    }
+
+    @Test
+    public void delete() throws Exception {
+        dishDAO.delete(4);
+        assertEquals(null, dishDAO.getById(4));
+    }
+
     private DataSource getDataSource() {
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
         EmbeddedDatabase db = builder
@@ -67,8 +72,6 @@ public class DishDAOTest {
                 .addScript("initDish.sql")
                 .addScript("dataDish.sql")
                 .build();
-
         return db;
     }
-
 }
