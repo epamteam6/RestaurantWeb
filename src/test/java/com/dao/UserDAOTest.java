@@ -3,95 +3,102 @@ package com.dao;
 import com.model.User;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
+import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
+
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
 import java.util.List;
 
-public class UserDAOTest
-{
-    private UserDAO userDAO;
-    private Connection con;
+public class UserDAOTest {
+
+    private UserDAO userDAO = UserDAO.getInstance();
+//    private Connection con;
 
     @Before
-    public void init() throws Exception
-    {
+    public void init() throws Exception {
+
 //        con = getConnection();
-        userDAO = new UserDAO(getDataSource());
+        userDAO.setDataSource(getDataSource());
     }
 
     @Test
-    public void isUserExist() throws Exception
-    {
-        System.out.println(userDAO.isExist("Admin")); //true
-        System.out.println(userDAO.isExist("admin")); //false
+    public void isUserExist() throws Exception {
+
+        boolean act1 = userDAO.isExist("Admin"); //true
+        boolean act2 = userDAO.isExist("admin"); //false
+
+        assertThat(act1, is(true));
+        assertThat(act2, is(false));
     }
 
     @Test
-    public void validateUser() throws Exception
-    {
-        System.out.println(userDAO.validate("Admin", "admin")); //true
-        System.out.println(userDAO.validate("Admin", "aDmin")); //false
+    public void validateUser() throws Exception {
+
+        boolean act1 = userDAO.validate("Admin", "admin");
+        boolean act2 = userDAO.validate("Admin", "aDmin");
+
+        assertThat(act1, is(true));
+        assertThat(act2, is(false));
     }
 
     @Test
-    public void getUser() throws Exception
-    {
-        System.out.println(userDAO.getByName("Admin"));
-        System.out.println(userDAO.getByName("Temp"));
+    public void getUser() throws Exception {
+
+        User act1 = userDAO.getByName("Admin");
+        User exp1 = new User(3, "Admin", true);
+
+        assertThat(act1, is(exp1));
     }
 
     @Test
-    public void addUser()
-    {
-        System.out.println(userDAO.add("Temp", "temp", true)); //true
-        System.out.println(userDAO.add("Temp", "temp", true)); //false
+    public void addUser() {
+
+        userDAO.add("Temp", "temp", true);
+
+
     }
 
     @Test
-    public void removeUser()
-    {
+    public void removeUser() {
+
         System.out.println(userDAO.remove("Temp")); //true
         System.out.println(userDAO.remove("Temp")); //false
     }
 
     @Test
-    public void updateUser()
-    {
+    public void updateUser() {
+
         userDAO.update("Temp", "temp1", false);
     }
 
     @Test
-    public void getAllUsers() throws Exception
-    {
+    public void getAllUsers() throws Exception {
+
         List<User> users = userDAO.getAll();
 
         users.forEach(System.out::println);
     }
 
     //real localhost connection
-    private Connection getConnection() throws Exception
-    {
-        return DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/restaurant-web-db?serverTimezone=UTC",
-                "root",
-                "password");
-    }
+//    private Connection getConnection() throws Exception {
+//
+//        return DriverManager.getConnection(
+//                "jdbc:mysql://localhost:3306/restaurant-web-db?serverTimezone=UTC",
+//                "root",
+//                "password");
+//    }
 
-    public DataSource getDataSource()
-    {
+    private DataSource getDataSource() {
+
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
-        EmbeddedDatabase dataSource = builder
+
+        return builder
                 .setType(EmbeddedDatabaseType.H2)
                 .addScript("init_users.sql")
                 .addScript("data_users.sql")
                 .build();
-
-        return dataSource;
     }
 }
