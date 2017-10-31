@@ -17,7 +17,8 @@ public class UserDAO {
     private static final String GET_BY_NAME_QUERY = "SELECT * FROM users WHERE user_name = ?";
     private static final String ADD_QUERY = "INSERT INTO users VALUES (NULL, ?, ?, ?)";
     private static final String REMOVE_QUERY = "DELETE FROM users WHERE user_name = ?";
-    private static final String UPDQTE_QUERY = "UPDATE users SET is_admin = ?, password_hash = ? WHERE user_name = ?";
+    private static final String UPDATE_QUERY = "UPDATE users SET is_admin = ?, password_hash = ? WHERE user_name = ?";
+    private static final String GET_ALL_QUERY = "SELECT * FROM users";
 
     private UserDAO() {
     }
@@ -156,7 +157,7 @@ public class UserDAO {
 
         try (Connection connection = dataSource.getConnection()) {
 
-            PreparedStatement sql = connection.prepareStatement(UPDQTE_QUERY);
+            PreparedStatement sql = connection.prepareStatement(UPDATE_QUERY);
             sql.setBoolean(1, isAdmin);
             sql.setString(2, password);
             sql.setString(3, userName);
@@ -179,9 +180,9 @@ public class UserDAO {
 
         try (Connection connection = dataSource.getConnection()) {
 
-            Statement statement = connection.createStatement();
+            PreparedStatement sql = connection.prepareStatement(GET_ALL_QUERY);
 
-            ResultSet rs = statement.executeQuery("SELECT * FROM users");
+            ResultSet rs = sql.executeQuery();
 
             while (rs.next())
                 users.add(createUser(rs));
