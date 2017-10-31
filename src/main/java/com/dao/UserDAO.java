@@ -12,6 +12,11 @@ public class UserDAO {
     private static UserDAO instance;
     private DataSource dataSource;
 
+    private static final String IS_EXIST_QUERY = "SELECT * FROM users WHERE user_name = ?";
+    private static final String VALIDATION_QUERY = "SELECT * FROM users WHERE user_name = ? AND password_hash = ?";
+    private static final String GET_BY_NAME_QUERY = "SELECT * FROM users WHERE user_name = ?";
+    private static final String ADD_QUERY = "INSERT INTO users VALUES (NULL, ?, ?, ?)";
+
     private UserDAO() {
     }
 
@@ -36,9 +41,9 @@ public class UserDAO {
 
         try (Connection connection = dataSource.getConnection()) {
 
-            Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery(
-                    String.format("SELECT * FROM users WHERE user_name = '%s'", userName));
+            PreparedStatement sql = connection.prepareStatement(IS_EXIST_QUERY);
+            sql.setString(1, userName);
+            ResultSet rs = sql.executeQuery();
 
             isPresent = rs.next();
 
@@ -56,10 +61,10 @@ public class UserDAO {
 
         try (Connection connection = dataSource.getConnection()) {
 
-            Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery(
-                    String.format("SELECT * FROM users WHERE user_name = '%s' " +
-                            "AND password_hash = '%s'", userName, password));
+            PreparedStatement sql = connection.prepareStatement(VALIDATION_QUERY);
+            sql.setString(1, userName);
+            sql.setString(2, password);
+            ResultSet rs = sql.executeQuery();
 
             isPresent = rs.next();
 
@@ -77,10 +82,10 @@ public class UserDAO {
 
         try (Connection connection = dataSource.getConnection()) {
 
-            Statement statement = connection.createStatement();
+            PreparedStatement sql = connection.prepareStatement(GET_BY_NAME_QUERY);
+            sql.setString(1, userName);
 
-            String query = String.format("SELECT * FROM users WHERE user_name = '%s'", userName);
-            ResultSet rs = statement.executeQuery(query);
+            ResultSet rs = sql.executeQuery();
 
             if (rs.next())
                 user = createUser(rs);
@@ -101,12 +106,12 @@ public class UserDAO {
 
         try (Connection connection = dataSource.getConnection()) {
 
-            Statement statement = connection.createStatement();
+            PreparedStatement sql = connection.prepareStatement(ADD_QUERY);
+            sql.setString(1, userName);
+            sql.setString(2, password);
+            sql.setBoolean(3, isAdmin);
 
-            String query =
-                    String.format("INSERT INTO users " +
-                            "VALUES (NULL, '%s', '%s', %b)", userName, password, isAdmin);
-            statement.executeUpdate(query);
+            sql.executeUpdate();
 
             user = getByName(userName);
 
