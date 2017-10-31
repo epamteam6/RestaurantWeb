@@ -77,7 +77,7 @@ public class DishDAO {
     public boolean update(Dish dish) {
         try (Connection connection = dataSource.getConnection()) {
             final PreparedStatement sql = connection.prepareStatement(UPDATE_QUERY);
-            sql.setString(1, dish.getDish().toString());
+            sql.setString(1, dish.getDish());
             sql.setLong(2, dish.getDishTypeId());
             sql.setLong(3, dish.getPrice());
             sql.setLong(4, dish.getId());
@@ -91,17 +91,16 @@ public class DishDAO {
     }
 
     public boolean delete(long id) {
-        boolean isCanceled = false;
         try (Connection connection = dataSource.getConnection()) {
             final PreparedStatement sql = connection.prepareStatement(DELETE_QUERY);
             sql.setLong(1, id);
             sql.executeUpdate();
-            isCanceled = true;
+            return true;
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return isCanceled;
+        return false;
     }
 
     public Dish getById(long id) {
