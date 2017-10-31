@@ -34,7 +34,6 @@ public class DishDAO {
     }
 
     public boolean create(Dish dish) {
-        boolean isCreated = false;
         try (Connection connection = dataSource.getConnection()) {
 
             final PreparedStatement sql = connection.prepareStatement(INSERT_QUERY);
@@ -43,12 +42,12 @@ public class DishDAO {
             sql.setLong(3, dish.getDishTypeId());
             sql.setLong(4, dish.getPrice());
             sql.executeUpdate();
-            isCreated = true;
+            return true;
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return isCreated;
+        return false;
     }
 
     public List<Dish> getAll() {
