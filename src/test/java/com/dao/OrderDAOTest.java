@@ -22,7 +22,7 @@ public class OrderDAOTest {
     private OrderDAO orderDAO = OrderDAO.getInstance();
 
     @Before
-    public  void init() {
+    public void init() {
         orderDAO.setDataSource(getDataSource());
     }
 
@@ -32,15 +32,15 @@ public class OrderDAOTest {
         List<Order> actual = orderDAO.getAll();
 
         List<Order> expected = Arrays.asList(
-                new Order(1,1,
-                        LocalDateTime.of(2017,10,25,13,54,19),
-                        475,Order.status.CREATED),
-                new Order(2,2,
-                        LocalDateTime.of(2017,10,25,13,54,19),
-                        290,Order.status.CONFIRMED),
-                new Order(3,4,
-                        LocalDateTime.of(2017,10,25,13,54,19),
-                        330,Order.status.PAID)
+                new Order(1, 1,
+                        LocalDateTime.of(2017, 10, 25, 13, 54, 19),
+                        475, Order.status.CREATED),
+                new Order(2, 2,
+                        LocalDateTime.of(2017, 10, 25, 13, 54, 19),
+                        290, Order.status.CONFIRMED),
+                new Order(3, 4,
+                        LocalDateTime.of(2017, 10, 25, 13, 54, 19),
+                        330, Order.status.PAID)
         );
 
         assertThat(actual, is(expected));
@@ -51,15 +51,15 @@ public class OrderDAOTest {
     public void getOrderById() throws Exception {
         Order actual = orderDAO.getById(1);
 
-        Order expected = new Order(1,1,LocalDateTime.of(2017,10,25,
-                13,54,19),475,Order.status.CREATED);
+        Order expected = new Order(1, 1, LocalDateTime.of(2017, 10, 25,
+                13, 54, 19), 475, Order.status.CREATED);
 
         assertEquals(actual, expected);
     }
 
     @Test
     public void createOrder() throws Exception {
-        Order toAdd = new Order(4,2, LocalDateTime.now(), 7005, Order.status.CONFIRMED);
+        Order toAdd = new Order(4, 2, LocalDateTime.now(), 7005, Order.status.CONFIRMED);
         orderDAO.create(toAdd);
         assertEquals(toAdd, orderDAO.getById(4));
 
@@ -68,7 +68,9 @@ public class OrderDAOTest {
 
     @Test
     public void updateOrder() throws Exception {
-        Order toUpdate = new Order(2,2,LocalDateTime.of(2017,10,25,13,54,19),690,Order.status.CONFIRMED);
+        Order toUpdate = new Order(2, 2,
+                LocalDateTime.of(2017, 10, 25, 13, 54, 19),
+                690, Order.status.CONFIRMED);
         orderDAO.update(toUpdate);
         assertEquals(toUpdate, orderDAO.getById(2));
 
