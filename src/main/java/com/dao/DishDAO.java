@@ -69,10 +69,10 @@ public class DishDAO {
 
     private Dish createDish(ResultSet rs) throws SQLException {
         return new Dish(
-                rs.getInt("id"),
+                rs.getLong("id"),
                 rs.getString("dish"),
                 rs.getLong("dish_type_id"),
-                rs.getInt("price"));
+                rs.getLong("price"));
     }
 
     public boolean update(Dish dish) {
