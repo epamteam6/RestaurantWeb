@@ -41,6 +41,14 @@ public class DishOrderDAOTest {
         assertThat(act, is(exp));
     }
 
+    @Test
+    public void getById() throws Exception {
+
+        DishOrder act = dishOrderDAO.getById(2);
+        DishOrder exp = new DishOrder(2, 1, 6, 1, 135);
+
+        assertThat(act, is(exp));
+    }
 
 
 }

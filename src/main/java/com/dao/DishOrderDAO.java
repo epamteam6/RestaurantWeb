@@ -36,6 +36,7 @@ public class DishOrderDAO {
     }
 
     public DishOrder getByOrderId(int id) {
+
         DishOrder dishOrder = null;
 
         try (Connection con = dataSource.getConnection()) {
@@ -46,12 +47,7 @@ public class DishOrderDAO {
 
             if (rs.next())
             {
-                dishOrder = new DishOrder(
-                        rs.getInt("id"),
-                        rs.getInt("order_id"),
-                        rs.getInt("dish_id"),
-                        rs.getInt("amount"),
-                        rs.getInt("sum"));
+                dishOrder = createDishOrderEntity(rs);
             }
 
         } catch (SQLException e) {
@@ -59,5 +55,36 @@ public class DishOrderDAO {
         }
 
         return dishOrder;
+    }
+
+    public DishOrder getById(int id) {
+
+        DishOrder dishOrder = null;
+
+        try (Connection con = dataSource.getConnection()) {
+
+            PreparedStatement sql = con.prepareStatement(SELECT_BY_ID_QUERY);
+            sql.setInt(1, id);
+            ResultSet rs = sql.executeQuery();
+
+            if (rs.next())
+            {
+                dishOrder = createDishOrderEntity(rs);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return dishOrder;
+    }
+
+    private DishOrder createDishOrderEntity(ResultSet rs) throws SQLException {
+        return new DishOrder(
+                rs.getInt("id"),
+                rs.getInt("order_id"),
+                rs.getInt("dish_id"),
+                rs.getInt("amount"),
+                rs.getInt("sum"));
     }
 }
