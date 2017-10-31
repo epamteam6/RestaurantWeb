@@ -41,8 +41,10 @@ public class DishDAO implements RestrauntDao {
 
     @Override
     public void addDish(Dish dish) {
+
         try {
             final PreparedStatement sql = connection.prepareStatement("INSERT INTO Dishes(id, dish, dishTypeId, price)  values (?,?,?,?)");
+
             sql.setLong(1, dish.getId());
             sql.setString(2, dish.getDish().toString());
             sql.setLong(3, dish.getDishTypeId());

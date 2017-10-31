@@ -11,6 +11,6 @@ public interface RestrauntDao {
 
     void addDish(Dish dish);
     void updateDish (Dish dish);
-    void deleteDish (long id);
+    void deleteDish (long  id);
 
 }
