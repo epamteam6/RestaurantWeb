@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class DishDAO implements RestrauntDao {
+public class DishDAO {
 
     private Connection connection;
 
@@ -16,7 +16,7 @@ public class DishDAO implements RestrauntDao {
     }
 
 
-    @Override
+
     public List<Dish> getAllDishes() {
 
         List<Dish> allDishes = new ArrayList<>();
@@ -39,7 +39,7 @@ public class DishDAO implements RestrauntDao {
         return allDishes;
     }
 
-    @Override
+
     public void addDish(Dish dish) {
 
         try {
@@ -63,7 +63,7 @@ public class DishDAO implements RestrauntDao {
     }
 
 
-    @Override
+
     public void updateDish(Dish dish) {
         try {
             final PreparedStatement sql = connection.prepareStatement("UPDATE Dishes SET dish=?, dishTypeId=?, price=? where id=?");
@@ -85,7 +85,7 @@ public class DishDAO implements RestrauntDao {
     }
 
 
-    @Override
+    
     public void deleteDish(long id) {
         try {
             final PreparedStatement sql = connection.prepareStatement("DELETE from Dishes where id=?");
