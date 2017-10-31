@@ -96,7 +96,7 @@ public class DishDAO {
         boolean isCanceled = false;
         try (Connection connection = dataSource.getConnection()) {
             final PreparedStatement sql = connection.prepareStatement(DELETE_QUERY);
-            sql.setInt(1, id);
+            sql.setLong(1, id);
             sql.executeUpdate();
             isCanceled = true;
 
