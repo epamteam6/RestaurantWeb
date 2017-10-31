@@ -105,6 +105,22 @@ public class DishDAO {
         }
         return isCanceled;
     }
+
+    public Dish getById(long id) {
+        Dish dish = null;
+        try (Connection connection = dataSource.getConnection()) {
+            final PreparedStatement sql = connection.prepareStatement(SELECT_QUERY);
+            sql.setLong(1, id);
+
+            final ResultSet rs = sql.executeQuery();
+            if (rs.next()) {
+                dish = createDish(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return dish;
+    }
 }
 
 
