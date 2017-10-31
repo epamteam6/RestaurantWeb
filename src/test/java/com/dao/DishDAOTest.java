@@ -3,39 +3,55 @@ package com.dao;
 import com.model.Dish;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import javax.sql.DataSource;
+import java.util.Arrays;
 import java.util.List;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 public class DishDAOTest {
 
-    private DishDAO dishDAO;
+    private DishDAO dishDAO = DishDAO.getInstance();
+
 
     @Before
     public void init() throws Exception {
-        dishDAO = new DishDAO(getConnection());
+        dishDAO.setDataSource(getDataSource());
     }
-
 
     @Test
-    public void addDish() throws Exception {
-        dishDAO = new DishDAO(getConnection());
-        dishDAO.addDish(new Dish(12, "Сhicken Soup", 1, 200));
-        dishDAO.addDish(new Dish(13, "Tea", 3, 50));
-
+    public void delete() throws Exception {
+        dishDAO.delete(4);
+        assertEquals(null, dishDAO.getById(4));
     }
+
+    @Test
+    public void getAll() throws Exception {
+        List<Dish> actual = dishDAO.getAll();
+
+        List<Dish> expected = Arrays.asList(
+                new Dish(1, "Borsch", 1, 150),
+                new Dish(2, "Kharcho", 1, 170),
+                new Dish(3, "Solyanka", 1, 200),
+                new Dish(4, "Olivie", 4, 180)
+        );
+        assertThat(actual, is(expected));
+    }
+
+
+    /*
 
     @Test
     public void updateDish() throws Exception {
         dishDAO.updateDish(new Dish(10,"RedMilk",3, 80));
     }
 
-    @Test
-    public void deleteDish() throws Exception {
-        dishDAO.deleteDish(12);
-    }
 
     @Test
     public void getAllDishes() throws Exception {
@@ -43,20 +59,16 @@ public class DishDAOTest {
         allDishes.forEach(System.out::println);
     }
 
-    private Connection getConnection() {
-        Connection conn = null;
+*/
+    private DataSource getDataSource() {
+        EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
+        EmbeddedDatabase db = builder
+                .setType(EmbeddedDatabaseType.H2)
+                .addScript("initDish.sql")
+                .addScript("dataDish.sql")
+                .build();
 
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/a208000_food?serverTimezone=UTC", "a208000_root", "foodroot");
-
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return conn;
-
+        return db;
     }
 
 }
