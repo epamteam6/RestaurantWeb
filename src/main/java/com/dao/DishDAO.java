@@ -85,7 +85,7 @@ public class DishDAO {
     }
 
 
-    
+
     public void deleteDish(long id) {
         try {
             final PreparedStatement sql = connection.prepareStatement("DELETE from Dishes where id=?");
