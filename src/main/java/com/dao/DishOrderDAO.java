@@ -7,6 +7,8 @@ public class DishOrderDAO {
     private static DishOrderDAO instance;
     private DataSource dataSource;
 
+    private static final String GET_BY_ORDER_ID = "";
+
     private DishOrderDAO() {
 
     }
