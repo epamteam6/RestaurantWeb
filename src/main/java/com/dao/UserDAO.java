@@ -16,6 +16,7 @@ public class UserDAO {
     private static final String VALIDATION_QUERY = "SELECT * FROM users WHERE user_name = ? AND password_hash = ?";
     private static final String GET_BY_NAME_QUERY = "SELECT * FROM users WHERE user_name = ?";
     private static final String ADD_QUERY = "INSERT INTO users VALUES (NULL, ?, ?, ?)";
+    private static final String REMOVE_QUERY = "DELETE FROM users WHERE user_name = ?";
 
     private UserDAO() {
     }
@@ -131,11 +132,10 @@ public class UserDAO {
 
         try (Connection connection = dataSource.getConnection()) {
 
-            Statement statement = connection.createStatement();
+            PreparedStatement sql = connection.prepareStatement(REMOVE_QUERY);
+            sql.setString(1, userName);
 
-            String query =
-                    String.format("DELETE FROM users WHERE user_name = '%s'", userName);
-            statement.executeUpdate(query);
+            sql.executeUpdate();
 
             isRemoved = true;
 
