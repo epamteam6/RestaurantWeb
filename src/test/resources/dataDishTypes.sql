@@ -1,4 +1,4 @@
-INSERT INTO `DisheTypes` (`id`, `dish_type`) VALUES
+INSERT INTO `Dishe_Types` (`id`, `dish_type`) VALUES
   (1, 'Soups'),
   (2, 'Desserts'),
   (3, 'Drinks'),
