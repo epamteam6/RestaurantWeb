@@ -16,12 +16,10 @@ import java.util.List;
 public class UserDAOTest {
 
     private UserDAO userDAO = UserDAO.getInstance();
-//    private Connection con;
 
     @Before
     public void init() throws Exception {
 
-//        con = getConnection();
         userDAO.setDataSource(getDataSource());
     }
 
@@ -97,15 +95,6 @@ public class UserDAOTest {
 
         assertThat(act, is(exp));
     }
-
-    //real localhost connection
-//    private Connection getConnection() throws Exception {
-//
-//        return DriverManager.getConnection(
-//                "jdbc:mysql://localhost:3306/restaurant-web-db?serverTimezone=UTC",
-//                "root",
-//                "password");
-//    }
 
     private DataSource getDataSource() {
 
