@@ -1,10 +1,12 @@
 package com.model;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
+@AllArgsConstructor
 @Data
 public class Order {
     private int id;
@@ -13,7 +15,7 @@ public class Order {
     private int totalSum;
     private status st;
 
-    private enum status {
-        CREATED, CONFIRMED, READY, PAID;
+    public enum status {
+        CREATED, CONFIRMED, READY, PAID
     }
 }
