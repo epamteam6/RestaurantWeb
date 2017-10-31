@@ -7,62 +7,76 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAO
-{
+public class UserDAO {
+
+    private static UserDAO instance;
     private DataSource dataSource;
 
-    public UserDAO(DataSource dataSource)
-    {
+    private UserDAO() {
+    }
+
+    public static UserDAO getInstance() {
+
+        if (instance == null) {
+
+            instance = new UserDAO();
+        }
+
+        return instance;
+    }
+
+    public void setDataSource(DataSource dataSource) {
+
         this.dataSource = dataSource;
     }
 
-    public boolean isExist(String userName)
-    {
+    public boolean isExist(String userName) {
+
         boolean isPresent = false;
 
-        try (Connection connection = dataSource.getConnection())
-        {
+        try (Connection connection = dataSource.getConnection()) {
+
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(
-                    String.format("SELECT * FROM users WHERE BINARY user_name = '%s'", userName));
+                    String.format("SELECT * FROM users WHERE user_name = '%s'", userName));
 
             isPresent = rs.next();
 
-        } catch (SQLException e)
-        {
+        } catch (SQLException e) {
+
             e.printStackTrace();
         }
 
         return isPresent;
     }
 
-    public boolean validate(String userName, String password)
-    {
+    public boolean validate(String userName, String password) {
+
         boolean isPresent = false;
 
-        try (Connection connection = dataSource.getConnection())
-        {
+        try (Connection connection = dataSource.getConnection()) {
+
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(
-                    String.format("SELECT * FROM users WHERE BINARY user_name = '%s' " +
-                            "AND BINARY password_hash = '%s'", userName, password));
+                    String.format("SELECT * FROM users WHERE user_name = '%s' " +
+                            "AND password_hash = '%s'", userName, password));
 
             isPresent = rs.next();
 
-        } catch (SQLException e)
-        {
+        } catch (SQLException e) {
+
             e.printStackTrace();
         }
 
         return isPresent;
     }
 
-    public User getByName(String userName)
-    {
+    public User getByName(String userName) {
+
         User user = null;
 
-        try (Connection connection = dataSource.getConnection())
-        {
+        try (Connection connection = dataSource.getConnection()) {
+
             Statement statement = connection.createStatement();
 
             String query = String.format("SELECT * FROM users WHERE user_name = '%s'", userName);
@@ -71,21 +85,21 @@ public class UserDAO
             if (rs.next())
                 user = createUser(rs);
 
-        } catch (SQLException e)
-        {
+        } catch (SQLException e) {
+
             e.printStackTrace();
         }
 
         return user;
     }
 
-    public boolean add(String userName, String password, boolean isAdmin)
-    {
+    public boolean add(String userName, String password, boolean isAdmin) {
+
         //in service class check if user exists
 
         boolean isCreated = false;
-        try (Connection connection = dataSource.getConnection())
-        {
+        try (Connection connection = dataSource.getConnection()) {
+
             Statement statement = connection.createStatement();
 
             String query =
@@ -95,22 +109,21 @@ public class UserDAO
 
             isCreated = true;
 
-        } catch (SQLException e)
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return isCreated;
     }
 
-    public boolean remove(String userName)
-    {
+    public boolean remove(String userName) {
+
         //in service class check if user exists or admin
 
         boolean isRemoved = false;
 
-        try (Connection connection = dataSource.getConnection())
-        {
+        try (Connection connection = dataSource.getConnection()) {
+
             Statement statement = connection.createStatement();
 
             String query =
@@ -119,22 +132,22 @@ public class UserDAO
 
             isRemoved = true;
 
-        } catch (SQLException e)
-        {
+        } catch (SQLException e) {
+
             e.printStackTrace();
         }
 
         return isRemoved;
     }
 
-    public boolean update(String userName, String password, boolean isAdmin)
-    {
+    public boolean update(String userName, String password, boolean isAdmin) {
+
         //in service class check if user exists
 
         boolean isUpdated = false;
 
-        try (Connection connection = dataSource.getConnection())
-        {
+        try (Connection connection = dataSource.getConnection()) {
+
             Statement statement = connection.createStatement();
 
             String query = String.format("UPDATE users SET is_admin = %b, " +
@@ -145,20 +158,20 @@ public class UserDAO
 
             isUpdated = true;
 
-        } catch (SQLException e)
-        {
+        } catch (SQLException e) {
+
             e.printStackTrace();
         }
 
         return isUpdated;
     }
 
-    public List<User> getAll()
-    {
+    public List<User> getAll() {
+
         List<User> users = new ArrayList<>();
 
-        try (Connection connection = dataSource.getConnection())
-        {
+        try (Connection connection = dataSource.getConnection()) {
+
             Statement statement = connection.createStatement();
 
             ResultSet rs = statement.executeQuery("SELECT * FROM users");
@@ -166,16 +179,16 @@ public class UserDAO
             while (rs.next())
                 users.add(createUser(rs));
 
-        } catch (SQLException e)
-        {
+        } catch (SQLException e) {
+
             e.printStackTrace();
         }
 
         return users;
     }
 
-    private User createUser(ResultSet rs) throws SQLException
-    {
+    private User createUser(ResultSet rs) throws SQLException {
+
         return new User(
                 rs.getInt("id"),
                 rs.getString("user_name"),

@@ -4,8 +4,8 @@ import lombok.*;
 
 @AllArgsConstructor
 @Data
-public class User
-{
+public class User {
+
     @Setter(AccessLevel.PRIVATE)
     private int id;
 
