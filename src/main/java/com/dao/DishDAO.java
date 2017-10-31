@@ -39,7 +39,7 @@ public class DishDAO {
 
             final PreparedStatement sql = connection.prepareStatement(INSERT_QUERY);
             sql.setLong(1, dish.getId());
-            sql.setString(2, dish.getDish().toString());
+            sql.setString(2, dish.getDish());
             sql.setLong(3, dish.getDishTypeId());
             sql.setLong(4, dish.getPrice());
             sql.executeUpdate();
@@ -59,7 +59,7 @@ public class DishDAO {
 
             final ResultSet rs = statement.executeQuery(SELECT_ALL_QUERY);
             while (rs.next()) {
-                res.add(createDish(rs));
+                res.add(parseDish(rs));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -67,12 +67,12 @@ public class DishDAO {
         return res;
     }
 
-    private Dish createDish(ResultSet rs) throws SQLException {
+    private Dish parseDish(ResultSet rs) throws SQLException {
         return new Dish(
-                rs.getInt("id"),
+                rs.getLong("id"),
                 rs.getString("dish"),
                 rs.getLong("dish_type_id"),
-                rs.getInt("price"));
+                rs.getLong("price"));
     }
 
     public boolean update(Dish dish) {
@@ -114,7 +114,7 @@ public class DishDAO {
 
             final ResultSet rs = sql.executeQuery();
             if (rs.next()) {
-                dish = createDish(rs);
+                dish = parseDish(rs);
             }
         } catch (SQLException e) {
             e.printStackTrace();
