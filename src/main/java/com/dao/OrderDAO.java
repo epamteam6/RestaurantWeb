@@ -10,18 +10,14 @@ import java.util.List;
 
 public class OrderDAO {
 
-    public static final String UPDATE_QUERY = "UPDATE orders SET user_id=?, date_time=?, total_sum=?, status=? WHERE id=?";
-    public static final String INSERT_QUERY = "INSERT INTO orders(user_id, date_time, total_sum, status)  values (?,?,?,?)";
-    public static final String SELECT_QUERY = "SELECT * FROM orders WHERE id = ?";
-    public static final String DELETE_QUERY = "DELETE FROM orders WHERE id=?";
-    public static final String SELECT_ALL_QUERY = "SELECT * FROM orders";
+    private static final String UPDATE_QUERY = "UPDATE orders SET user_id=?, date_time=?, total_sum=?, status=? WHERE id=?";
+    private static final String INSERT_QUERY = "INSERT INTO orders(user_id, date_time, total_sum, status)  values (?,?,?,?)";
+    private static final String SELECT_QUERY = "SELECT * FROM orders WHERE id = ?";
+    private static final String DELETE_QUERY = "DELETE FROM orders WHERE id=?";
+    private static final String SELECT_ALL_QUERY = "SELECT * FROM orders";
 
     private DataSource dataSource;
     private static OrderDAO instance;
-
-    public OrderDAO(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
 
     private OrderDAO() { }
 
@@ -35,13 +31,7 @@ public class OrderDAO {
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
     }
-
-
-   /* private Connection connection;
-
-    public OrderDAO(Connection connection) {
-        this.connection = connection;
-    }*/
+    
 
     public boolean create(Order order) {
         boolean isCreated = false;

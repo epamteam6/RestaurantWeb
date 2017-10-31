@@ -32,9 +32,15 @@ public class OrderDAOTest {
         List<Order> actual = orderDAO.getAll();
 
         List<Order> expected = Arrays.asList(
-                new Order(1,1,LocalDateTime.of(2017,10,25,13,54,19),475,Order.status.CREATED),
-                new Order(2,2,LocalDateTime.of(2017,10,25,13,54,19),290,Order.status.CONFIRMED),
-                new Order(3,4,LocalDateTime.of(2017,10,25,13,54,19),330,Order.status.PAID)
+                new Order(1,1,
+                        LocalDateTime.of(2017,10,25,13,54,19),
+                        475,Order.status.CREATED),
+                new Order(2,2,
+                        LocalDateTime.of(2017,10,25,13,54,19),
+                        290,Order.status.CONFIRMED),
+                new Order(3,4,
+                        LocalDateTime.of(2017,10,25,13,54,19),
+                        330,Order.status.PAID)
         );
 
         assertThat(actual, is(expected));
@@ -50,23 +56,6 @@ public class OrderDAOTest {
 
         assertEquals(actual, expected);
     }
-
-    /*private Connection getConnection() {
-        Connection conn = null;
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/food?serverTimezone=UTC","root", "root");
-
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return conn;
-
-    }*/
-
 
     @Test
     public void createOrder() throws Exception {
