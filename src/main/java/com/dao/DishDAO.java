@@ -10,8 +10,8 @@ import java.util.List;
 
 public class DishDAO {
 
-    private static final String UPDATE_QUERY = "UPDATE Dishes SET dish=?, dish_type_id=?, price=? where id=?";
-    private static final String INSERT_QUERY = "INSERT INTO Dishes(id, dish, dish_type_id, price)  values (?,?,?,?)";
+    private static final String UPDATE_QUERY = "UPDATE Dishes SET dish=?, dish_type_id=?, price=? WHERE id=?";
+    private static final String INSERT_QUERY = "INSERT INTO Dishes(id, dish, dish_type_id, price)  VALUES (?,?,?,?)";
     private static final String SELECT_QUERY = "SELECT * FROM Dishes WHERE id = ?";
     private static final String DELETE_QUERY = "DELETE FROM Dishes WHERE id=?";
     private static final String SELECT_ALL_QUERY = "SELECT * FROM Dishes";
@@ -52,8 +52,8 @@ public class DishDAO {
 
     public List<Dish> getAll() {
         List<Dish> res = new ArrayList<>();
-        Statement statement;
         try (Connection connection = dataSource.getConnection()) {
+            Statement statement;
             statement = connection.createStatement();
 
             final ResultSet rs = statement.executeQuery(SELECT_ALL_QUERY);
