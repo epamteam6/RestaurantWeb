@@ -34,13 +34,13 @@ public class OrderDAOTest {
         List<Order> expected = Arrays.asList(
                 new Order(1, 1,
                         LocalDateTime.of(2017, 10, 25, 13, 54, 19),
-                        475, Order.status.CREATED),
+                        475, Order.Status.CREATED),
                 new Order(2, 2,
                         LocalDateTime.of(2017, 10, 25, 13, 54, 19),
-                        290, Order.status.CONFIRMED),
+                        290, Order.Status.CONFIRMED),
                 new Order(3, 4,
                         LocalDateTime.of(2017, 10, 25, 13, 54, 19),
-                        330, Order.status.PAID)
+                        330, Order.Status.PAID)
         );
 
         assertThat(actual, is(expected));
@@ -49,19 +49,20 @@ public class OrderDAOTest {
 
     @Test
     public void getOrderById() throws Exception {
-        Order actual = orderDAO.getById(1);
+
+        Order actual = orderDAO.getById(1).get();
 
         Order expected = new Order(1, 1, LocalDateTime.of(2017, 10, 25,
-                13, 54, 19), 475, Order.status.CREATED);
+                13, 54, 19), 475, Order.Status.CREATED);
 
         assertEquals(actual, expected);
     }
 
     @Test
     public void createOrder() throws Exception {
-        Order toAdd = new Order(4, 2, LocalDateTime.now(), 7005, Order.status.CONFIRMED);
+        Order toAdd = new Order(4, 2, LocalDateTime.now(), 7005, Order.Status.CONFIRMED);
         orderDAO.create(toAdd);
-        assertEquals(toAdd, orderDAO.getById(4));
+        assertEquals(toAdd, orderDAO.getById(4).get());
 
 
     }
@@ -70,16 +71,16 @@ public class OrderDAOTest {
     public void updateOrder() throws Exception {
         Order toUpdate = new Order(2, 2,
                 LocalDateTime.of(2017, 10, 25, 13, 54, 19),
-                690, Order.status.CONFIRMED);
+                690, Order.Status.CONFIRMED);
         orderDAO.update(toUpdate);
-        assertEquals(toUpdate, orderDAO.getById(2));
+        assertEquals(toUpdate, orderDAO.getById(2).get());
 
     }
 
     @Test
     public void cancelOrder() throws Exception {
         orderDAO.cancel(3);
-        assertEquals(null, orderDAO.getById(3));
+        assertEquals(false, orderDAO.getById(3).isPresent());
     }
 
     private DataSource getDataSource() {

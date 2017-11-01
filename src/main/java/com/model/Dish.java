@@ -1,11 +1,13 @@
 package com.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class Dish {
-    private int id;
+    private long id;
     private String dish;
-    private String dishTypeId;
-    private int price;
+    private long dishTypeId;
+    private long price;
 }

@@ -6,13 +6,13 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class UserDAO {
 
     private static UserDAO instance;
     private DataSource dataSource;
 
-    private static final String IS_EXIST_QUERY = "SELECT * FROM users WHERE user_name = ?";
     private static final String VALIDATION_QUERY = "SELECT * FROM users WHERE user_name = ? AND password_hash = ?";
     private static final String GET_BY_NAME_QUERY = "SELECT * FROM users WHERE user_name = ?";
     private static final String ADD_QUERY = "INSERT INTO users VALUES (NULL, ?, ?, ?)";
@@ -38,29 +38,7 @@ public class UserDAO {
         this.dataSource = dataSource;
     }
 
-    public boolean isExist(String userName) {
-
-        boolean isPresent = false;
-
-        try (Connection connection = dataSource.getConnection()) {
-
-            PreparedStatement sql = connection.prepareStatement(IS_EXIST_QUERY);
-            sql.setString(1, userName);
-            ResultSet rs = sql.executeQuery();
-
-            isPresent = rs.next();
-
-        } catch (SQLException e) {
-
-            e.printStackTrace();
-        }
-
-        return isPresent;
-    }
-
     public boolean validate(String userName, String password) {
-
-        boolean isPresent = false;
 
         try (Connection connection = dataSource.getConnection()) {
 
@@ -69,17 +47,17 @@ public class UserDAO {
             sql.setString(2, password);
             ResultSet rs = sql.executeQuery();
 
-            isPresent = rs.next();
+            return rs.next();
 
         } catch (SQLException e) {
 
             e.printStackTrace();
         }
 
-        return isPresent;
+        return false;
     }
 
-    public User getByName(String userName) {
+    public Optional<User> getByName(String userName) {
 
         User user = null;
 
@@ -91,21 +69,17 @@ public class UserDAO {
             ResultSet rs = sql.executeQuery();
 
             if (rs.next())
-                user = createUser(rs);
+                user = createUserEntity(rs);
 
         } catch (SQLException e) {
 
             e.printStackTrace();
         }
 
-        return user;
+        return Optional.ofNullable(user);
     }
 
-    public User add(String userName, String password, boolean isAdmin) {
-
-        //in service class check if user exists
-
-        User user = null;
+    public boolean add(String userName, String password, boolean isAdmin) {
 
         try (Connection connection = dataSource.getConnection()) {
 
@@ -116,21 +90,17 @@ public class UserDAO {
 
             sql.executeUpdate();
 
-            user = getByName(userName);
+            return true;
 
         } catch (SQLException e) {
 
             e.printStackTrace();
         }
 
-        return user;
+        return false;
     }
 
     public boolean remove(String userName) {
-
-        //in service class check if user exists or admin
-
-        boolean isRemoved = false;
 
         try (Connection connection = dataSource.getConnection()) {
 
@@ -139,21 +109,17 @@ public class UserDAO {
 
             sql.executeUpdate();
 
-            isRemoved = true;
+            return true;
 
         } catch (SQLException e) {
 
             e.printStackTrace();
         }
 
-        return isRemoved;
+        return false;
     }
 
     public boolean update(String userName, String password, boolean isAdmin) {
-
-        //in service class check if user exists
-
-        boolean isUpdated = false;
 
         try (Connection connection = dataSource.getConnection()) {
 
@@ -164,14 +130,14 @@ public class UserDAO {
 
             sql.executeUpdate();
 
-            isUpdated = true;
+            return true;
 
         } catch (SQLException e) {
 
             e.printStackTrace();
         }
 
-        return isUpdated;
+        return false;
     }
 
     public List<User> getAll() {
@@ -185,7 +151,7 @@ public class UserDAO {
             ResultSet rs = sql.executeQuery();
 
             while (rs.next())
-                users.add(createUser(rs));
+                users.add(createUserEntity(rs));
 
         } catch (SQLException e) {
 
@@ -195,7 +161,7 @@ public class UserDAO {
         return users;
     }
 
-    private User createUser(ResultSet rs) throws SQLException {
+    private User createUserEntity(ResultSet rs) throws SQLException {
 
         return new User(
                 rs.getInt("id"),
