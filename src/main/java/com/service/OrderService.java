@@ -55,7 +55,6 @@ public class OrderService {
                 orderID = order.getId();
             }
         }
-        final long finalOrderID = orderID;
 
         long total_sum = 0;
         Iterator it = dishNamesAndAmount.entrySet().iterator();
@@ -67,13 +66,13 @@ public class OrderService {
             long price = dishDAO.getByName(pair.getKey()).get().getPrice();
             total_sum += amount * price;
             System.out.println(total_sum);
-            dishOrderDAO.add(new DishOrder(0, finalOrderID,
+            dishOrderDAO.add(new DishOrder(0, orderID,
                     dishId, amount, amount * price));
 
             it.remove(); // avoids a ConcurrentModificationException
 
         }
-        Order order = orderDAO.getById(finalOrderID).get();
+        Order order = orderDAO.getById(orderID).get();
         order.setTotalSum(total_sum);
         orderDAO.update(order);
     }
