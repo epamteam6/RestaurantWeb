@@ -1,11 +1,16 @@
 package com.model;
 
-import lombok.Data;
+import lombok.*;
 
+@AllArgsConstructor
 @Data
-public class   User {
+public class User {
+
+    @Setter(AccessLevel.PRIVATE)
     private int id;
+
+    @Setter(AccessLevel.PRIVATE)
     private String userName;
-    private String passwordHash;
+
     private boolean isAdmin;
 }
