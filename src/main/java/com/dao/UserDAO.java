@@ -15,6 +15,7 @@ public class UserDAO {
 
     private static final String VALIDATION_QUERY = "SELECT * FROM users WHERE user_name = ? AND password_hash = ?";
     private static final String GET_BY_NAME_QUERY = "SELECT * FROM users WHERE user_name = ?";
+    private static final String GET_BY_ID = "SELECT * FROM users WHERE id = ?";
     private static final String ADD_QUERY = "INSERT INTO users VALUES (NULL, ?, ?, ?)";
     private static final String REMOVE_QUERY = "DELETE FROM users WHERE user_name = ?";
     private static final String UPDATE_QUERY = "UPDATE users SET is_admin = ?, password_hash = ? WHERE user_name = ?";
@@ -65,6 +66,28 @@ public class UserDAO {
 
             PreparedStatement sql = connection.prepareStatement(GET_BY_NAME_QUERY);
             sql.setString(1, userName);
+
+            ResultSet rs = sql.executeQuery();
+
+            if (rs.next())
+                user = createUserEntity(rs);
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+        }
+
+        return Optional.ofNullable(user);
+    }
+
+    public Optional<User> getById(int id) {
+
+        User user = null;
+
+        try (Connection connection = dataSource.getConnection()) {
+
+            PreparedStatement sql = connection.prepareStatement(GET_BY_ID);
+            sql.setInt(1, id);
 
             ResultSet rs = sql.executeQuery();
 
