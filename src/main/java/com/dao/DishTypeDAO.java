@@ -6,6 +6,7 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 public class DishTypeDAO {
@@ -34,26 +35,24 @@ public class DishTypeDAO {
     }
 
     public boolean create(DishType dishType) {
-        boolean isCreated = false;
         try (Connection connection = dataSource.getConnection()) {
 
             final PreparedStatement sql = connection.prepareStatement(INSERT_QUERY);
             sql.setLong(1, dishType.getId());
             sql.setString(2, dishType.getDishType());
             sql.executeUpdate();
-            isCreated = true;
+            return true;
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return isCreated;
+        return false;
     }
 
     public List<DishType> getAll() {
         List<DishType> res = new ArrayList<>();
-        Statement statement;
         try (Connection connection = dataSource.getConnection()) {
-            statement = connection.createStatement();
+            Statement statement = connection.createStatement();
 
             final ResultSet rs = statement.executeQuery(SELECT_ALL_QUERY);
             while (rs.next()) {
@@ -72,43 +71,42 @@ public class DishTypeDAO {
     }
 
     public boolean update(DishType dishType) {
-        boolean isUpdated = false;
         try (Connection connection = dataSource.getConnection()) {
             final PreparedStatement sql = connection.prepareStatement(UPDATE_QUERY);
             sql.setString(1, dishType.getDishType());
             sql.setLong(2, dishType.getId());
             sql.executeUpdate();
-            isUpdated = true;
+            return true;
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return isUpdated;
+        return false;
     }
 
     public boolean delete(long id) {
-        boolean isCanceled = false;
         try (Connection connection = dataSource.getConnection()) {
             final PreparedStatement sql = connection.prepareStatement(DELETE_QUERY);
             sql.setLong(1, id);
             sql.executeUpdate();
-            isCanceled = true;
+            return true;
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return isCanceled;
+        return false;
     }
 
-    public DishType getById(long id) {
-        DishType dishType = null;
+    public Optional<DishType> getById(long id) {
+
+        Optional<DishType> dishType = Optional.empty();
         try (Connection connection = dataSource.getConnection()) {
             final PreparedStatement sql = connection.prepareStatement(SELECT_QUERY);
             sql.setLong(1, id);
 
             final ResultSet rs = sql.executeQuery();
             if (rs.next()) {
-                dishType = createDishType(rs);
+                dishType = Optional.of(createDishType(rs));
             }
         } catch (SQLException e) {
             e.printStackTrace();
