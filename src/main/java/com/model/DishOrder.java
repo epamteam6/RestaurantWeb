@@ -3,11 +3,12 @@ package com.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@Data
 @AllArgsConstructor
-public class Dish {
+@Data
+public class DishOrder {
     private long id;
-    private String dish;
-    private long dishTypeId;
+    private long orderId;
+    private long dishId;
+    private int amount;
     private long price;
 }
