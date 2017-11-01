@@ -38,14 +38,14 @@ public class DishOrderDAO {
         this.dataSource = dataSource;
     }
 
-    public Optional<DishOrder> getByOrderId(int id) {
+    public Optional<DishOrder> getByOrderId(long id) {
 
         DishOrder dishOrder = null;
 
         try (Connection con = dataSource.getConnection()) {
 
             PreparedStatement sql = con.prepareStatement(SELECT_BY_ORDER_ID_QUERY);
-            sql.setInt(1, id);
+            sql.setLong(1, id);
             ResultSet rs = sql.executeQuery();
 
             if (rs.next())
@@ -60,14 +60,14 @@ public class DishOrderDAO {
         return Optional.ofNullable(dishOrder);
     }
 
-    public Optional<DishOrder> getById(int id) {
+    public Optional<DishOrder> getById(long id) {
 
         DishOrder dishOrder = null;
 
         try (Connection con = dataSource.getConnection()) {
 
             PreparedStatement sql = con.prepareStatement(SELECT_BY_ID_QUERY);
-            sql.setInt(1, id);
+            sql.setLong(1, id);
             ResultSet rs = sql.executeQuery();
 
             if (rs.next())
@@ -103,12 +103,12 @@ public class DishOrderDAO {
         return users;
     }
 
-    public boolean remove(int id) {
+    public boolean remove(long id) {
 
         try (Connection connection = dataSource.getConnection()) {
 
             PreparedStatement sql = connection.prepareStatement(REMOVE_QUERY);
-            sql.setInt(1, id);
+            sql.setLong(1, id);
 
             sql.executeUpdate();
 
@@ -127,11 +127,11 @@ public class DishOrderDAO {
         try (Connection connection = dataSource.getConnection()) {
 
             PreparedStatement sql = connection.prepareStatement(UPDATE_QUERY);
-            sql.setInt(1, dishOrder.getOrderId());
-            sql.setInt(2, dishOrder.getDishId());
-            sql.setInt(3, dishOrder.getDishAmount());
-            sql.setInt(4, dishOrder.getDishSum());
-            sql.setInt(5, dishOrder.getId());
+            sql.setLong(1, dishOrder.getOrderId());
+            sql.setLong(2, dishOrder.getDishId());
+            sql.setLong(3, dishOrder.getDishAmount());
+            sql.setLong(4, dishOrder.getDishSum());
+            sql.setLong(5, dishOrder.getId());
 
             sql.executeUpdate();
 
@@ -150,10 +150,10 @@ public class DishOrderDAO {
         try (Connection connection = dataSource.getConnection()) {
 
             PreparedStatement sql = connection.prepareStatement(INSERT_QUERY);
-            sql.setInt(1, dishOrder.getOrderId());
-            sql.setInt(2, dishOrder.getDishId());
-            sql.setInt(3, dishOrder.getDishAmount());
-            sql.setInt(4, dishOrder.getDishSum());
+            sql.setLong(1, dishOrder.getOrderId());
+            sql.setLong(2, dishOrder.getDishId());
+            sql.setLong(3, dishOrder.getDishAmount());
+            sql.setLong(4, dishOrder.getDishSum());
 
             sql.executeUpdate();
 
@@ -169,10 +169,10 @@ public class DishOrderDAO {
 
     private DishOrder createDishOrderEntity(ResultSet rs) throws SQLException {
         return new DishOrder(
-                rs.getInt("id"),
-                rs.getInt("order_id"),
-                rs.getInt("dish_id"),
-                rs.getInt("amount"),
-                rs.getInt("item_sum"));
+                rs.getLong("id"),
+                rs.getLong("order_id"),
+                rs.getLong("dish_id"),
+                rs.getLong("amount"),
+                rs.getLong("item_sum"));
     }
 }
