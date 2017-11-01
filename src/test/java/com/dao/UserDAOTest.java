@@ -43,6 +43,15 @@ public class UserDAOTest {
     }
 
     @Test
+    public void getById() throws Exception {
+
+        User act1 = userDAO.getById(3).get();
+        User exp1 = new User(3, "Admin", true);
+
+        assertThat(act1, is(exp1));
+    }
+
+    @Test
     public void addUser() {
 
         boolean act = userDAO.add("Temp", "temp", true);

@@ -60,7 +60,7 @@ public class DishDAOTest {
 
     @Test
     public void delete() throws Exception {
-        dishDAO.delete(4);
+        dishDAO.remove(4);
         assertFalse(dishDAO.getById(4).isPresent());
     }
 

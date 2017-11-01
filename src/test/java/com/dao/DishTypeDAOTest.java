@@ -59,7 +59,7 @@ public class DishTypeDAOTest {
 
     @Test
     public void delete() throws Exception {
-        dishTypeDAO.delete(2);
+        dishTypeDAO.remove(2);
         assertFalse(dishTypeDAO.getById(2).isPresent());
     }
 

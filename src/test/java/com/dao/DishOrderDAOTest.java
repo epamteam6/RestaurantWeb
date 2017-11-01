@@ -38,7 +38,7 @@ public class DishOrderDAOTest {
     public void add() throws Exception {
 
         DishOrder dishOrder = new DishOrder(6, 100, 100, 100, 1000);
-        dishOrderDAO.add(dishOrder);
+        dishOrderDAO.create(dishOrder);
 
         assertEquals(dishOrderDAO.getByOrderId(100).get(), dishOrder);
     }
