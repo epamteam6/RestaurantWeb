@@ -1,6 +1,6 @@
 package com.dao;
 
-import com.model.Dish;
+import com.model.DishType;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -9,23 +9,23 @@ import java.util.List;
 import java.util.Optional;
 
 
-public class DishDAO {
+public class DishTypeDAO {
 
-    private static final String UPDATE_QUERY = "UPDATE Dishes SET dish=?, dish_type_id=?, price=? WHERE id=?";
-    private static final String INSERT_QUERY = "INSERT INTO Dishes(id, dish, dish_type_id, price)  VALUES (?,?,?,?)";
-    private static final String SELECT_QUERY = "SELECT * FROM Dishes WHERE id = ?";
-    private static final String DELETE_QUERY = "DELETE FROM Dishes WHERE id=?";
-    private static final String SELECT_ALL_QUERY = "SELECT * FROM Dishes";
+    private static final String UPDATE_QUERY = "UPDATE Dish_Types SET dish_type=? WHERE id=?";
+    private static final String INSERT_QUERY = "INSERT INTO Dish_Types(id, dish_type)  VALUES (?,?)";
+    private static final String SELECT_QUERY = "SELECT * FROM Dish_Types WHERE id = ?";
+    private static final String DELETE_QUERY = "DELETE FROM Dish_Types WHERE id=?";
+    private static final String SELECT_ALL_QUERY = "SELECT * FROM Dish_Types";
 
     private DataSource dataSource;
-    private static DishDAO instance;
+    private static DishTypeDAO instance;
 
-    private DishDAO() {
+    private DishTypeDAO() {
     }
 
-    public static DishDAO getInstance() {
+    public static DishTypeDAO getInstance() {
         if (instance == null) {
-            instance = new DishDAO();
+            instance = new DishTypeDAO();
         }
         return instance;
     }
@@ -34,14 +34,12 @@ public class DishDAO {
         this.dataSource = dataSource;
     }
 
-    public boolean create(Dish dish) {
+    public boolean create(DishType dishType) {
         try (Connection connection = dataSource.getConnection()) {
 
             final PreparedStatement sql = connection.prepareStatement(INSERT_QUERY);
-            sql.setLong(1, dish.getId());
-            sql.setString(2, dish.getDish());
-            sql.setLong(3, dish.getDishTypeId());
-            sql.setLong(4, dish.getPrice());
+            sql.setLong(1, dishType.getId());
+            sql.setString(2, dishType.getDishType());
             sql.executeUpdate();
             return true;
 
@@ -51,13 +49,14 @@ public class DishDAO {
         return false;
     }
 
-    public List<Dish> getAll() {
-        List<Dish> res = new ArrayList<>();
+    public List<DishType> getAll() {
+        List<DishType> res = new ArrayList<>();
         try (Connection connection = dataSource.getConnection()) {
             Statement statement = connection.createStatement();
+
             final ResultSet rs = statement.executeQuery(SELECT_ALL_QUERY);
             while (rs.next()) {
-                res.add(parseDish(rs));
+                res.add(createDishType(rs));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -65,21 +64,17 @@ public class DishDAO {
         return res;
     }
 
-    private Dish parseDish(ResultSet rs) throws SQLException {
-        return new Dish(
+    private DishType createDishType(ResultSet rs) throws SQLException {
+        return new DishType(
                 rs.getLong("id"),
-                rs.getString("dish"),
-                rs.getLong("dish_type_id"),
-                rs.getLong("price"));
+                rs.getString("dish_type"));
     }
 
-    public boolean update(Dish dish) {
+    public boolean update(DishType dishType) {
         try (Connection connection = dataSource.getConnection()) {
             final PreparedStatement sql = connection.prepareStatement(UPDATE_QUERY);
-            sql.setString(1, dish.getDish());
-            sql.setLong(2, dish.getDishTypeId());
-            sql.setLong(3, dish.getPrice());
-            sql.setLong(4, dish.getId());
+            sql.setString(1, dishType.getDishType());
+            sql.setLong(2, dishType.getId());
             sql.executeUpdate();
             return true;
 
@@ -91,7 +86,6 @@ public class DishDAO {
 
     public boolean delete(long id) {
         try (Connection connection = dataSource.getConnection()) {
-
             final PreparedStatement sql = connection.prepareStatement(DELETE_QUERY);
             sql.setLong(1, id);
             sql.executeUpdate();
@@ -103,20 +97,21 @@ public class DishDAO {
         return false;
     }
 
-    public Optional<Dish> getById(long id) {
-        Optional<Dish> dish = Optional.empty();
+    public Optional<DishType> getById(long id) {
+
+        Optional<DishType> dishType = Optional.empty();
         try (Connection connection = dataSource.getConnection()) {
             final PreparedStatement sql = connection.prepareStatement(SELECT_QUERY);
             sql.setLong(1, id);
 
             final ResultSet rs = sql.executeQuery();
             if (rs.next()) {
-                dish = Optional.of(parseDish(rs));
+                dishType = Optional.of(createDishType(rs));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return dish;
+        return dishType;
     }
 }
 
