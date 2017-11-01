@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-public class DishOrderDAO {
+public class DishOrderDAO implements RegularDAO<DishOrder> {
 
     private DataSource dataSource;
     private static DishOrderDAO instance;
@@ -35,11 +35,13 @@ public class DishOrderDAO {
         return instance;
     }
 
+
+    @Override
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
-
+    @Override
     public Optional<DishOrder> getById(long id) {
 
         DishOrder dishOrder = null;
@@ -62,6 +64,7 @@ public class DishOrderDAO {
         return Optional.ofNullable(dishOrder);
     }
 
+    @Override
     public List<DishOrder> getAll() {
 
         List<DishOrder> users = new ArrayList<>();
@@ -84,13 +87,14 @@ public class DishOrderDAO {
     }
 
 
+    @Override
     public boolean create(DishOrder dishOrder) {
 
         try (Connection connection = dataSource.getConnection()) {
 
             PreparedStatement sql = connection.prepareStatement(INSERT_QUERY);
-            sql.setInt(1, dishOrder.getOrderId());
-            sql.setInt(2, dishOrder.getDishId());
+            sql.setLong(1, dishOrder.getOrderId());
+            sql.setLong(2, dishOrder.getDishId());
             sql.setInt(3, dishOrder.getDishAmount());
             sql.setInt(4, dishOrder.getDishSum());
 
@@ -106,6 +110,7 @@ public class DishOrderDAO {
         return false;
     }
 
+    @Override
     public boolean remove(long id) {
 
         try (Connection connection = dataSource.getConnection()) {
@@ -125,16 +130,17 @@ public class DishOrderDAO {
         return false;
     }
 
+    @Override
     public boolean update(DishOrder dishOrder) {
 
         try (Connection connection = dataSource.getConnection()) {
 
             PreparedStatement sql = connection.prepareStatement(UPDATE_QUERY);
-            sql.setInt(1, dishOrder.getOrderId());
-            sql.setInt(2, dishOrder.getDishId());
+            sql.setLong(1, dishOrder.getOrderId());
+            sql.setLong(2, dishOrder.getDishId());
             sql.setInt(3, dishOrder.getDishAmount());
             sql.setInt(4, dishOrder.getDishSum());
-            sql.setInt(5, dishOrder.getId());
+            sql.setLong(5, dishOrder.getId());
 
             sql.executeUpdate();
 

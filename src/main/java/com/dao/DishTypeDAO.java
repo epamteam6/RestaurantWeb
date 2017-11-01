@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-public class DishTypeDAO {
+public class DishTypeDAO implements RegularDAO<DishType> {
 
     private DataSource dataSource;
     private static DishTypeDAO instance;
@@ -30,11 +30,13 @@ public class DishTypeDAO {
         return instance;
     }
 
+
+    @Override
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
-
+    @Override
     public Optional<DishType> getById(long id) {
 
         Optional<DishType> dishType = Optional.empty();
@@ -52,6 +54,7 @@ public class DishTypeDAO {
         return dishType;
     }
 
+    @Override
     public List<DishType> getAll() {
         List<DishType> res = new ArrayList<>();
         try (Connection connection = dataSource.getConnection()) {
@@ -68,6 +71,7 @@ public class DishTypeDAO {
     }
 
 
+    @Override
     public boolean create(DishType dishType) {
         try (Connection connection = dataSource.getConnection()) {
 
@@ -83,6 +87,7 @@ public class DishTypeDAO {
         return false;
     }
 
+    @Override
     public boolean remove(long id) {
         try (Connection connection = dataSource.getConnection()) {
             final PreparedStatement sql = connection.prepareStatement(DELETE_QUERY);
@@ -96,6 +101,7 @@ public class DishTypeDAO {
         return false;
     }
 
+    @Override
     public boolean update(DishType dishType) {
         try (Connection connection = dataSource.getConnection()) {
             final PreparedStatement sql = connection.prepareStatement(UPDATE_QUERY);

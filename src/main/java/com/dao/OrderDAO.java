@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-public class OrderDAO {
+public class OrderDAO implements RegularDAO<Order> {
 
     private DataSource dataSource;
     private static OrderDAO instance;
@@ -29,17 +29,19 @@ public class OrderDAO {
         return instance;
     }
 
+
+    @Override
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
-
-    public Optional<Order> getById(int id) {
+    @Override
+    public Optional<Order> getById(long id) {
         Order order = null;
 
         try (Connection connection  = dataSource.getConnection()){
             final PreparedStatement sql = connection.prepareStatement(SELECT_QUERY);
-            sql.setInt(1, id);
+            sql.setLong(1, id);
 
             final ResultSet rs = sql.executeQuery();
             if (rs.next()) {
@@ -55,6 +57,7 @@ public class OrderDAO {
 
     }
 
+    @Override
     public List<Order> getAll() {
         List<Order> res = new ArrayList<>();
         Statement statement;
@@ -71,7 +74,8 @@ public class OrderDAO {
         return res;
     }
 
-    
+
+    @Override
     public boolean create(Order order) {
         try (Connection connection  = dataSource.getConnection()){
 
@@ -89,6 +93,7 @@ public class OrderDAO {
         return false;
     }
 
+    @Override
     public boolean remove(long id) {
         try (Connection connection  = dataSource.getConnection()){
             final PreparedStatement sql = connection.prepareStatement(DELETE_QUERY);
@@ -103,6 +108,7 @@ public class OrderDAO {
 
     }
 
+    @Override
     public boolean update(Order order) {
         try(Connection connection  = dataSource.getConnection()) {
             final PreparedStatement sql = connection.prepareStatement(UPDATE_QUERY);

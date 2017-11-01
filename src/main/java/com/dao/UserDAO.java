@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-public class UserDAO {
+public class UserDAO implements DAO<User> {
 
     private DataSource dataSource;
     private static UserDAO instance;
@@ -35,12 +35,14 @@ public class UserDAO {
         return instance;
     }
 
+
+    @Override
     public void setDataSource(DataSource dataSource) {
 
         this.dataSource = dataSource;
     }
 
-
+    @Override
     public Optional<User> getById(long id) {
 
         User user = null;
@@ -63,6 +65,7 @@ public class UserDAO {
         return Optional.ofNullable(user);
     }
 
+    @Override
     public List<User> getAll() {
 
         List<User> users = new ArrayList<>();
