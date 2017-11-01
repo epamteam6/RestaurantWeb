@@ -7,9 +7,9 @@ import lombok.Data;
 @Data
 public class DishOrder {
 
-    private int id;
-    private int orderId;
-    private int dishId;
-    private int dishAmount;
-    private int dishSum;
+    private long id;
+    private long orderId;
+    private long dishId;
+    private long dishAmount;
+    private long dishSum;
 }
