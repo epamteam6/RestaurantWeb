@@ -54,8 +54,7 @@ public class DishDAO {
     public List<Dish> getAll() {
         List<Dish> res = new ArrayList<>();
         try (Connection connection = dataSource.getConnection()) {
-            Statement statement;
-            statement = connection.createStatement();
+            Statement statement = connection.createStatement();
 
             final ResultSet rs = statement.executeQuery(SELECT_ALL_QUERY);
             while (rs.next()) {
