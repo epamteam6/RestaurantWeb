@@ -35,7 +35,7 @@ public class DishOrderDAOTest {
     @Test
     public void getByOrderId() throws Exception {
 
-        DishOrder act = dishOrderDAO.getByOrderId(1);
+        DishOrder act = dishOrderDAO.getByOrderId(1).get();
         DishOrder exp = new DishOrder(1, 1, 2, 2, 340);
 
         assertThat(act, is(exp));
@@ -44,7 +44,7 @@ public class DishOrderDAOTest {
     @Test
     public void getById() throws Exception {
 
-        DishOrder act = dishOrderDAO.getById(2);
+        DishOrder act = dishOrderDAO.getById(2).get();
         DishOrder exp = new DishOrder(2, 1, 6, 1, 135);
 
         assertThat(act, is(exp));

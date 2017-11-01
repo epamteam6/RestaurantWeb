@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 
 public class DishOrderDAO {
 
@@ -35,7 +36,7 @@ public class DishOrderDAO {
         this.dataSource = dataSource;
     }
 
-    public DishOrder getByOrderId(int id) {
+    public Optional<DishOrder> getByOrderId(int id) {
 
         DishOrder dishOrder = null;
 
@@ -54,10 +55,10 @@ public class DishOrderDAO {
             e.printStackTrace();
         }
 
-        return dishOrder;
+        return Optional.ofNullable(dishOrder);
     }
 
-    public DishOrder getById(int id) {
+    public Optional<DishOrder> getById(int id) {
 
         DishOrder dishOrder = null;
 
@@ -76,7 +77,7 @@ public class DishOrderDAO {
             e.printStackTrace();
         }
 
-        return dishOrder;
+        return Optional.ofNullable(dishOrder);
     }
 
     private DishOrder createDishOrderEntity(ResultSet rs) throws SQLException {
