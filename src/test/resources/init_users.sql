@@ -1,0 +1,8 @@
+DROP TABLE IF EXISTS Users;
+CREATE TABLE Users
+(
+  id            SMALLINT(6) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  user_name     VARCHAR(32) NOT NULL,
+  password_hash VARCHAR(32) NOT NULL,
+  is_admin      TINYINT(1)  NOT NULL DEFAULT '0'
+);
