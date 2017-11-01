@@ -19,7 +19,7 @@ public class DishOrderDAO {
     private static final String SELECT_BY_ORDER_ID_QUERY = "SELECT * FROM dishes_orders WHERE order_id = ?";
     private static final String SELECT_BY_ID_QUERY = "SELECT * FROM dishes_orders WHERE id = ?";
     private static final String SELECT_ALL_QUERY = "SELECT * FROM dishes_orders";
-    private static final String REMOVE_QUERY = "DELETE * FROM dishes_orders WHERE id = ?";
+    private static final String REMOVE_QUERY = "DELETE FROM dishes_orders WHERE id = ?";
     private static final String UPDATE_QUERY = "UPDATE dishes_orders SET order_id = ? dish_id = ? amount = ? sum = ? WHERE id = ?";
     private static final String INSERT_QUERY = "INSERT INTO dishes_orders VALUES (NULL, ?, ?, ?, ?)";
 
@@ -101,6 +101,25 @@ public class DishOrderDAO {
         }
 
         return users;
+    }
+
+    public boolean remove(int id) {
+
+        try (Connection connection = dataSource.getConnection()) {
+
+            PreparedStatement sql = connection.prepareStatement(REMOVE_QUERY);
+            sql.setInt(1, id);
+
+            sql.executeUpdate();
+
+            return true;
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
     private DishOrder createDishOrderEntity(ResultSet rs) throws SQLException {

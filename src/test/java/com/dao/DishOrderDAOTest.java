@@ -35,6 +35,18 @@ public class DishOrderDAOTest {
     }
 
     @Test
+    public void remove() throws Exception {
+
+        assertEquals(true, dishOrderDAO.getById(2).isPresent());
+//        List<DishOrder> temp = dishOrderDAO.getAll();
+//        temp.forEach(System.out::println);
+        dishOrderDAO.remove(2);
+//        temp = dishOrderDAO.getAll();
+//        temp.forEach(System.out::println);
+        assertEquals(false, dishOrderDAO.getById(2).isPresent());
+    }
+
+    @Test
     public void getAll() throws Exception {
 
         List<DishOrder> act = dishOrderDAO.getAll();
@@ -66,6 +78,4 @@ public class DishOrderDAOTest {
 
         assertThat(act, is(exp));
     }
-
-
 }
