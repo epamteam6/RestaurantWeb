@@ -1,6 +1,6 @@
 package com.dao;
 
-import com.model.Dish;
+import com.model.DishType;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
@@ -14,62 +14,61 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
-public class DishDAOTest {
+public class DishTypeDAOTest {
 
-    private DishDAO dishDAO = DishDAO.getInstance();
+    private DishTypeDAO dishTypeDAO = DishTypeDAO.getInstance();
 
 
     @Before
     public void init() throws Exception {
-        dishDAO.setDataSource(getDataSource());
+        dishTypeDAO.setDataSource(getDataSource());
     }
 
     @Test
     public void getAll() throws Exception {
-        List<Dish> actual = dishDAO.getAll();
+        List<DishType> actual = dishTypeDAO.getAll();
 
-        List<Dish> expected = Arrays.asList(
-                new Dish(1, "Borsch", 1, 150),
-                new Dish(2, "Kharcho", 1, 170),
-                new Dish(3, "Solyanka", 1, 200),
-                new Dish(4, "Olivie", 4, 180)
+        List<DishType> expected = Arrays.asList(
+                new DishType(1, "Soups"),
+                new DishType(2, "Desserts"),
+                new DishType(3, "Drinks")
         );
         assertThat(actual, is(expected));
     }
 
     @Test
     public void getById() throws Exception {
-        Dish actual = dishDAO.getById(1).get();
-        Dish expected = new Dish(1, "Borsch", 1, 150);
+        DishType actual = dishTypeDAO.getById(1).get();
+        DishType expected = new DishType(1, "Soups");
         assertEquals(actual, expected);
     }
 
     @Test
     public void create() throws Exception {
-        Dish toAdd = new Dish(5, "Greek", 4, 220);
-        dishDAO.create(toAdd);
-        assertEquals(toAdd, dishDAO.getById(5).get());
+        DishType toAdd = new DishType(4, "Salads");
+        dishTypeDAO.create(toAdd);
+        assertEquals(toAdd, dishTypeDAO.getById(4).get());
     }
 
     @Test
     public void update() throws Exception {
-        Dish toUpdate = new Dish(1, "Chiken Soup", 1, 200);
-        dishDAO.update(toUpdate);
-        assertEquals(toUpdate, dishDAO.getById(1).get());
+        DishType toUpdate = new DishType(1, "Salads");
+        dishTypeDAO.update(toUpdate);
+        assertEquals(toUpdate, dishTypeDAO.getById(1).get());
     }
 
     @Test
     public void delete() throws Exception {
-        dishDAO.remove(4);
-        assertFalse(dishDAO.getById(4).isPresent());
+        dishTypeDAO.remove(2);
+        assertFalse(dishTypeDAO.getById(2).isPresent());
     }
 
     private DataSource getDataSource() {
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
         EmbeddedDatabase db = builder
                 .setType(EmbeddedDatabaseType.H2)
-                .addScript("initDish.sql")
-                .addScript("dataDish.sql")
+                .addScript("initDishType.sql")
+                .addScript("dataDishType.sql")
                 .build();
         return db;
     }

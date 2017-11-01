@@ -1,9 +1,12 @@
 package com.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-public class DishType {
-    private int id;
+@AllArgsConstructor
+public class DishType implements Entity {
+
+    private long id;
     private String dishType;
 }

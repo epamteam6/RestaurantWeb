@@ -8,7 +8,8 @@ import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @Data
-public class Order {
+public class Order implements Entity {
+
     private int id;
     private int userId;
     private LocalDateTime dateTime;

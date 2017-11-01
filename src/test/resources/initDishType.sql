@@ -1,0 +1,6 @@
+DROP TABLE IF EXISTS Dish_Types;
+CREATE TABLE Dish_Types
+(
+  id        BIGINT AUTO_INCREMENT PRIMARY KEY,
+  dish_type VARCHAR(32) NOT NULL
+);
