@@ -13,9 +13,9 @@ public class Order {
     private int userId;
     private LocalDateTime dateTime;
     private int totalSum;
-    private status st;
+    private Status status;
 
-    public enum status {
+    public enum Status {
         CREATED, CONFIRMED, READY, PAID
     }
 }
