@@ -35,14 +35,21 @@ public class DishOrderDAOTest {
     }
 
     @Test
+    public void update() throws Exception {
+
+        DishOrder act = dishOrderDAO.getById(1).get();
+        act.setDishSum(100);
+        dishOrderDAO.update(act);
+
+        DishOrder exp = dishOrderDAO.getById(1).get();
+        assertEquals(act, exp);
+    }
+
+    @Test
     public void remove() throws Exception {
 
         assertEquals(true, dishOrderDAO.getById(2).isPresent());
-//        List<DishOrder> temp = dishOrderDAO.getAll();
-//        temp.forEach(System.out::println);
         dishOrderDAO.remove(2);
-//        temp = dishOrderDAO.getAll();
-//        temp.forEach(System.out::println);
         assertEquals(false, dishOrderDAO.getById(2).isPresent());
     }
 

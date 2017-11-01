@@ -20,7 +20,7 @@ public class DishOrderDAO {
     private static final String SELECT_BY_ID_QUERY = "SELECT * FROM dishes_orders WHERE id = ?";
     private static final String SELECT_ALL_QUERY = "SELECT * FROM dishes_orders";
     private static final String REMOVE_QUERY = "DELETE FROM dishes_orders WHERE id = ?";
-    private static final String UPDATE_QUERY = "UPDATE dishes_orders SET order_id = ? dish_id = ? amount = ? sum = ? WHERE id = ?";
+    private static final String UPDATE_QUERY = "UPDATE dishes_orders SET order_id = ?, dish_id = ?, amount = ?, item_sum = ? WHERE id = ?";
     private static final String INSERT_QUERY = "INSERT INTO dishes_orders VALUES (NULL, ?, ?, ?, ?)";
 
     private DishOrderDAO() {
@@ -122,12 +122,35 @@ public class DishOrderDAO {
         return false;
     }
 
+    public boolean update(DishOrder dishOrder) {
+
+        try (Connection connection = dataSource.getConnection()) {
+
+            PreparedStatement sql = connection.prepareStatement(UPDATE_QUERY);
+            sql.setInt(1, dishOrder.getOrderId());
+            sql.setInt(2, dishOrder.getDishId());
+            sql.setInt(3, dishOrder.getDishAmount());
+            sql.setInt(4, dishOrder.getDishSum());
+            sql.setInt(5, dishOrder.getId());
+
+            sql.executeUpdate();
+
+            return true;
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
     private DishOrder createDishOrderEntity(ResultSet rs) throws SQLException {
         return new DishOrder(
                 rs.getInt("id"),
                 rs.getInt("order_id"),
                 rs.getInt("dish_id"),
                 rs.getInt("amount"),
-                rs.getInt("sum"));
+                rs.getInt("item_sum"));
     }
 }
