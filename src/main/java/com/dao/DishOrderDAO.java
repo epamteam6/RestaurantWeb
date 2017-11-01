@@ -145,6 +145,28 @@ public class DishOrderDAO {
         return false;
     }
 
+    public boolean add(DishOrder dishOrder) {
+
+        try (Connection connection = dataSource.getConnection()) {
+
+            PreparedStatement sql = connection.prepareStatement(INSERT_QUERY);
+            sql.setInt(1, dishOrder.getOrderId());
+            sql.setInt(2, dishOrder.getDishId());
+            sql.setInt(3, dishOrder.getDishAmount());
+            sql.setInt(4, dishOrder.getDishSum());
+
+            sql.executeUpdate();
+
+            return true;
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
     private DishOrder createDishOrderEntity(ResultSet rs) throws SQLException {
         return new DishOrder(
                 rs.getInt("id"),

@@ -35,6 +35,15 @@ public class DishOrderDAOTest {
     }
 
     @Test
+    public void add() throws Exception {
+
+        DishOrder dishOrder = new DishOrder(6, 100, 100, 100, 1000);
+        dishOrderDAO.add(dishOrder);
+
+        assertEquals(dishOrderDAO.getByOrderId(100).get(), dishOrder);
+    }
+
+    @Test
     public void update() throws Exception {
 
         DishOrder act = dishOrderDAO.getById(1).get();
