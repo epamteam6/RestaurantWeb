@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class DishOrderDAO {
@@ -78,6 +80,27 @@ public class DishOrderDAO {
         }
 
         return Optional.ofNullable(dishOrder);
+    }
+
+    public List<DishOrder> getAll() {
+
+        List<DishOrder> users = new ArrayList<>();
+
+        try (Connection connection = dataSource.getConnection()) {
+
+            PreparedStatement sql = connection.prepareStatement(SELECT_ALL_QUERY);
+
+            ResultSet rs = sql.executeQuery();
+
+            while (rs.next())
+                users.add(createDishOrderEntity(rs));
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+        }
+
+        return users;
     }
 
     private DishOrder createDishOrderEntity(ResultSet rs) throws SQLException {

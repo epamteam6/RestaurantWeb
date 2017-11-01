@@ -10,6 +10,8 @@ import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
 import javax.sql.DataSource;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DishOrderDAOTest {
 
@@ -30,6 +32,21 @@ public class DishOrderDAOTest {
                 .addScript("init_dish_order.sql")
                 .addScript("data_dish_order.sql")
                 .build();
+    }
+
+    @Test
+    public void getAll() throws Exception {
+
+        List<DishOrder> act = dishOrderDAO.getAll();
+
+        List<DishOrder> exp = new ArrayList<>();
+        exp.add(new DishOrder(1, 1, 2, 2, 340));
+        exp.add(new DishOrder(2, 1, 6, 1, 135));
+        exp.add(new DishOrder(3, 2, 4, 1, 180));
+        exp.add(new DishOrder(4, 2, 9, 2, 110));
+        exp.add(new DishOrder(5, 3, 8, 3, 330));
+
+        assertThat(act, is(exp));
     }
 
     @Test
