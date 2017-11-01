@@ -6,8 +6,12 @@ import com.dao.OrderDAO;
 import com.dao.UserDAO;
 import com.model.DishOrder;
 import com.model.Order;
+import com.mysql.jdbc.Driver;
+import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 
+import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.Iterator;
 import java.util.Map;
 
 public class OrderService {
@@ -20,6 +24,19 @@ public class OrderService {
     private OrderService() {
     }
 
+    {
+        try {
+            SimpleDriverDataSource dataSource = new SimpleDriverDataSource(new Driver(),
+                    "jdbc:mysql://localhost:3306/food?serverTimezone=UTC", "root", "root");
+            userDAO.setDataSource(dataSource);
+            orderDAO.setDataSource(dataSource);
+            dishDAO.setDataSource(dataSource);
+            dishOrderDAO.setDataSource(dataSource);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static OrderService getInstance() {
         if (instance == null) {
             instance = new OrderService();
@@ -27,7 +44,8 @@ public class OrderService {
         return instance;
     }
 
-    public void makeOrder(String userName, Map<String, Integer> dishNamesAndAmount) {
+    public void makeOrder(String userName, Map<String, Long> dishNamesAndAmount) {
+
         long userID = userDAO.getByName(userName).get().getId();
         orderDAO.create(new Order(0, userID, LocalDateTime.now(), 0, Order.Status.CREATED));
 
@@ -39,24 +57,26 @@ public class OrderService {
         }
         final long finalOrderID = orderID;
 
-        long [] total_sum = {0};
-        dishNamesAndAmount.forEach((dishName, amount) -> {
-            long dishId = dishDAO.getByName(dishName).get().getId();
-            long price = dishDAO.getByName(dishName).get().getPrice();
-            total_sum[0]+=amount*price;
-            dishOrderDAO.add(
-                    new DishOrder(0, finalOrderID,
-                            dishId, amount, amount * price));
-        });
+        long total_sum = 0;
+        Iterator it = dishNamesAndAmount.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<String, Long> pair = (Map.Entry) it.next();
+            System.out.println(pair.getKey() + " = " + pair.getValue());
+            long amount = pair.getValue();
+            long dishId = dishDAO.getByName(pair.getKey()).get().getId();
+            long price = dishDAO.getByName(pair.getKey()).get().getPrice();
+            total_sum += amount * price;
+            System.out.println(total_sum);
+            dishOrderDAO.add(new DishOrder(0, finalOrderID,
+                    dishId, amount, amount * price));
 
+            it.remove(); // avoids a ConcurrentModificationException
 
-        orderDAO.getById(finalOrderID).get().setTotalSum(total_sum[0]);
-    }
-
-    public void makeBill(int id) {
-        Order order = orderDAO.getById(id).get();
-        order.setStatus(Order.Status.READY);
+        }
+        Order order = orderDAO.getById(finalOrderID).get();
+        order.setTotalSum(total_sum);
         orderDAO.update(order);
     }
+
 
 }
