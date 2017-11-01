@@ -6,6 +6,7 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 public class DishDAO {
@@ -103,20 +104,20 @@ public class DishDAO {
         return false;
     }
 
-    public Dish getById(long id) {
-        Dish dish = null;
+    public Optional<Dish> getById(long id) {
+        Optional<Dish> dish = Optional.empty();
         try (Connection connection = dataSource.getConnection()) {
             final PreparedStatement sql = connection.prepareStatement(SELECT_QUERY);
             sql.setLong(1, id);
 
             final ResultSet rs = sql.executeQuery();
             if (rs.next()) {
-                dish = parseDish(rs);
+                dish = Optional.of(parseDish(rs));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return dish;
+        return  dish;
     }
 }
 

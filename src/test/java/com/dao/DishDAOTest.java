@@ -12,8 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 public class DishDAOTest {
 
@@ -40,7 +39,7 @@ public class DishDAOTest {
 
     @Test
     public void getById() throws Exception {
-        Dish actual = dishDAO.getById(1);
+        Dish actual = dishDAO.getById(1).get();
         Dish expected = new Dish(1, "Borsch", 1, 150);
         assertEquals(actual, expected);
     }
@@ -49,20 +48,20 @@ public class DishDAOTest {
     public void create() throws Exception {
         Dish toAdd = new Dish(5, "Greek", 4, 220);
         dishDAO.create(toAdd);
-        assertEquals(toAdd, dishDAO.getById(5));
+        assertEquals(toAdd, dishDAO.getById(5).get());
     }
 
     @Test
     public void update() throws Exception {
         Dish toUpdate = new Dish(1, "Chiken Soup", 1, 200);
         dishDAO.update(toUpdate);
-        assertEquals(toUpdate, dishDAO.getById(1));
+        assertEquals(toUpdate, dishDAO.getById(1).get());
     }
 
     @Test
     public void delete() throws Exception {
         dishDAO.delete(4);
-        assertEquals(null, dishDAO.getById(4));
+        assertFalse(dishDAO.getById(4).isPresent());
     }
 
     private DataSource getDataSource() {
