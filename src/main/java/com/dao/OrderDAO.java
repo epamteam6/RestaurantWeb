@@ -6,6 +6,7 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 public class OrderDAO {
@@ -34,25 +35,24 @@ public class OrderDAO {
     
 
     public boolean create(Order order) {
-        boolean isCreated = false;
         try (Connection connection  = dataSource.getConnection()){
 
             final PreparedStatement sql = connection.prepareStatement(INSERT_QUERY);
             sql.setInt(1, order.getUserId());
             sql.setTimestamp(2, Timestamp.valueOf(order.getDateTime()));
             sql.setInt(3, order.getTotalSum());
-            sql.setString(4, order.getSt().toString());
+            sql.setString(4, order.getStatus().toString());
             sql.executeUpdate();
-            isCreated = true;
+            return true;
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return isCreated;
+        return false;
     }
 
 
-    public Order getById(int id) {
+    public Optional<Order> getById(int id) {
         Order order = null;
 
         try (Connection connection  = dataSource.getConnection()){
@@ -61,7 +61,7 @@ public class OrderDAO {
 
             final ResultSet rs = sql.executeQuery();
             if (rs.next()) {
-                order = createOrder(rs);
+                order = createOrderEntity(rs);
             }
 
 
@@ -69,41 +69,39 @@ public class OrderDAO {
             e.printStackTrace();
         }
 
-        return order;
+        return Optional.ofNullable(order);
 
     }
 
     public boolean cancel(int id) {
-        boolean isCanceled = false;
         try (Connection connection  = dataSource.getConnection()){
             final PreparedStatement sql = connection.prepareStatement(DELETE_QUERY);
             sql.setInt(1, id);
             sql.executeUpdate();
-            isCanceled = true;
+            return true;
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return isCanceled;
+        return false;
 
     }
 
     public boolean update(Order order) {
-        boolean isUpdated = false;
         try(Connection connection  = dataSource.getConnection()) {
             final PreparedStatement sql = connection.prepareStatement(UPDATE_QUERY);
             sql.setInt(1, order.getUserId());
             sql.setTimestamp(2, Timestamp.valueOf(order.getDateTime()));
             sql.setInt(3, order.getTotalSum());
-            sql.setString(4, order.getSt().toString());
+            sql.setString(4, order.getStatus().toString());
             sql.setInt(5, order.getId());
             sql.executeUpdate();
-            isUpdated = true;
+            return true;
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return isUpdated;
+        return false;
     }
 
     public List<Order> getAll() {
@@ -114,7 +112,7 @@ public class OrderDAO {
 
             final ResultSet rs = statement.executeQuery(SELECT_ALL_QUERY);
             while (rs.next()) {
-                res.add(createOrder(rs));
+                res.add(createOrderEntity(rs));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -122,13 +120,13 @@ public class OrderDAO {
         return res;
     }
 
-    private Order createOrder(ResultSet rs) throws SQLException {
+    private Order createOrderEntity(ResultSet rs) throws SQLException {
         return new Order(
                 rs.getInt("id"),
                 rs.getInt("user_id"),
                 rs.getTimestamp("date_time").toLocalDateTime(),
                 rs.getInt("total_sum"),
-                Order.status.valueOf(rs.getString("status"))
+                Order.Status.valueOf(rs.getString("Status"))
 
         );
     }
