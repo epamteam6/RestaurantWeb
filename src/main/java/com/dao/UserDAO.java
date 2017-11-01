@@ -6,13 +6,13 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class UserDAO {
 
     private static UserDAO instance;
     private DataSource dataSource;
 
-    private static final String IS_EXIST_QUERY = "SELECT * FROM users WHERE user_name = ?";
     private static final String VALIDATION_QUERY = "SELECT * FROM users WHERE user_name = ? AND password_hash = ?";
     private static final String GET_BY_NAME_QUERY = "SELECT * FROM users WHERE user_name = ?";
     private static final String ADD_QUERY = "INSERT INTO users VALUES (NULL, ?, ?, ?)";
@@ -38,26 +38,6 @@ public class UserDAO {
         this.dataSource = dataSource;
     }
 
-    public boolean isExist(String userName) {
-
-        boolean isPresent = false;
-
-        try (Connection connection = dataSource.getConnection()) {
-
-            PreparedStatement sql = connection.prepareStatement(IS_EXIST_QUERY);
-            sql.setString(1, userName);
-            ResultSet rs = sql.executeQuery();
-
-            isPresent = rs.next();
-
-        } catch (SQLException e) {
-
-            e.printStackTrace();
-        }
-
-        return isPresent;
-    }
-
     public boolean validate(String userName, String password) {
 
         try (Connection connection = dataSource.getConnection()) {
@@ -77,7 +57,7 @@ public class UserDAO {
         return false;
     }
 
-    public User getByName(String userName) {
+    public Optional<User> getByName(String userName) {
 
         User user = null;
 
@@ -96,12 +76,10 @@ public class UserDAO {
             e.printStackTrace();
         }
 
-        return user;
+        return Optional.ofNullable(user);
     }
 
-    public User add(String userName, String password, boolean isAdmin) {
-
-        User user = null;
+    public boolean add(String userName, String password, boolean isAdmin) {
 
         try (Connection connection = dataSource.getConnection()) {
 
@@ -112,14 +90,14 @@ public class UserDAO {
 
             sql.executeUpdate();
 
-            user = getByName(userName);
+            return true;
 
         } catch (SQLException e) {
 
             e.printStackTrace();
         }
 
-        return user;
+        return false;
     }
 
     public boolean remove(String userName) {

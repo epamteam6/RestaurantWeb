@@ -24,16 +24,6 @@ public class UserDAOTest {
     }
 
     @Test
-    public void isUserExist() throws Exception {
-
-        boolean act1 = userDAO.isExist("Admin"); //true
-        boolean act2 = userDAO.isExist("admin"); //false
-
-        assertThat(act1, is(true));
-        assertThat(act2, is(false));
-    }
-
-    @Test
     public void validateUser() throws Exception {
 
         boolean act1 = userDAO.validate("Admin", "admin");
@@ -46,7 +36,7 @@ public class UserDAOTest {
     @Test
     public void getUser() throws Exception {
 
-        User act1 = userDAO.getByName("Admin");
+        User act1 = userDAO.getByName("Admin").get();
         User exp1 = new User(3, "Admin", true);
 
         assertThat(act1, is(exp1));
@@ -55,28 +45,27 @@ public class UserDAOTest {
     @Test
     public void addUser() {
 
-        User act = userDAO.add("Temp", "temp", true);
-        User exp = new User(7, "Temp", true);
+        boolean act = userDAO.add("Temp", "temp", true);
 
-        assertThat(act, is(exp));
+        assertThat(act, is(true));
     }
 
     @Test
     public void removeUser() {
 
-        assertThat(userDAO.isExist("Ivanov"), is(true));
+        assertThat(userDAO.getByName("Ivanov").isPresent(), is(true));
         userDAO.remove("Ivanov");
-        assertThat(userDAO.isExist("Ivanov"), is(false));
+        assertThat(userDAO.getByName("Ivanov").isPresent(), is(false));
     }
 
     @Test
     public void updateUser() {
 
-        boolean act1 = userDAO.getByName("Admin").isAdmin();
+        boolean act1 = userDAO.getByName("Admin").get().isAdmin();
         assertThat(act1, is(true));
 
         userDAO.update("Admin", "aaaaa", false);
-        boolean act2 = userDAO.getByName("Admin").isAdmin();
+        boolean act2 = userDAO.getByName("Admin").get().isAdmin();
         assertThat(act2, is(false));
     }
 
