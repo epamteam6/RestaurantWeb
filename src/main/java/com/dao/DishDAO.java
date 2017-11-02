@@ -56,7 +56,6 @@ public class DishDAO {
         List<Dish> res = new ArrayList<>();
         try (Connection connection = dataSource.getConnection()) {
             Statement statement = connection.createStatement();
-
             final ResultSet rs = statement.executeQuery(SELECT_ALL_QUERY);
             while (rs.next()) {
                 res.add(parseDish(rs));
@@ -93,6 +92,7 @@ public class DishDAO {
 
     public boolean delete(long id) {
         try (Connection connection = dataSource.getConnection()) {
+
             final PreparedStatement sql = connection.prepareStatement(DELETE_QUERY);
             sql.setLong(1, id);
             sql.executeUpdate();
@@ -117,7 +117,7 @@ public class DishDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return  dish;
+        return dish;
     }
 
     public Optional<Dish> getByName(String name) {
