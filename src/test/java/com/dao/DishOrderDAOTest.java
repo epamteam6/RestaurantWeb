@@ -12,6 +12,7 @@ import static org.hamcrest.CoreMatchers.*;
 import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class DishOrderDAOTest {
 
@@ -41,7 +42,10 @@ public class DishOrderDAOTest {
         dishOrderDAO.create(exp);
 
         DishOrder act = dishOrderDAO.getByOrderId(100).get();
-        assertEquals(exp, is(act));
+        assertEquals(exp, act);
+
+        Optional<DishOrder> act2 = dishOrderDAO.getByOrderId(1000);
+        assertFalse(act2.isPresent());
     }
 
     @Test
@@ -52,7 +56,7 @@ public class DishOrderDAOTest {
         dishOrderDAO.update(act);
 
         DishOrder exp = dishOrderDAO.getById(1).get();
-        assertEquals(act, is(exp));
+        assertEquals(act, exp);
     }
 
     @Test
@@ -76,6 +80,17 @@ public class DishOrderDAOTest {
         exp.add(new DishOrder(5, 3, 8, 3, 330));
 
         assertThat(act, is(exp));
+
+        List<DishOrder> act2 = dishOrderDAO.getAll();
+
+        List<DishOrder> exp2 = new ArrayList<>();
+        exp.add(new DishOrder(1, 1, 2, 2, 340));
+        exp.add(new DishOrder(2, 1, 6, 1, 135));
+        exp.add(new DishOrder(3, 2, 4, 1, 180));
+        exp.add(new DishOrder(4, 2, 9, 2, 110));
+        exp.add(new DishOrder(1000, 3, 8, 3, 330));
+
+        assertThat(act2, is(not(exp2)));
     }
 
     @Test
