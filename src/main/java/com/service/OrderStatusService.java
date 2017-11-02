@@ -3,8 +3,6 @@ package com.service;
 import com.dao.OrderDAO;
 import com.model.Order;
 
-import javax.sql.DataSource;
-
 public class OrderStatusService {
 
     private OrderDAO orderDAO = OrderDAO.getInstance();
@@ -12,12 +10,17 @@ public class OrderStatusService {
 
     private OrderStatusService() { }
 
+    public void setOrderDAO(OrderDAO orderDAO) {
+        this.orderDAO = orderDAO;
+    }
+
     public static OrderStatusService getInstance() {
         if (instance == null) {
             instance = new OrderStatusService();
         }
         return instance;
     }
+
 
     public void confirmOrder(int id){
         Order order = orderDAO.getById(id).get();
