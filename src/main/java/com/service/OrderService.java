@@ -26,7 +26,7 @@ public class OrderService {
     {
         try {
             SimpleDriverDataSource dataSource = new SimpleDriverDataSource(new Driver(),
-                    "jdbc:mysql://localhost:3306/food?serverTimezone=UTC", "root", "root");
+                    "jdbc:mysql://localhost:3306/food?serverTimezone=UTC&verifyServerCertificate=false&useSSL=true", "root", "root");
             userDAO.setDataSource(dataSource);
             orderDAO.setDataSource(dataSource);
             dishDAO.setDataSource(dataSource);
@@ -77,7 +77,7 @@ public class OrderService {
         orderDAO.update(order);
     }
 
-    public Map<String, Map<String, Long>> getMenu(){
+    public Map<String, Map<String, Long>> getMenu() {
         Map<String, Map<String, Long>> menu = new HashMap<>();
         List<Dish> allDishes = dishDAO.getAll();
         List<DishType> allDishTypes = dishTypeDAO.getAll();
@@ -87,19 +87,23 @@ public class OrderService {
             allDishTypesNumbers.add(dishType.getId());
         }
 
-        for (Long type: allDishTypesNumbers) {
-            Map<String, Long> submenu = new HashMap<String, Long>();
-            for (Dish dish : allDishes) {
-                if (dish.getDishTypeId()==type){
-                    submenu.put(dish.getDish(), dish.getPrice());
-                }
-
-            }
+        for (Long type : allDishTypesNumbers) {
+            Map<String, Long> submenu = new HashMap<>();
             menu.put(dishTypeDAO.getById(type).get().getDishType(), submenu);
         }
 
+        for (Dish dish : allDishes) {
+            String dishTypeName = dishTypeDAO.getById(dish.getDishTypeId()).get().getDishType();
+            Map<String, Long> submenu = menu.get(dishTypeName);
+            submenu.put(dish.getDish(), dish.getPrice());
+            menu.put(dishTypeName, submenu);
 
-            return menu;
+        }
+        return menu;
+    }
+
+    public void cancelOrder(Long id) {
+        orderDAO.cancel(id);
     }
 
 
