@@ -25,14 +25,17 @@ public class UserService {
         return instance;
     }
 
-    public boolean register(String userName, String password) {
-        if (userDAO.getByName(userName).isPresent())
+    public boolean register(String username, String password) {
+        if (userDAO.getByName(username).isPresent())
             return false;
 
-        return userDAO.add(userName, password, false);
+        return userDAO.add(username, password, false);
     }
 
     public boolean remove(String username) {
+        if (!userDAO.getByName(username).isPresent())
+            return false;
+
         return userDAO.remove(username);
     }
 

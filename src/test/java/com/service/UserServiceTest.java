@@ -16,16 +16,14 @@ public class UserServiceTest {
     private static UserDAO userDAOMock;
 
     @Before
-    public void init()
-    {
+    public void init() {
         service = UserService.getInstance();
         userDAOMock = mock(UserDAO.class);
         service.setUserDAO(userDAOMock);
     }
 
     @Test
-    public void registerUsedUsernameTest()
-    {
+    public void registerNotUsedUsernameTest() {
         String usernameNotExist = "Temp";
         String whatEverPassword = "whatever...";
         boolean defaultStatus = false;
@@ -41,8 +39,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void registerNotUsedUsernameTest()
-    {
+    public void registerUsedUsernameTest() {
         String usernameExist = "Admin";
         String whatEverPassword = "whatever...";
         boolean defaultStatus = false;
@@ -57,5 +54,32 @@ public class UserServiceTest {
         assertFalse(regWhenNotNewName);
     }
 
+    @Test
+    public void removeWhenExistsTest() {
+        String usernameExist = "Admin";
+        boolean defaultStatus = false;
 
+        Optional<User> opt = Optional.of(new User(1, usernameExist, defaultStatus));
+
+        when(userDAOMock.getByName(usernameExist)).thenReturn(opt);
+        when(userDAOMock.remove(usernameExist)).thenReturn(true);
+
+        boolean removeWhenExists = service.remove(usernameExist);
+
+        verify(userDAOMock, atLeastOnce()).getByName(usernameExist);
+        assertTrue(removeWhenExists);
+    }
+
+    @Test
+    public void removeWhenNotExistsTest() {
+        String usernameNotExist = "Temp";
+        boolean defaultStatus = false;
+
+        when(userDAOMock.getByName(usernameNotExist)).thenReturn(Optional.ofNullable(null));
+
+        boolean removeWhenNotExists = service.remove(usernameNotExist);
+
+        verify(userDAOMock, atLeastOnce()).getByName(usernameNotExist);
+        assertFalse(removeWhenNotExists);
+    }
 }
