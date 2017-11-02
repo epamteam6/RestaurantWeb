@@ -11,28 +11,25 @@ import java.util.Optional;
 public class UserService {
 
     private DataSource dataSource;
-    private UserDAO userDAO = UserDAO.getInstance();
-
-    {
-        userDAO.setDataSource(dataSource);
-    }
-
-    private User user;
-    private UserService instance;
+    private UserDAO userDAO;
+    private static UserService instance;
 
     private UserService() {
 
     }
 
-    public UserService getInstance() {
+    public static UserService getInstance() {
         if (instance == null)
             instance = new UserService();
 
         return instance;
     }
 
-    public boolean register(String userName, String password, boolean isAdmin) {
-        return userDAO.add(userName, password, isAdmin);
+    public boolean register(String userName, String password) {
+        if (userDAO.getByName(userName).isPresent())
+            return false;
+
+        return userDAO.add(userName, password, false);
     }
 
     public boolean remove(String username) {
