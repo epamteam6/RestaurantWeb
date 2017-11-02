@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class DishType implements Entity {
+public class DishType {
 
     private long id;
     private String dishType;

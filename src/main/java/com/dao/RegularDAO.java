@@ -1,8 +1,6 @@
 package com.dao;
 
-import com.model.Entity;
-
-public interface RegularDAO<T extends Entity> extends DAO {
+public interface RegularDAO<T> extends DAO {
 
       boolean create(T t);
 

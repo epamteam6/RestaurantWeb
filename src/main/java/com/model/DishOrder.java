@@ -5,7 +5,7 @@ import lombok.Data;
 
 @AllArgsConstructor
 @Data
-public class DishOrder implements Entity {
+public class DishOrder {
 
     private long id;
     private long orderId;
