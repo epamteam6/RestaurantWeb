@@ -4,6 +4,7 @@ import com.dao.DishDAO;
 import com.dao.DishOrderDAO;
 import com.dao.OrderDAO;
 import com.dao.UserDAO;
+import com.model.Dish;
 import com.model.DishOrder;
 import com.model.Order;
 import com.mysql.jdbc.Driver;
@@ -11,8 +12,7 @@ import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 public class OrderService {
     private OrderDAO orderDAO = OrderDAO.getInstance();
@@ -75,6 +75,31 @@ public class OrderService {
         Order order = orderDAO.getById(orderID).get();
         order.setTotalSum(total_sum);
         orderDAO.update(order);
+    }
+
+    public Map<Long, Map<String, Long>> getMenu(){
+        Map<Long, Map<String, Long>> menu = new HashMap<>();
+        List<Dish> allDishes = dishDAO.getAll();
+        //int numberOfCategories = ;
+        Set<Long> allDishTypes = new HashSet<>();
+        for (Dish dish : allDishes) {
+            allDishTypes.add(dish.getDishTypeId());
+        }
+
+        for (Long type: allDishTypes) {
+            Map<String, Long> submenu = new HashMap<String, Long>();
+            for (Dish dish : allDishes) {
+                if (dish.getDishTypeId()==type){
+                    submenu.put(dish.getDish(), dish.getPrice());
+                }
+
+            }
+            menu.put(type, submenu);
+        }
+
+
+
+        return menu;
     }
 
 
