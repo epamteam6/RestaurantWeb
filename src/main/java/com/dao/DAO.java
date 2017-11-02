@@ -1,12 +1,10 @@
 package com.dao;
 
-import com.model.Entity;
-
 import javax.sql.DataSource;
 import java.util.List;
 import java.util.Optional;
 
-public interface DAO <T extends Entity> {
+public interface DAO <T> {
 
     void setDataSource(DataSource dataSource);
 

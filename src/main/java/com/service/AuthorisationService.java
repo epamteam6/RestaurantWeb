@@ -1,7 +1,6 @@
 package com.service;
 
 import com.dao.UserDAO;
-import com.model.User;
 import lombok.Data;
 
 import javax.sql.DataSource;
@@ -10,27 +9,25 @@ import javax.sql.DataSource;
 public class AuthorisationService {
 
     private DataSource dataSource;
-    private UserDAO userDAO = UserDAO.getInstance();
-    {
-        userDAO.setDataSource(dataSource);
-    }
-
-    private User user;
-    private AuthorisationService instance;
+    private UserDAO userDAO;
+    private static AuthorisationService instance;
 
     private AuthorisationService() {
-
     }
 
-    public AuthorisationService getInstance() {
+    public static AuthorisationService getInstance() {
+
+        if (instance == null)
+            instance = new AuthorisationService();
+
         return instance;
     }
 
-    public void singIn(String userName, String password) {
-        if (userDAO.validate(userName, password)) {
-            user = userDAO.getByName(userName).get();
-        }
+    public boolean singIn(String userName, String password) {
+
+        if (userDAO.validate(userName, password))
+            return true;
+
+        return false;
     }
-
-
 }

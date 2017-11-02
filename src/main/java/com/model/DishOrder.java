@@ -5,11 +5,11 @@ import lombok.Data;
 
 @AllArgsConstructor
 @Data
-public class DishOrder implements Entity {
+public class DishOrder {
 
     private long id;
     private long orderId;
     private long dishId;
     private int dishAmount;
-    private int dishSum;
+    private int dishTotalSum;
 }

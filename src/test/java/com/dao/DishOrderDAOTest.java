@@ -12,6 +12,7 @@ import static org.hamcrest.CoreMatchers.*;
 import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class DishOrderDAOTest {
 
@@ -37,17 +38,21 @@ public class DishOrderDAOTest {
     @Test
     public void add() throws Exception {
 
-        DishOrder dishOrder = new DishOrder(6, 100, 100, 100, 1000);
-        dishOrderDAO.create(dishOrder);
+        DishOrder exp = new DishOrder(6, 100, 100, 100, 1000);
+        dishOrderDAO.create(exp);
 
-        assertEquals(dishOrderDAO.getByOrderId(100).get(), dishOrder);
+        DishOrder act = dishOrderDAO.getByOrderId(100).get();
+        assertEquals(exp, act);
+
+        Optional<DishOrder> act2 = dishOrderDAO.getByOrderId(1000);
+        assertFalse(act2.isPresent());
     }
 
     @Test
     public void update() throws Exception {
 
         DishOrder act = dishOrderDAO.getById(1).get();
-        act.setDishSum(100);
+        act.setDishTotalSum(100);
         dishOrderDAO.update(act);
 
         DishOrder exp = dishOrderDAO.getById(1).get();
@@ -57,9 +62,9 @@ public class DishOrderDAOTest {
     @Test
     public void remove() throws Exception {
 
-        assertEquals(true, dishOrderDAO.getById(2).isPresent());
+        assertTrue(dishOrderDAO.getById(2).isPresent());
         dishOrderDAO.remove(2);
-        assertEquals(false, dishOrderDAO.getById(2).isPresent());
+        assertFalse(dishOrderDAO.getById(2).isPresent());
     }
 
     @Test
@@ -75,6 +80,17 @@ public class DishOrderDAOTest {
         exp.add(new DishOrder(5, 3, 8, 3, 330));
 
         assertThat(act, is(exp));
+
+        List<DishOrder> act2 = dishOrderDAO.getAll();
+
+        List<DishOrder> exp2 = new ArrayList<>();
+        exp.add(new DishOrder(1, 1, 2, 2, 340));
+        exp.add(new DishOrder(2, 1, 6, 1, 135));
+        exp.add(new DishOrder(3, 2, 4, 1, 180));
+        exp.add(new DishOrder(4, 2, 9, 2, 110));
+        exp.add(new DishOrder(1000, 3, 8, 3, 330));
+
+        assertThat(act2, is(not(exp2)));
     }
 
     @Test
