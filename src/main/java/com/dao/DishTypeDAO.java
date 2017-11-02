@@ -41,10 +41,10 @@ public class DishTypeDAO implements RegularDAO<DishType> {
 
         Optional<DishType> dishType = Optional.empty();
         try (Connection connection = dataSource.getConnection()) {
-            final PreparedStatement sql = connection.prepareStatement(SELECT_QUERY);
+            PreparedStatement sql = connection.prepareStatement(SELECT_QUERY);
             sql.setLong(1, id);
 
-            final ResultSet rs = sql.executeQuery();
+            ResultSet rs = sql.executeQuery();
             if (rs.next()) {
                 dishType = Optional.of(createDishTypeEntity(rs));
             }
@@ -60,7 +60,7 @@ public class DishTypeDAO implements RegularDAO<DishType> {
         try (Connection connection = dataSource.getConnection()) {
             Statement statement = connection.createStatement();
 
-            final ResultSet rs = statement.executeQuery(SELECT_ALL_QUERY);
+            ResultSet rs = statement.executeQuery(SELECT_ALL_QUERY);
             while (rs.next()) {
                 res.add(createDishTypeEntity(rs));
             }
@@ -75,7 +75,7 @@ public class DishTypeDAO implements RegularDAO<DishType> {
     public boolean create(DishType dishType) {
         try (Connection connection = dataSource.getConnection()) {
 
-            final PreparedStatement sql = connection.prepareStatement(INSERT_QUERY);
+            PreparedStatement sql = connection.prepareStatement(INSERT_QUERY);
             sql.setLong(1, dishType.getId());
             sql.setString(2, dishType.getDishType());
             sql.executeUpdate();
@@ -90,7 +90,7 @@ public class DishTypeDAO implements RegularDAO<DishType> {
     @Override
     public boolean remove(long id) {
         try (Connection connection = dataSource.getConnection()) {
-            final PreparedStatement sql = connection.prepareStatement(DELETE_QUERY);
+            PreparedStatement sql = connection.prepareStatement(DELETE_QUERY);
             sql.setLong(1, id);
             sql.executeUpdate();
             return true;
@@ -104,7 +104,7 @@ public class DishTypeDAO implements RegularDAO<DishType> {
     @Override
     public boolean update(DishType dishType) {
         try (Connection connection = dataSource.getConnection()) {
-            final PreparedStatement sql = connection.prepareStatement(UPDATE_QUERY);
+            PreparedStatement sql = connection.prepareStatement(UPDATE_QUERY);
             sql.setString(1, dishType.getDishType());
             sql.setLong(2, dishType.getId());
             sql.executeUpdate();

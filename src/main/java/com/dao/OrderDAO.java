@@ -40,10 +40,10 @@ public class OrderDAO implements RegularDAO<Order> {
         Order order = null;
 
         try (Connection connection  = dataSource.getConnection()){
-            final PreparedStatement sql = connection.prepareStatement(SELECT_QUERY);
+            PreparedStatement sql = connection.prepareStatement(SELECT_QUERY);
             sql.setLong(1, id);
 
-            final ResultSet rs = sql.executeQuery();
+            ResultSet rs = sql.executeQuery();
             if (rs.next()) {
                 order = createOrderEntity(rs);
             }
@@ -64,7 +64,7 @@ public class OrderDAO implements RegularDAO<Order> {
         try (Connection connection  = dataSource.getConnection()){
             statement = connection.createStatement();
 
-            final ResultSet rs = statement.executeQuery(SELECT_ALL_QUERY);
+            ResultSet rs = statement.executeQuery(SELECT_ALL_QUERY);
             while (rs.next()) {
                 res.add(createOrderEntity(rs));
             }
@@ -79,7 +79,7 @@ public class OrderDAO implements RegularDAO<Order> {
     public boolean create(Order order) {
         try (Connection connection  = dataSource.getConnection()){
 
-            final PreparedStatement sql = connection.prepareStatement(INSERT_QUERY);
+            PreparedStatement sql = connection.prepareStatement(INSERT_QUERY);
             sql.setInt(1, order.getUserId());
             sql.setTimestamp(2, Timestamp.valueOf(order.getDateTime()));
             sql.setInt(3, order.getTotalSum());
@@ -96,7 +96,7 @@ public class OrderDAO implements RegularDAO<Order> {
     @Override
     public boolean remove(long id) {
         try (Connection connection  = dataSource.getConnection()){
-            final PreparedStatement sql = connection.prepareStatement(DELETE_QUERY);
+            PreparedStatement sql = connection.prepareStatement(DELETE_QUERY);
             sql.setLong(1, id);
             sql.executeUpdate();
             return true;
@@ -111,7 +111,7 @@ public class OrderDAO implements RegularDAO<Order> {
     @Override
     public boolean update(Order order) {
         try(Connection connection  = dataSource.getConnection()) {
-            final PreparedStatement sql = connection.prepareStatement(UPDATE_QUERY);
+            PreparedStatement sql = connection.prepareStatement(UPDATE_QUERY);
             sql.setInt(1, order.getUserId());
             sql.setTimestamp(2, Timestamp.valueOf(order.getDateTime()));
             sql.setInt(3, order.getTotalSum());

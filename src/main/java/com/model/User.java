@@ -4,7 +4,7 @@ import lombok.*;
 
 @AllArgsConstructor
 @Data
-public class User implements Entity {
+public class User {
 
     @Setter(AccessLevel.PRIVATE)
     private int id;

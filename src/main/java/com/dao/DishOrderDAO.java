@@ -67,7 +67,7 @@ public class DishOrderDAO implements RegularDAO<DishOrder> {
     @Override
     public List<DishOrder> getAll() {
 
-        List<DishOrder> users = new ArrayList<>();
+        List<DishOrder> dishOrders = new ArrayList<>();
 
         try (Connection connection = dataSource.getConnection()) {
 
@@ -76,14 +76,14 @@ public class DishOrderDAO implements RegularDAO<DishOrder> {
             ResultSet rs = sql.executeQuery();
 
             while (rs.next())
-                users.add(createDishOrderEntity(rs));
+                dishOrders.add(createDishOrderEntity(rs));
 
         } catch (SQLException e) {
 
             e.printStackTrace();
         }
 
-        return users;
+        return dishOrders;
     }
 
 
@@ -96,7 +96,7 @@ public class DishOrderDAO implements RegularDAO<DishOrder> {
             sql.setLong(1, dishOrder.getOrderId());
             sql.setLong(2, dishOrder.getDishId());
             sql.setInt(3, dishOrder.getDishAmount());
-            sql.setInt(4, dishOrder.getDishSum());
+            sql.setInt(4, dishOrder.getDishTotalSum());
 
             sql.executeUpdate();
 
@@ -139,7 +139,7 @@ public class DishOrderDAO implements RegularDAO<DishOrder> {
             sql.setLong(1, dishOrder.getOrderId());
             sql.setLong(2, dishOrder.getDishId());
             sql.setInt(3, dishOrder.getDishAmount());
-            sql.setInt(4, dishOrder.getDishSum());
+            sql.setInt(4, dishOrder.getDishTotalSum());
             sql.setLong(5, dishOrder.getId());
 
             sql.executeUpdate();
