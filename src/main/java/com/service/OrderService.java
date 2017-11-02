@@ -1,11 +1,9 @@
 package com.service;
 
-import com.dao.DishDAO;
-import com.dao.DishOrderDAO;
-import com.dao.OrderDAO;
-import com.dao.UserDAO;
+import com.dao.*;
 import com.model.Dish;
 import com.model.DishOrder;
+import com.model.DishType;
 import com.model.Order;
 import com.mysql.jdbc.Driver;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
@@ -17,6 +15,7 @@ import java.util.*;
 public class OrderService {
     private OrderDAO orderDAO = OrderDAO.getInstance();
     private UserDAO userDAO = UserDAO.getInstance();
+    private DishTypeDAO dishTypeDAO = DishTypeDAO.getInstance();
     private DishDAO dishDAO = DishDAO.getInstance();
     private DishOrderDAO dishOrderDAO = DishOrderDAO.getInstance();
     private static OrderService instance;
@@ -32,6 +31,7 @@ public class OrderService {
             orderDAO.setDataSource(dataSource);
             dishDAO.setDataSource(dataSource);
             dishOrderDAO.setDataSource(dataSource);
+            dishTypeDAO.setDataSource(dataSource);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -77,16 +77,17 @@ public class OrderService {
         orderDAO.update(order);
     }
 
-    public Map<Long, Map<String, Long>> getMenu(){
-        Map<Long, Map<String, Long>> menu = new HashMap<>();
+    public Map<String, Map<String, Long>> getMenu(){
+        Map<String, Map<String, Long>> menu = new HashMap<>();
         List<Dish> allDishes = dishDAO.getAll();
-        //int numberOfCategories = ;
-        Set<Long> allDishTypes = new HashSet<>();
-        for (Dish dish : allDishes) {
-            allDishTypes.add(dish.getDishTypeId());
+        List<DishType> allDishTypes = dishTypeDAO.getAll();
+
+        Set<Long> allDishTypesNumbers = new HashSet<>();
+        for (DishType dishType : allDishTypes) {
+            allDishTypesNumbers.add(dishType.getId());
         }
 
-        for (Long type: allDishTypes) {
+        for (Long type: allDishTypesNumbers) {
             Map<String, Long> submenu = new HashMap<String, Long>();
             for (Dish dish : allDishes) {
                 if (dish.getDishTypeId()==type){
@@ -94,12 +95,11 @@ public class OrderService {
                 }
 
             }
-            menu.put(type, submenu);
+            menu.put(dishTypeDAO.getById(type).get().getDishType(), submenu);
         }
 
 
-
-        return menu;
+            return menu;
     }
 
 
