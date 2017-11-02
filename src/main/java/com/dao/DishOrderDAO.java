@@ -96,7 +96,7 @@ public class DishOrderDAO implements RegularDAO<DishOrder> {
             sql.setLong(1, dishOrder.getOrderId());
             sql.setLong(2, dishOrder.getDishId());
             sql.setInt(3, dishOrder.getDishAmount());
-            sql.setInt(4, dishOrder.getDishSum());
+            sql.setInt(4, dishOrder.getDishTotalSum());
 
             sql.executeUpdate();
 
@@ -139,7 +139,7 @@ public class DishOrderDAO implements RegularDAO<DishOrder> {
             sql.setLong(1, dishOrder.getOrderId());
             sql.setLong(2, dishOrder.getDishId());
             sql.setInt(3, dishOrder.getDishAmount());
-            sql.setInt(4, dishOrder.getDishSum());
+            sql.setInt(4, dishOrder.getDishTotalSum());
             sql.setLong(5, dishOrder.getId());
 
             sql.executeUpdate();

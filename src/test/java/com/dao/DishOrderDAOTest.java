@@ -37,29 +37,30 @@ public class DishOrderDAOTest {
     @Test
     public void add() throws Exception {
 
-        DishOrder dishOrder = new DishOrder(6, 100, 100, 100, 1000);
-        dishOrderDAO.create(dishOrder);
+        DishOrder exp = new DishOrder(6, 100, 100, 100, 1000);
+        dishOrderDAO.create(exp);
 
-        assertEquals(dishOrderDAO.getByOrderId(100).get(), dishOrder);
+        DishOrder act = dishOrderDAO.getByOrderId(100).get();
+        assertEquals(exp, is(act));
     }
 
     @Test
     public void update() throws Exception {
 
         DishOrder act = dishOrderDAO.getById(1).get();
-        act.setDishSum(100);
+        act.setDishTotalSum(100);
         dishOrderDAO.update(act);
 
         DishOrder exp = dishOrderDAO.getById(1).get();
-        assertEquals(act, exp);
+        assertEquals(act, is(exp));
     }
 
     @Test
     public void remove() throws Exception {
 
-        assertEquals(true, dishOrderDAO.getById(2).isPresent());
+        assertTrue(dishOrderDAO.getById(2).isPresent());
         dishOrderDAO.remove(2);
-        assertEquals(false, dishOrderDAO.getById(2).isPresent());
+        assertFalse(dishOrderDAO.getById(2).isPresent());
     }
 
     @Test

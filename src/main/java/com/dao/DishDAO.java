@@ -40,10 +40,10 @@ public class DishDAO implements RegularDAO<Dish> {
     public Optional<Dish> getById(long id) {
         Optional<Dish> dish = Optional.empty();
         try (Connection connection = dataSource.getConnection()) {
-            final PreparedStatement sql = connection.prepareStatement(SELECT_QUERY);
+            PreparedStatement sql = connection.prepareStatement(SELECT_QUERY);
             sql.setLong(1, id);
 
-            final ResultSet rs = sql.executeQuery();
+            ResultSet rs = sql.executeQuery();
             if (rs.next()) {
                 dish = Optional.of(createDishEntity(rs));
             }
@@ -58,7 +58,7 @@ public class DishDAO implements RegularDAO<Dish> {
         List<Dish> res = new ArrayList<>();
         try (Connection connection = dataSource.getConnection()) {
             Statement statement = connection.createStatement();
-            final ResultSet rs = statement.executeQuery(SELECT_ALL_QUERY);
+            ResultSet rs = statement.executeQuery(SELECT_ALL_QUERY);
             while (rs.next()) {
                 res.add(createDishEntity(rs));
             }
@@ -73,7 +73,7 @@ public class DishDAO implements RegularDAO<Dish> {
     public boolean create(Dish dish) {
         try (Connection connection = dataSource.getConnection()) {
 
-            final PreparedStatement sql = connection.prepareStatement(INSERT_QUERY);
+            PreparedStatement sql = connection.prepareStatement(INSERT_QUERY);
             sql.setLong(1, dish.getId());
             sql.setString(2, dish.getDish());
             sql.setLong(3, dish.getDishTypeId());
@@ -91,7 +91,7 @@ public class DishDAO implements RegularDAO<Dish> {
     public boolean remove(long id) {
         try (Connection connection = dataSource.getConnection()) {
 
-            final PreparedStatement sql = connection.prepareStatement(DELETE_QUERY);
+            PreparedStatement sql = connection.prepareStatement(DELETE_QUERY);
             sql.setLong(1, id);
             sql.executeUpdate();
             return true;
@@ -105,7 +105,7 @@ public class DishDAO implements RegularDAO<Dish> {
     @Override
     public boolean update(Dish dish) {
         try (Connection connection = dataSource.getConnection()) {
-            final PreparedStatement sql = connection.prepareStatement(UPDATE_QUERY);
+            PreparedStatement sql = connection.prepareStatement(UPDATE_QUERY);
             sql.setString(1, dish.getDish());
             sql.setLong(2, dish.getDishTypeId());
             sql.setLong(3, dish.getPrice());

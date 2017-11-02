@@ -11,5 +11,5 @@ public class DishOrder {
     private long orderId;
     private long dishId;
     private int dishAmount;
-    private int dishSum;
+    private int dishTotalSum;
 }
