@@ -79,7 +79,7 @@ public class OrderDAOTest {
 
     @Test
     public void cancelOrder() throws Exception {
-        orderDAO.cancel(3);
+        orderDAO.remove(3);
         assertEquals(false, orderDAO.getById(3).isPresent());
     }
 
