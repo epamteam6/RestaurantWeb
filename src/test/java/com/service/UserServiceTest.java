@@ -29,8 +29,20 @@ public class UserServiceTest {
         service.setUserDAO(userDAOMock);
     }
 
+
     @Test
-    public void registerNotUsedUsernameTest() {
+    public void registerUsedUsername() {
+
+        when(userDAOMock.getByName(usernameExist)).thenReturn(opt);
+
+        boolean regWhenNotNewName = service.register(usernameExist, whatEverPassword);
+
+        verify(userDAOMock, atLeastOnce()).getByName(usernameExist);
+        assertFalse(regWhenNotNewName);
+    }
+
+    @Test
+    public void registerNotUsedUsername() {
 
         when(userDAOMock.getByName(usernameNotExist)).thenReturn(Optional.ofNullable(null));
         when(userDAOMock.add(usernameNotExist, whatEverPassword, defaultStatus)).thenReturn(true);
@@ -42,19 +54,9 @@ public class UserServiceTest {
         assertTrue(regWhenNewName);
     }
 
-    @Test
-    public void registerUsedUsernameTest() {
-
-        when(userDAOMock.getByName(usernameExist)).thenReturn(opt);
-
-        boolean regWhenNotNewName = service.register(usernameExist, whatEverPassword);
-
-        verify(userDAOMock, atLeastOnce()).getByName(usernameExist);
-        assertFalse(regWhenNotNewName);
-    }
 
     @Test
-    public void removeWhenExistsTest() {
+    public void removeWhenExists() {
 
         when(userDAOMock.getByName(usernameExist)).thenReturn(opt);
         when(userDAOMock.remove(usernameExist)).thenReturn(true);
@@ -66,7 +68,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void removeWhenNotExistsTest() {
+    public void removeWhenNotExists() {
 
         when(userDAOMock.getByName(usernameNotExist)).thenReturn(Optional.ofNullable(null));
 
@@ -75,6 +77,7 @@ public class UserServiceTest {
         verify(userDAOMock, atLeastOnce()).getByName(usernameNotExist);
         assertFalse(removeWhenNotExists);
     }
+
 
     @Test
     public void passwordChangeWhenExists() {
@@ -102,6 +105,7 @@ public class UserServiceTest {
         assertFalse(setPasswordWhenNotExist);
     }
 
+
     @Test
     public void statusChangeWhenExists() {
 
@@ -114,5 +118,17 @@ public class UserServiceTest {
         verify(userDAOMock, atLeastOnce()).update(usernameExist, null, defaultStatus);
 
         assertTrue(setStatusWhenExist);
+    }
+
+    @Test
+    public void statusChangeWhenNotExists() {
+
+        when(userDAOMock.getByName(usernameNotExist)).thenReturn(Optional.ofNullable(null));
+
+        boolean setStatusWhenNotExist = service.changeAdminStatus(usernameNotExist, defaultStatus);
+
+        verify(userDAOMock, atLeastOnce()).getByName(usernameNotExist);
+
+        assertFalse(setStatusWhenNotExist);
     }
 }
