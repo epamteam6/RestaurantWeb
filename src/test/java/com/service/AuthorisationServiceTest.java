@@ -8,7 +8,7 @@ import static org.mockito.Mockito.*;
 
 public class AuthorisationServiceTest {
 
-    AuthorisationService service = AuthorisationService.getInstance();
+    private final AuthorisationService service = AuthorisationService.getInstance();
 
     @Test
     public void singInTest()

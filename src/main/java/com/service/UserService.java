@@ -9,7 +9,7 @@ import java.util.Optional;
 @Data
 public class UserService {
 
-    private UserDAO userDAO = UserDAO.getInstance();
+    private final UserDAO userDAO = UserDAO.getInstance();
     private static UserService instance;
 
     private UserService() {
