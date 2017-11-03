@@ -89,4 +89,16 @@ public class UserServiceTest {
 
         assertTrue(setPasswordWhenExist);
     }
+
+    @Test
+    public void passwordChangeWhenNotExists() {
+
+        when(userDAOMock.getByName(usernameNotExist)).thenReturn(Optional.ofNullable(null));
+
+        boolean setPasswordWhenNotExist = service.changePassword(usernameNotExist, whatEverPassword);
+
+        verify(userDAOMock, atLeastOnce()).getByName(usernameNotExist);
+
+        assertFalse(setPasswordWhenNotExist);
+    }
 }
