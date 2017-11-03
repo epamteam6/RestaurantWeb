@@ -11,10 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class DishOrderDAO {
 
-    private static DishOrderDAO instance;
+public class DishOrderDAO implements RegularDAO<DishOrder> {
+
     private DataSource dataSource;
+    private static DishOrderDAO instance;
 
     private static final String SELECT_BY_ORDER_ID_QUERY = "SELECT * FROM dishes_orders WHERE order_id = ?";
     private static final String SELECT_BY_ID_QUERY = "SELECT * FROM dishes_orders WHERE id = ?";
@@ -34,35 +35,16 @@ public class DishOrderDAO {
         return instance;
     }
 
+
+    @Override
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
-    public Optional<DishOrder> getByOrderId(long id) {
-
-        Optional<DishOrder> dishOrder = Optional.empty();
-
-        try (Connection con = dataSource.getConnection()) {
-
-            PreparedStatement sql = con.prepareStatement(SELECT_BY_ORDER_ID_QUERY);
-            sql.setLong(1, id);
-            ResultSet rs = sql.executeQuery();
-
-            if (rs.next())
-            {
-                dishOrder = Optional.of(createDishOrderEntity(rs));
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return dishOrder;
-    }
-
+    @Override
     public Optional<DishOrder> getById(long id) {
 
-        Optional<DishOrder> dishOrder = Optional.empty();
+        DishOrder dishOrder = null;
 
         try (Connection con = dataSource.getConnection()) {
 
@@ -72,19 +54,20 @@ public class DishOrderDAO {
 
             if (rs.next())
             {
-                dishOrder = Optional.of(createDishOrderEntity(rs));
+                dishOrder = createDishOrderEntity(rs);
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return dishOrder;
+        return Optional.ofNullable(dishOrder);
     }
 
+    @Override
     public List<DishOrder> getAll() {
 
-        List<DishOrder> users = new ArrayList<>();
+        List<DishOrder> dishOrders = new ArrayList<>();
 
         try (Connection connection = dataSource.getConnection()) {
 
@@ -93,16 +76,41 @@ public class DishOrderDAO {
             ResultSet rs = sql.executeQuery();
 
             while (rs.next())
-                users.add(createDishOrderEntity(rs));
+                dishOrders.add(createDishOrderEntity(rs));
 
         } catch (SQLException e) {
 
             e.printStackTrace();
         }
 
-        return users;
+        return dishOrders;
     }
 
+
+    @Override
+    public boolean create(DishOrder dishOrder) {
+
+        try (Connection connection = dataSource.getConnection()) {
+
+            PreparedStatement sql = connection.prepareStatement(INSERT_QUERY);
+            sql.setLong(1, dishOrder.getOrderId());
+            sql.setLong(2, dishOrder.getDishId());
+            sql.setInt(3, dishOrder.getDishAmount());
+            sql.setInt(4, dishOrder.getDishTotalSum());
+
+            sql.executeUpdate();
+
+            return true;
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    @Override
     public boolean remove(long id) {
 
         try (Connection connection = dataSource.getConnection()) {
@@ -122,6 +130,7 @@ public class DishOrderDAO {
         return false;
     }
 
+    @Override
     public boolean update(DishOrder dishOrder) {
 
         try (Connection connection = dataSource.getConnection()) {
@@ -129,8 +138,8 @@ public class DishOrderDAO {
             PreparedStatement sql = connection.prepareStatement(UPDATE_QUERY);
             sql.setLong(1, dishOrder.getOrderId());
             sql.setLong(2, dishOrder.getDishId());
-            sql.setLong(3, dishOrder.getDishAmount());
-            sql.setLong(4, dishOrder.getDishSum());
+            sql.setInt(3, dishOrder.getDishAmount());
+            sql.setInt(4, dishOrder.getDishTotalSum());
             sql.setLong(5, dishOrder.getId());
 
             sql.executeUpdate();
@@ -145,34 +154,35 @@ public class DishOrderDAO {
         return false;
     }
 
-    public boolean add(DishOrder dishOrder) {
 
-        try (Connection connection = dataSource.getConnection()) {
+    public Optional<DishOrder> getByOrderId(long id) {
 
-            PreparedStatement sql = connection.prepareStatement(INSERT_QUERY);
-            sql.setLong(1, dishOrder.getOrderId());
-            sql.setLong(2, dishOrder.getDishId());
-            sql.setLong(3, dishOrder.getDishAmount());
-            sql.setLong(4, dishOrder.getDishSum());
+        DishOrder dishOrder = null;
 
-            sql.executeUpdate();
+        try (Connection con = dataSource.getConnection()) {
 
-            return true;
+            PreparedStatement sql = con.prepareStatement(SELECT_BY_ORDER_ID_QUERY);
+            sql.setLong(1, id);
+            ResultSet rs = sql.executeQuery();
+
+            if (rs.next())
+            {
+                dishOrder = createDishOrderEntity(rs);
+            }
 
         } catch (SQLException e) {
-
             e.printStackTrace();
         }
 
-        return false;
+        return Optional.ofNullable(dishOrder);
     }
 
     private DishOrder createDishOrderEntity(ResultSet rs) throws SQLException {
         return new DishOrder(
-                rs.getLong("id"),
-                rs.getLong("order_id"),
-                rs.getLong("dish_id"),
-                rs.getLong("amount"),
-                rs.getLong("item_sum"));
+                rs.getInt("id"),
+                rs.getInt("order_id"),
+                rs.getInt("dish_id"),
+                rs.getInt("amount"),
+                rs.getInt("item_sum"));
     }
 }
