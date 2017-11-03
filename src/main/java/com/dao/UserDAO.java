@@ -194,7 +194,7 @@ public class UserDAO implements DAO<User> {
     private User createUserEntity(ResultSet rs) throws SQLException {
 
         return new User(
-                rs.getInt("id"),
+                rs.getLong("id"),
                 rs.getString("user_name"),
                 rs.getBoolean("is_admin"));
     }
