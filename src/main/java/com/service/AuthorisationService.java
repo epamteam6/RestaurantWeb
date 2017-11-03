@@ -3,12 +3,10 @@ package com.service;
 import com.dao.UserDAO;
 import lombok.Data;
 
-import javax.sql.DataSource;
 
 @Data
 public class AuthorisationService {
 
-    private DataSource dataSource;
     private UserDAO userDAO;
     private static AuthorisationService instance;
 
