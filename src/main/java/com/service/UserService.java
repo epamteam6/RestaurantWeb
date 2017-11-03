@@ -4,7 +4,6 @@ import com.dao.UserDAO;
 import com.model.User;
 import lombok.Data;
 
-import javax.sql.DataSource;
 import java.util.Optional;
 
 @Data
