@@ -79,5 +79,14 @@ public class UserServiceTest {
     @Test
     public void passwordChangeWhenExists() {
 
+        when(userDAOMock.getByName(usernameExist)).thenReturn(opt);
+        when(userDAOMock.update(usernameExist, whatEverPassword, opt.get().isAdmin())).thenReturn(true);
+
+        boolean setPasswordWhenExist = service.changePassword(usernameExist, whatEverPassword);
+
+        verify(userDAOMock, atLeastOnce()).getByName(usernameExist);
+        verify(userDAOMock, atLeastOnce()).update(usernameExist, whatEverPassword, opt.get().isAdmin());
+
+        assertTrue(setPasswordWhenExist);
     }
 }
