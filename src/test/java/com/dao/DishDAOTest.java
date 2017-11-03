@@ -16,6 +16,7 @@ import static org.junit.Assert.*;
 
 public class DishDAOTest {
 
+
     private DishDAO dishDAO = DishDAO.getInstance();
 
 
@@ -72,5 +73,12 @@ public class DishDAOTest {
                 .addScript("dataDish.sql")
                 .build();
         return db;
+    }
+
+    @Test
+    public void getByName() throws Exception {
+        Dish actual = dishDAO.getByName("Borsch").get();
+        Dish expected = new Dish(1, "Borsch", 1, 150);
+        assertEquals(actual, expected);
     }
 }

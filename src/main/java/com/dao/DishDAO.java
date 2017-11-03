@@ -17,6 +17,7 @@ public class DishDAO implements RegularDAO<Dish> {
     private static final String UPDATE_QUERY = "UPDATE Dishes SET dish=?, dish_type_id=?, price=? WHERE id=?";
     private static final String INSERT_QUERY = "INSERT INTO Dishes(id, dish, dish_type_id, price)  VALUES (?,?,?,?)";
     private static final String SELECT_QUERY = "SELECT * FROM Dishes WHERE id = ?";
+    private static final String SELECT_BY_NAME_QUERY = "SELECT * FROM Dishes WHERE dish = ?";
     private static final String DELETE_QUERY = "DELETE FROM Dishes WHERE id=?";
     private static final String SELECT_ALL_QUERY = "SELECT * FROM Dishes";
 
@@ -126,6 +127,22 @@ public class DishDAO implements RegularDAO<Dish> {
                 rs.getString("dish"),
                 rs.getLong("dish_type_id"),
                 rs.getLong("price"));
+    }
+
+    public Optional<Dish> getByName(String name) {
+        Optional<Dish> dish = Optional.empty();
+        try (Connection connection = dataSource.getConnection()) {
+            final PreparedStatement sql = connection.prepareStatement(SELECT_BY_NAME_QUERY);
+            sql.setString(1, name);
+
+            final ResultSet rs = sql.executeQuery();
+            if (rs.next()) {
+                dish = Optional.of(parseDish(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return dish;
     }
 }
 

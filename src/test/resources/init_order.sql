@@ -1,10 +1,10 @@
 DROP TABLE IF EXISTS orders;
-CREATE TABLE orders
-(
-  id        BIGINT AUTO_INCREMENT
-    PRIMARY KEY,
-  user_id   BIGINT                                         NOT NULL,
-  date_time TIMESTAMP                                      NOT NULL,
-  total_sum BIGINT                                         NOT NULL,
-  status    ENUM ('CREATED', 'CONFIRMED', 'READY', 'PAID') NOT NULL
-);
+create table orders (
+  id bigint auto_increment
+    primary key,
+  user_id bigint(6) not null,
+  date_time timestamp not null,
+  total_sum bigint(11) not null,
+  status enum('CREATED','CONFIRMED','READY','PAID') not null
+)
+;
