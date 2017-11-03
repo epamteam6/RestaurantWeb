@@ -83,7 +83,7 @@ public class OrderService {
             long price = dishDAO.getByName(pair.getKey()).get().getPrice();
             total_sum += amount * price;
             //System.out.println(total_sum);
-            dishOrderDAO.add(new DishOrder(0, orderID,
+            dishOrderDAO.create(new DishOrder(0, orderID,
                     dishId, amount, amount * price));
 
             it.remove(); // avoids a ConcurrentModificationException
@@ -120,7 +120,7 @@ public class OrderService {
     }
 
     public void cancelOrder(Long id) {
-        orderDAO.cancel(id);
+        orderDAO.remove(id);
     }
 
 
