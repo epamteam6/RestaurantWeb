@@ -5,10 +5,7 @@ import com.model.Dish;
 import com.model.DishOrder;
 import com.model.DishType;
 import com.model.Order;
-import com.mysql.jdbc.Driver;
-import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -23,7 +20,27 @@ public class OrderService {
     private OrderService() {
     }
 
-    {
+    public void setOrderDAO(OrderDAO orderDAO) {
+        this.orderDAO = orderDAO;
+    }
+
+    public void setUserDAO(UserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
+
+    public void setDishTypeDAO(DishTypeDAO dishTypeDAO) {
+        this.dishTypeDAO = dishTypeDAO;
+    }
+
+    public void setDishDAO(DishDAO dishDAO) {
+        this.dishDAO = dishDAO;
+    }
+
+    public void setDishOrderDAO(DishOrderDAO dishOrderDAO) {
+        this.dishOrderDAO = dishOrderDAO;
+    }
+
+    /*{
         try {
             SimpleDriverDataSource dataSource = new SimpleDriverDataSource(new Driver(),
                     "jdbc:mysql://localhost:3306/food?serverTimezone=UTC&verifyServerCertificate=false&useSSL=true", "root", "root");
@@ -35,7 +52,7 @@ public class OrderService {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     public static OrderService getInstance() {
         if (instance == null) {
@@ -65,7 +82,7 @@ public class OrderService {
             long dishId = dishDAO.getByName(pair.getKey()).get().getId();
             long price = dishDAO.getByName(pair.getKey()).get().getPrice();
             total_sum += amount * price;
-            System.out.println(total_sum);
+            //System.out.println(total_sum);
             dishOrderDAO.add(new DishOrder(0, orderID,
                     dishId, amount, amount * price));
 
