@@ -137,7 +137,7 @@ public class DishDAO implements RegularDAO<Dish> {
 
             final ResultSet rs = sql.executeQuery();
             if (rs.next()) {
-                dish = Optional.of(parseDish(rs));
+                dish = Optional.of(createDishEntity(rs));
             }
         } catch (SQLException e) {
             e.printStackTrace();
