@@ -12,8 +12,15 @@ import static org.mockito.Mockito.*;
 
 public class UserServiceTest {
 
-    private static UserService service;
-    private static UserDAO userDAOMock;
+    private UserService service;
+    private UserDAO userDAOMock;
+
+    private String usernameExist = "Admin";
+    private String usernameNotExist = "Temp";
+    private String whatEverPassword = "whatever...";
+    private boolean defaultStatus = false;
+
+    private Optional<User> opt = Optional.of(new User(1, usernameExist, defaultStatus));
 
     @Before
     public void init() {
@@ -24,9 +31,6 @@ public class UserServiceTest {
 
     @Test
     public void registerNotUsedUsernameTest() {
-        String usernameNotExist = "Temp";
-        String whatEverPassword = "whatever...";
-        boolean defaultStatus = false;
 
         when(userDAOMock.getByName(usernameNotExist)).thenReturn(Optional.ofNullable(null));
         when(userDAOMock.add(usernameNotExist, whatEverPassword, defaultStatus)).thenReturn(true);
@@ -40,11 +44,6 @@ public class UserServiceTest {
 
     @Test
     public void registerUsedUsernameTest() {
-        String usernameExist = "Admin";
-        String whatEverPassword = "whatever...";
-        boolean defaultStatus = false;
-
-        Optional<User> opt = Optional.of(new User(1, usernameExist, defaultStatus));
 
         when(userDAOMock.getByName(usernameExist)).thenReturn(opt);
 
@@ -56,10 +55,6 @@ public class UserServiceTest {
 
     @Test
     public void removeWhenExistsTest() {
-        String usernameExist = "Admin";
-        boolean defaultStatus = false;
-
-        Optional<User> opt = Optional.of(new User(1, usernameExist, defaultStatus));
 
         when(userDAOMock.getByName(usernameExist)).thenReturn(opt);
         when(userDAOMock.remove(usernameExist)).thenReturn(true);
@@ -72,8 +67,6 @@ public class UserServiceTest {
 
     @Test
     public void removeWhenNotExistsTest() {
-        String usernameNotExist = "Temp";
-        boolean defaultStatus = false;
 
         when(userDAOMock.getByName(usernameNotExist)).thenReturn(Optional.ofNullable(null));
 
@@ -81,5 +74,10 @@ public class UserServiceTest {
 
         verify(userDAOMock, atLeastOnce()).getByName(usernameNotExist);
         assertFalse(removeWhenNotExists);
+    }
+
+    @Test
+    public void passwordChangeWhenExists() {
+
     }
 }
