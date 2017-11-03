@@ -79,7 +79,7 @@ public class OrderDAOTest {
 
     @Test
     public void cancelOrder() throws Exception {
-        orderDAO.cancel(3);
+        orderDAO.remove(3);
         assertEquals(false, orderDAO.getById(3).isPresent());
     }
 
@@ -87,8 +87,8 @@ public class OrderDAOTest {
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
         EmbeddedDatabase db = builder
                 .setType(EmbeddedDatabaseType.H2)
-                .addScript("init.sql")
-                .addScript("data.sql")
+                .addScript("init_order.sql")
+                .addScript("data_order.sql")
                 .build();
 
         return db;
