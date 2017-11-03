@@ -10,8 +10,7 @@ import java.util.Optional;
 @Data
 public class UserService {
 
-    private DataSource dataSource;
-    private UserDAO userDAO;
+    private UserDAO userDAO = UserDAO.getInstance();
     private static UserService instance;
 
     private UserService() {
