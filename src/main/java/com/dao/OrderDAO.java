@@ -80,9 +80,9 @@ public class OrderDAO implements RegularDAO<Order> {
         try (Connection connection  = dataSource.getConnection()){
 
             PreparedStatement sql = connection.prepareStatement(INSERT_QUERY);
-            sql.setInt(1, order.getUserId());
+            sql.setLong(1, order.getUserId());
             sql.setTimestamp(2, Timestamp.valueOf(order.getDateTime()));
-            sql.setInt(3, order.getTotalSum());
+            sql.setLong(3, order.getTotalSum());
             sql.setString(4, order.getStatus().toString());
             sql.executeUpdate();
             return true;
@@ -112,11 +112,11 @@ public class OrderDAO implements RegularDAO<Order> {
     public boolean update(Order order) {
         try(Connection connection  = dataSource.getConnection()) {
             PreparedStatement sql = connection.prepareStatement(UPDATE_QUERY);
-            sql.setInt(1, order.getUserId());
+            sql.setLong(1, order.getUserId());
             sql.setTimestamp(2, Timestamp.valueOf(order.getDateTime()));
-            sql.setInt(3, order.getTotalSum());
+            sql.setLong(3, order.getTotalSum());
             sql.setString(4, order.getStatus().toString());
-            sql.setInt(5, order.getId());
+            sql.setLong(5, order.getId());
             sql.executeUpdate();
             return true;
 

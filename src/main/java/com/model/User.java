@@ -7,7 +7,7 @@ import lombok.*;
 public class User {
 
     @Setter(AccessLevel.PRIVATE)
-    private int id;
+    private long id;
 
     @Setter(AccessLevel.PRIVATE)
     private String userName;

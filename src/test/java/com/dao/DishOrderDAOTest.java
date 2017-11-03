@@ -52,7 +52,7 @@ public class DishOrderDAOTest {
     public void update() throws Exception {
 
         DishOrder act = dishOrderDAO.getById(1).get();
-        act.setDishTotalSum(100);
+        act.setDishSum(100);
         dishOrderDAO.update(act);
 
         DishOrder exp = dishOrderDAO.getById(1).get();

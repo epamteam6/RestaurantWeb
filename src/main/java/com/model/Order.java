@@ -9,11 +9,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Data
 public class Order {
-
-    private int id;
-    private int userId;
+    private long id;
+    private long userId;
     private LocalDateTime dateTime;
-    private int totalSum;
+    private long totalSum;
     private Status status;
 
     public enum Status {

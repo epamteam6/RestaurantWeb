@@ -10,6 +10,6 @@ public class DishOrder {
     private long id;
     private long orderId;
     private long dishId;
-    private int dishAmount;
-    private int dishTotalSum;
+    private long dishAmount;
+    private long dishSum;
 }
