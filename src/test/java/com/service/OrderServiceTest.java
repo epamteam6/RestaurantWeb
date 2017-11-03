@@ -7,13 +7,10 @@ import com.model.Order;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Optional;
+import java.util.*;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyListOf;
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 public class OrderServiceTest {
 
@@ -25,11 +22,19 @@ public class OrderServiceTest {
     private DishDAO dishDAOMock;
     private DishOrderDAO dishOrderDAOMock;
 
-    private static Optional<Order> order;
+    private Optional<Order> optOrder;
+
+    private List<Dish> dishes = Arrays.asList(
+            new Dish(1, "MOJITO", 1, 100),
+            new Dish(2, "BURITO", 2, 100)
+    );
+    private List<DishType> dishTypes = Arrays.asList(
+            new DishType(1, "DRINKS"),
+            new DishType(2, "SHAVERMAS")
+    );
 
     @Before
-    public void init()
-    {
+    public void init() {
         service = OrderService.getInstance();
 
         orderDAOMock = mock(OrderDAO.class);
@@ -48,11 +53,22 @@ public class OrderServiceTest {
     @Test
     public void getMenu() throws Exception {
 
-        when(dishDAOMock.getAll()).thenReturn(anyListOf(Dish.class));
-        when(dishTypeDAOMock.getAll()).thenReturn(anyListOf(DishType.class));
-        when(dishTypeDAOMock.getById(anyLong())).thenReturn(Optional.of(any(DishType.class)));
-        service.getMenu();
-        //System.out.println(OrderService.getInstance().getMenu());
+        when(dishDAOMock.getAll()).thenReturn(dishes);
+        when(dishTypeDAOMock.getAll()).thenReturn(dishTypes);
+        when(dishTypeDAOMock.getById(1)).thenReturn(Optional.of(dishTypes.get(0)));
+        when(dishTypeDAOMock.getById(2)).thenReturn(Optional.of(dishTypes.get(1)));
+
+        Map<String, Map<String, Long>> menu = service.getMenu();
+
+        String act = menu.toString();
+        String exp = "{DRINKS={MOJITO=100}, SHAVERMAS={BURITO=100}}";
+
+        verify(dishDAOMock, atLeastOnce()).getAll();
+        verify(dishTypeDAOMock, atLeastOnce()).getAll();
+        verify(dishTypeDAOMock, atLeastOnce()).getById(1);
+        verify(dishTypeDAOMock, atLeastOnce()).getById(2);
+
+        assertEquals(act, exp);
     }
 
 }
