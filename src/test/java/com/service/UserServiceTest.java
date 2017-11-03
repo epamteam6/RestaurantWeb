@@ -101,4 +101,18 @@ public class UserServiceTest {
 
         assertFalse(setPasswordWhenNotExist);
     }
+
+    @Test
+    public void statusChangeWhenExists() {
+
+        when(userDAOMock.getByName(usernameExist)).thenReturn(opt);
+        when(userDAOMock.update(usernameExist, null, defaultStatus)).thenReturn(true);
+
+        boolean setStatusWhenExist = service.changeAdminStatus(usernameExist, defaultStatus);
+
+        verify(userDAOMock, atLeastOnce()).getByName(usernameExist);
+        verify(userDAOMock, atLeastOnce()).update(usernameExist, null, defaultStatus);
+
+        assertTrue(setStatusWhenExist);
+    }
 }
