@@ -133,7 +133,7 @@ public class DishDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return  dish;
+        return dish;
     }
 }
 

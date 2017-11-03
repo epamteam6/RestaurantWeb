@@ -40,7 +40,7 @@ public class DishOrderDAO {
 
     public Optional<DishOrder> getByOrderId(long id) {
 
-        DishOrder dishOrder = null;
+        Optional<DishOrder> dishOrder = Optional.empty();
 
         try (Connection con = dataSource.getConnection()) {
 
@@ -50,19 +50,19 @@ public class DishOrderDAO {
 
             if (rs.next())
             {
-                dishOrder = createDishOrderEntity(rs);
+                dishOrder = Optional.of(createDishOrderEntity(rs));
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return Optional.ofNullable(dishOrder);
+        return dishOrder;
     }
 
     public Optional<DishOrder> getById(long id) {
 
-        DishOrder dishOrder = null;
+        Optional<DishOrder> dishOrder = Optional.empty();
 
         try (Connection con = dataSource.getConnection()) {
 
@@ -72,14 +72,14 @@ public class DishOrderDAO {
 
             if (rs.next())
             {
-                dishOrder = createDishOrderEntity(rs);
+                dishOrder = Optional.of(createDishOrderEntity(rs));
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return Optional.ofNullable(dishOrder);
+        return dishOrder;
     }
 
     public List<DishOrder> getAll() {

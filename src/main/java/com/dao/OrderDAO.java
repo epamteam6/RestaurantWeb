@@ -53,7 +53,7 @@ public class OrderDAO {
 
 
     public Optional<Order> getById(long id) {
-        Order order = null;
+        Optional<Order> order = Optional.empty();
 
         try (Connection connection  = dataSource.getConnection()){
             final PreparedStatement sql = connection.prepareStatement(SELECT_QUERY);
@@ -61,7 +61,7 @@ public class OrderDAO {
 
             final ResultSet rs = sql.executeQuery();
             if (rs.next()) {
-                order = createOrderEntity(rs);
+                order = Optional.of(createOrderEntity(rs));
             }
 
 
@@ -69,7 +69,7 @@ public class OrderDAO {
             e.printStackTrace();
         }
 
-        return Optional.ofNullable(order);
+        return order;
 
     }
 
