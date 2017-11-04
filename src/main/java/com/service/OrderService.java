@@ -62,7 +62,9 @@ public class OrderService {
     }
 
     public void makeOrder(String userName, Map<String, Long> dishNamesAndAmount) {
-
+        if (!userDAO.getByName(userName).isPresent()) {
+            throw new NoSuchElementException("There is no such user!");
+        }
         long userID = userDAO.getByName(userName).get().getId();
         orderDAO.create(new Order(0, userID, LocalDateTime.now(), 0, Order.Status.CREATED));
 
@@ -73,25 +75,29 @@ public class OrderService {
             }
         }
 
-        long total_sum = 0;
+        long totalSum = 0;
         Iterator it = dishNamesAndAmount.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry<String, Long> pair = (Map.Entry) it.next();
             System.out.println(pair.getKey() + " = " + pair.getValue());
             long amount = pair.getValue();
-            long dishId = dishDAO.getByName(pair.getKey()).get().getId();
-            long price = dishDAO.getByName(pair.getKey()).get().getPrice();
-            total_sum += amount * price;
-            //System.out.println(total_sum);
-            dishOrderDAO.create(new DishOrder(0, orderID,
-                    dishId, amount, amount * price));
+            Optional<Dish> dish = dishDAO.getByName(pair.getKey());
+            if (dish.isPresent()) {
+                long dishId = dish.get().getId();
+                long price = dish.get().getPrice();
+                totalSum += amount * price;
+                dishOrderDAO.create(new DishOrder(0, orderID,
+                        dishId, amount, amount * price));
 
-            it.remove(); // avoids a ConcurrentModificationException
-
+                it.remove(); // avoids a ConcurrentModificationException
+            }
+            else throw new NoSuchElementException("There is no such dish!");
         }
+
         Order order = orderDAO.getById(orderID).get();
-        order.setTotalSum(total_sum);
+        order.setTotalSum(totalSum);
         orderDAO.update(order);
+
     }
 
     public Map<String, Map<String, Long>> getMenu() {
@@ -106,15 +112,21 @@ public class OrderService {
 
         for (Long type : allDishTypesNumbers) {
             Map<String, Long> submenu = new HashMap<>();
-            menu.put(dishTypeDAO.getById(type).get().getDishType(), submenu);
+            Optional<DishType> dishType = dishTypeDAO.getById(type);
+            if (dishType.isPresent()) {
+                menu.put(dishType.get().getDishType(), submenu);
+            }
+            else throw new NoSuchElementException("There is no such dish type!");
         }
 
         for (Dish dish : allDishes) {
-            String dishTypeName = dishTypeDAO.getById(dish.getDishTypeId()).get().getDishType();
-            Map<String, Long> submenu = menu.get(dishTypeName);
-            submenu.put(dish.getDish(), dish.getPrice());
-            menu.put(dishTypeName, submenu);
-
+            if (dishTypeDAO.getById(dish.getDishTypeId()).isPresent()) {
+                String dishTypeName = dishTypeDAO.getById(dish.getDishTypeId()).get().getDishType();
+                Map<String, Long> submenu = menu.get(dishTypeName);
+                submenu.put(dish.getDish(), dish.getPrice());
+                menu.put(dishTypeName, submenu);
+            }
+            else throw new NoSuchElementException("There is no such dish type!");
         }
         return menu;
     }
