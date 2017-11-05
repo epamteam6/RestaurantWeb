@@ -131,8 +131,8 @@ public class OrderService {
         return menu;
     }
 
-    public void cancelOrder(Long id) {
-        orderDAO.remove(id);
+    public boolean cancelOrder(Long id) {
+        return orderDAO.remove(id);
     }
 
 

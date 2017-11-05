@@ -48,6 +48,18 @@ public class OrderServiceTest {
         service.setDishOrderDAO(dishOrderDAOMock);
     }
 
+
+    @Test
+    public void cancelOrder() throws Exception {
+        when(orderDAOMock.remove(anyLong())).thenReturn(true);
+
+        boolean check = service.cancelOrder(anyLong());
+        verify(orderDAOMock, times(1)).remove(anyLong());
+
+        assertTrue(true);
+    }
+
+
     @Test
     public void getMenu() throws Exception {
 
