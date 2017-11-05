@@ -153,11 +153,12 @@ public class OrderService {
         Map<Long, Map<String, Long>> result = new HashMap<>();
         Map<String, Long> orderDetails;
         List<DishOrder> dishOrders = dishOrderDAO.getAll();
+
         for (Order order : orders) {
             orderDetails = new HashMap<>();
 
             for (DishOrder dishOrder : dishOrders) {
-                if (dishOrder.getDishId() == order.getId()) {
+                if (dishOrder.getOrderId() == order.getId()) {
                     String dishname = dishDAO.getById(dishOrder.getDishId()).get().getDishname();
                     long amount = dishOrder.getDishAmount();
 
