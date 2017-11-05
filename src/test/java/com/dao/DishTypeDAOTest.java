@@ -67,8 +67,8 @@ public class DishTypeDAOTest {
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
         EmbeddedDatabase db = builder
                 .setType(EmbeddedDatabaseType.H2)
-                .addScript("initDishType.sql")
-                .addScript("dataDishType.sql")
+                .addScript("init_dish_type.sql")
+                .addScript("data_dish_type.sql")
                 .build();
         return db;
     }

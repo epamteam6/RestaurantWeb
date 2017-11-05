@@ -1,10 +1,7 @@
 package com.service;
 
 import com.dao.*;
-import com.model.Dish;
-import com.model.DishOrder;
-import com.model.DishType;
-import com.model.Order;
+import com.model.*;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -61,6 +58,10 @@ public class OrderService {
         return instance;
     }
 
+    public boolean cancelOrder(Long id) {
+        return orderDAO.remove(id);
+    }
+
     public void makeOrder(String userName, Map<String, Long> dishNamesAndAmount) {
         if (!userDAO.getByName(userName).isPresent()) {
             throw new NoSuchElementException("There is no such user!");
@@ -90,8 +91,7 @@ public class OrderService {
                         dishId, amount, amount * price));
 
                 it.remove(); // avoids a ConcurrentModificationException
-            }
-            else throw new NoSuchElementException("There is no such dish!");
+            } else throw new NoSuchElementException("There is no such dishname!");
         }
 
         Order order = orderDAO.getById(orderID).get();
@@ -115,25 +115,56 @@ public class OrderService {
             Optional<DishType> dishType = dishTypeDAO.getById(type);
             if (dishType.isPresent()) {
                 menu.put(dishType.get().getDishType(), submenu);
-            }
-            else throw new NoSuchElementException("There is no such dish type!");
+            } else throw new NoSuchElementException("There is no such dishname type!");
         }
 
         for (Dish dish : allDishes) {
             if (dishTypeDAO.getById(dish.getDishTypeId()).isPresent()) {
                 String dishTypeName = dishTypeDAO.getById(dish.getDishTypeId()).get().getDishType();
                 Map<String, Long> submenu = menu.get(dishTypeName);
-                submenu.put(dish.getDish(), dish.getPrice());
+                submenu.put(dish.getDishname(), dish.getPrice());
                 menu.put(dishTypeName, submenu);
-            }
-            else throw new NoSuchElementException("There is no such dish type!");
+            } else throw new NoSuchElementException("There is no such dishname type!");
         }
         return menu;
     }
 
-    public boolean cancelOrder(Long id) {
-        return orderDAO.remove(id);
+    public Map<LocalDateTime, Map<String, Long>> showOrdersWithDetails(String username, Order.Status status) {
+
+        Optional<User> user = userDAO.getByName(username);
+        if (!user.isPresent()) {
+            throw new NoSuchElementException("There is no such user!");
+        }
+
+        long userId = user.get().getId();
+
+        List<Order> orders = new ArrayList<>();
+        for (Order order : orderDAO.getAll()) {
+
+            if (order.getUserId() == userId && order.getStatus() == status) {
+                orders.add(order);
+            }
+        }
+
+        if (orders.size() < 1) {
+            throw new NoSuchElementException("There is no order with this status!");
+        }
+
+
+        Map<LocalDateTime, Map<String, Long>> result = new HashMap<>();
+        Map<String, Long> orderDetails;
+        List<DishOrder> dishOrders = dishOrderDAO.getAll();
+        for (Order order : orders) {
+
+            for (DishOrder dishOrder : dishOrders)
+            {
+                if (dishOrder.getDishId() == order.getId())
+                {
+                    String nameOfDish = dishDAO.getById(dishOrder.getDishId()).get().getDishname();
+                }
+            }
+        }
+
+        return result;
     }
-
-
 }

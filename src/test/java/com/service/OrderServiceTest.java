@@ -56,7 +56,7 @@ public class OrderServiceTest {
         boolean check = service.cancelOrder(anyLong());
         verify(orderDAOMock, times(1)).remove(anyLong());
 
-        assertTrue(true);
+        assertTrue(check);
     }
 
 
