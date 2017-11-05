@@ -137,7 +137,6 @@ public class OrderService {
         }
 
         long userId = user.get().getId();
-
         List<Order> orders = new ArrayList<>();
         for (Order order : orderDAO.getAll()) {
 
@@ -155,14 +154,18 @@ public class OrderService {
         Map<String, Long> orderDetails;
         List<DishOrder> dishOrders = dishOrderDAO.getAll();
         for (Order order : orders) {
+            orderDetails = new HashMap<>();
 
-            for (DishOrder dishOrder : dishOrders)
-            {
-                if (dishOrder.getDishId() == order.getId())
-                {
-                    String nameOfDish = dishDAO.getById(dishOrder.getDishId()).get().getDishname();
+            for (DishOrder dishOrder : dishOrders) {
+                if (dishOrder.getDishId() == order.getId()) {
+                    String dishname = dishDAO.getById(dishOrder.getDishId()).get().getDishname();
+                    long amount = dishOrder.getDishAmount();
+
+                    orderDetails.put(dishname, amount);
                 }
             }
+
+            result.put(order.getDateTime(), orderDetails);
         }
 
         return result;
