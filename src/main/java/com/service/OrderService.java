@@ -129,7 +129,7 @@ public class OrderService {
         return menu;
     }
 
-    public Map<LocalDateTime, Map<String, Long>> showOrdersWithDetails(String username, Order.Status status) {
+    public Map<Long, Map<String, Long>> showOrdersWithDetails(String username, Order.Status status) {
 
         Optional<User> user = userDAO.getByName(username);
         if (!user.isPresent()) {
@@ -150,7 +150,7 @@ public class OrderService {
         }
 
 
-        Map<LocalDateTime, Map<String, Long>> result = new HashMap<>();
+        Map<Long, Map<String, Long>> result = new HashMap<>();
         Map<String, Long> orderDetails;
         List<DishOrder> dishOrders = dishOrderDAO.getAll();
         for (Order order : orders) {
@@ -165,7 +165,7 @@ public class OrderService {
                 }
             }
 
-            result.put(order.getDateTime(), orderDetails);
+            result.put(order.getId(), orderDetails);
         }
 
         return result;
