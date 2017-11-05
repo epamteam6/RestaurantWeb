@@ -94,6 +94,15 @@ public class OrderServiceTest {
         service.showOrdersWithDetails("Ivan", Order.Status.CREATED);
     }
 
+    @Test(expected = NoSuchElementException.class)
+    public void showOrdersWithDetailsNoOrders() {
+
+        when(userDAOMock.getByName("Ivan")).thenReturn(Optional.of(users.get(0)));
+        when(orderDAOMock.getAll()).thenReturn(new ArrayList<>());
+
+        service.showOrdersWithDetails("Ivan", Order.Status.CREATED);
+    }
+
 
     @Test
     public void cancelOrder() throws Exception {
