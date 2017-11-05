@@ -102,30 +102,4 @@ public class OrderServiceTest {
     }
 
 
-    @Test
-    public void getMenu() throws Exception {
-
-        when(dishDAOMock.getAll()).thenReturn(dishes);
-        when(dishTypeDAOMock.getAll()).thenReturn(dishTypes);
-        when(dishTypeDAOMock.getById(1)).thenReturn(Optional.of(dishTypes.get(0)));
-        when(dishTypeDAOMock.getById(2)).thenReturn(Optional.of(dishTypes.get(1)));
-
-        Map<String, Map<String, Long>> menu = service.getMenu();
-
-        String act = menuToString(menu);
-        String exp = "{DRINKS={MOJITO=100}, SHAVERMAS={BURRITO=100}}";
-
-        verify(dishDAOMock, atLeastOnce()).getAll();
-        verify(dishTypeDAOMock, atLeastOnce()).getAll();
-        verify(dishTypeDAOMock, atLeastOnce()).getById(1);
-        verify(dishTypeDAOMock, atLeastOnce()).getById(2);
-
-        assertEquals(act, exp);
-    }
-
-    private String menuToString(Map<String, Map<String, Long>> menu) {
-        return menu.toString();
-    }
-
-
 }
