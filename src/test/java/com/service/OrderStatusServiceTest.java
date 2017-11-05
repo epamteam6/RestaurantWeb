@@ -4,6 +4,9 @@ import com.dao.OrderDAO;
 import com.model.Order;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -12,16 +15,16 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.*;
 
+@RunWith(MockitoJUnitRunner.class)
 public class OrderStatusServiceTest {
 
+    @Mock private OrderDAO orderDAO;
 
     private static final OrderStatusService orderStatusService = OrderStatusService.getInstance();
-    private OrderDAO orderDAO;
     private static Optional<Order> order;
 
     @Before
     public void init() {
-        orderDAO = mock(OrderDAO.getInstance().getClass());
 
         when(orderDAO.getById(anyInt())).thenReturn(Optional.of(new Order(1, 1,
                 LocalDateTime.of(2017, 10, 25, 13, 54, 19),
