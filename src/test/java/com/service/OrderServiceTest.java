@@ -9,10 +9,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -69,7 +66,7 @@ public class OrderServiceTest {
     }
 
     @Test
-    public void showOrdersWithDetails() throws Exception {
+    public void showOrdersWithDetailsValid() {
         when(userDAOMock.getByName("Ivan")).thenReturn(Optional.of(users.get(0)));
         when(orderDAOMock.getAll()).thenReturn(orders);
         when(dishOrderDAOMock.getAll()).thenReturn(dishOrders);
@@ -88,6 +85,13 @@ public class OrderServiceTest {
         verify(dishDAOMock, times(2)).getById(anyLong());
 
         assertEquals(act, exp);
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void showOrdersWithDetailsNoUser() {
+
+        when(userDAOMock.getByName("Ivan")).thenReturn(Optional.ofNullable(null));
+        service.showOrdersWithDetails("Ivan", Order.Status.CREATED);
     }
 
 
