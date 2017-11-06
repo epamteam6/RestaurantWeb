@@ -29,8 +29,6 @@ public class MenuServiceTest {
     @Mock
     private DishDAO dishDAOMock;
 
-    private Optional<Order> optOrder;
-
     private List<Dish> dishes = Arrays.asList(
             new Dish(1, "MOJITO", 1, 100),
             new Dish(2, "BURRITO", 2, 100)
