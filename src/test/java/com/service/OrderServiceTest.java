@@ -67,8 +67,8 @@ public class OrderServiceTest {
     @Test
     public void showOrdersWithDetailsValid() {
         when(userDAOMock.getByName("Ivan")).thenReturn(Optional.of(users.get(0)));
-        when(orderDAOMock.getAll()).thenReturn(orders);
-        when(dishOrderDAOMock.getAll()).thenReturn(dishOrders);
+        when(orderDAOMock.getByUserAndStatus(1, Order.Status.CREATED)).thenReturn(orders);
+        when(dishOrderDAOMock.getByOrderId(1)).thenReturn(dishOrders);
         when(dishDAOMock.getById(1)).thenReturn(Optional.of(dishes.get(0)));
         when(dishDAOMock.getById(2)).thenReturn(Optional.of(dishes.get(1)));
 
@@ -79,8 +79,8 @@ public class OrderServiceTest {
         String exp = "{1={BURRITO=2, MOJITO=1}}";
 
         verify(userDAOMock, times(1)).getByName(anyString());
-        verify(orderDAOMock, times(1)).getAll();
-        verify(dishOrderDAOMock, times(1)).getAll();
+        verify(orderDAOMock, times(1)).getByUserAndStatus(1, Order.Status.CREATED);
+        verify(dishOrderDAOMock, times(1)).getByOrderId(1);
         verify(dishDAOMock, times(2)).getById(anyLong());
 
         assertEquals(act, exp);
@@ -97,7 +97,7 @@ public class OrderServiceTest {
     public void showOrdersWithDetailsNoOrders() {
 
         when(userDAOMock.getByName("Ivan")).thenReturn(Optional.of(users.get(0)));
-        when(orderDAOMock.getAll()).thenReturn(new ArrayList<>());
+        when(orderDAOMock.getByUserAndStatus(1, Order.Status.CREATED)).thenReturn(new ArrayList<>());
 
         service.orderDetails("Ivan", Order.Status.CREATED);
     }
