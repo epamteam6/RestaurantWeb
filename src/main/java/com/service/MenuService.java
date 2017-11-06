@@ -46,17 +46,18 @@ public class MenuService {
             Optional<DishType> dishType = dishTypeDAO.getById(type);
             if (dishType.isPresent()) {
                 menu.put(dishType.get().getDishType(), submenu);
-            } else throw new NoSuchElementException("There is no such dishname type!");
+            } else throw new NoSuchElementException("There is no such dish type!");
         }
 
         List<Dish> allDishes = dishDAO.getAll();
         for (Dish dish : allDishes) {
-            if (dishTypeDAO.getById(dish.getDishTypeId()).isPresent()) {
-                String dishTypeName = dishTypeDAO.getById(dish.getDishTypeId()).get().getDishType();
+            Optional<DishType> dishTypeById = dishTypeDAO.getById(dish.getDishTypeId());
+            if (dishTypeById.isPresent()) {
+                String dishTypeName = dishTypeById.get().getDishType();
                 Map<String, Long> submenu = menu.get(dishTypeName);
                 submenu.put(dish.getDishname(), dish.getPrice());
                 menu.put(dishTypeName, submenu);
-            } else throw new NoSuchElementException("There is no such dishname type!");
+            } else throw new NoSuchElementException("There is no such dish type!");
         }
         return menu;
     }
