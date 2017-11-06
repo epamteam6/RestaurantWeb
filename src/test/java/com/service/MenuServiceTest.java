@@ -61,9 +61,9 @@ public class MenuServiceTest {
         String exp = "{DRINKS={MOJITO=100}, SHAVERMAS={BURRITO=100}}";
 
         verify(dishDAOMock, atLeastOnce()).getAll();
-        verify(dishTypeDAOMock, atLeastOnce()).getAll();
-        verify(dishTypeDAOMock, atLeastOnce()).getById(1);
-        verify(dishTypeDAOMock, atLeastOnce()).getById(2);
+        verify(dishTypeDAOMock, times(1)).getAll();
+        verify(dishTypeDAOMock, times(1)).getById(1);
+        verify(dishTypeDAOMock, times(1)).getById(2);
 
         assertEquals(act, exp);
     }
