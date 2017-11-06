@@ -25,21 +25,13 @@ public class OrderServiceTest {
     @Mock
     private UserDAO userDAOMock;
     @Mock
-    private DishTypeDAO dishTypeDAOMock;
-    @Mock
     private DishDAO dishDAOMock;
     @Mock
     private DishOrderDAO dishOrderDAOMock;
 
-    private Optional<Order> optOrder;
-
     private List<Dish> dishes = Arrays.asList(
             new Dish(1, "MOJITO", 1, 100),
             new Dish(2, "BURRITO", 2, 100)
-    );
-    private List<DishType> dishTypes = Arrays.asList(
-            new DishType(1, "DRINKS"),
-            new DishType(2, "SHAVERMAS")
     );
     private List<DishOrder> dishOrders = Arrays.asList(
             new DishOrder(1, 1, 1, 1, 100),
@@ -54,15 +46,22 @@ public class OrderServiceTest {
             new User(1, "Ivan", false)
     );
 
+    private Map<String, Long> userChoice = new HashMap<>();
+    long amount_1 = 10;
+    long amount_2 = 5;
+
+
     @Before
     public void init() {
         service = OrderService.getInstance();
 
         service.setOrderDAO(orderDAOMock);
         service.setUserDAO(userDAOMock);
-        service.setDishTypeDAO(dishTypeDAOMock);
         service.setDishDAO(dishDAOMock);
         service.setDishOrderDAO(dishOrderDAOMock);
+
+        userChoice.put("MOJITO", amount_1);
+        userChoice.put("BURRITO", amount_2);
     }
 
     @Test
@@ -115,4 +114,46 @@ public class OrderServiceTest {
     }
 
 
+    @Test(expected = NoSuchElementException.class)
+    public void makeOrderNoUser() throws Exception {
+
+        when(userDAOMock.getByName("Ivan")).thenReturn(Optional.ofNullable(null));
+        service.makeOrder("Ivan", userChoice);
+    }
+
+    @Test
+    public void makeOrderValid() {
+
+        when(userDAOMock.getByName("Ivan")).thenReturn(Optional.of(users.get(0)));
+        when(orderDAOMock.create(new Order(0, users.get(0).getId(), LocalDateTime.now(), 0, Order.Status.CREATED)))
+                .thenReturn(true);
+
+        when(orderDAOMock.getAll()).thenReturn(orders);
+        when(dishDAOMock.getByName("MOJITO")).thenReturn(Optional.of(dishes.get(0)));
+        when(dishDAOMock.getByName("BURRITO")).thenReturn(Optional.of(dishes.get(1)));
+
+        DishOrder dishOrder1 = new DishOrder(0, orders.get(0).getId(),
+                dishes.get(0).getId(), amount_1, amount_1 * dishes.get(0).getPrice());
+        when(dishOrderDAOMock.create(dishOrder1)).thenReturn(true);
+
+        DishOrder dishOrder2 = new DishOrder(0, orders.get(0).getId(),
+                dishes.get(1).getId(), amount_2, amount_2 * dishes.get(1).getPrice());
+        when(dishOrderDAOMock.create(dishOrder2)).thenReturn(true);
+
+        when(orderDAOMock.getById(orders.get(0).getId())).thenReturn(Optional.of(orders.get(0)));
+        when(orderDAOMock.update(orders.get(0))).thenReturn(true);
+
+        service.makeOrder("Ivan", userChoice);
+
+        verify(userDAOMock, times(2)).getByName("Ivan");
+        verify(orderDAOMock, times(1)).create(any());
+        verify(orderDAOMock, times(1)).getAll();
+        verify(dishDAOMock, times(1)).getByName("MOJITO");
+        verify(dishDAOMock, times(1)).getByName("BURRITO");
+        verify(dishOrderDAOMock, times(1)).create(dishOrder1);
+        verify(dishOrderDAOMock, times(1)).create(dishOrder2);
+        verify(orderDAOMock, times(1)).getById(orders.get(0).getId());
+        verify(orderDAOMock, times(1)).update(orders.get(0));
+
+    }
 }

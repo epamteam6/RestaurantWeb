@@ -9,7 +9,6 @@ import java.util.*;
 public class OrderService {
     private OrderDAO orderDAO = OrderDAO.getInstance();
     private UserDAO userDAO = UserDAO.getInstance();
-    private DishTypeDAO dishTypeDAO = DishTypeDAO.getInstance();
     private DishDAO dishDAO = DishDAO.getInstance();
     private DishOrderDAO dishOrderDAO = DishOrderDAO.getInstance();
     private static OrderService instance;
@@ -25,10 +24,6 @@ public class OrderService {
         this.userDAO = userDAO;
     }
 
-    public void setDishTypeDAO(DishTypeDAO dishTypeDAO) {
-        this.dishTypeDAO = dishTypeDAO;
-    }
-
     public void setDishDAO(DishDAO dishDAO) {
         this.dishDAO = dishDAO;
     }
@@ -36,20 +31,6 @@ public class OrderService {
     public void setDishOrderDAO(DishOrderDAO dishOrderDAO) {
         this.dishOrderDAO = dishOrderDAO;
     }
-
-    /*{
-        try {
-            SimpleDriverDataSource dataSource = new SimpleDriverDataSource(new Driver(),
-                    "jdbc:mysql://localhost:3306/food?serverTimezone=UTC&verifyServerCertificate=false&useSSL=true", "root", "root");
-            userDAO.setDataSource(dataSource);
-            orderDAO.setDataSource(dataSource);
-            dishDAO.setDataSource(dataSource);
-            dishOrderDAO.setDataSource(dataSource);
-            dishTypeDAO.setDataSource(dataSource);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }*/
 
     public static OrderService getInstance() {
         if (instance == null) {
@@ -80,7 +61,7 @@ public class OrderService {
         Iterator it = dishNamesAndAmount.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry<String, Long> pair = (Map.Entry) it.next();
-            System.out.println(pair.getKey() + " = " + pair.getValue());
+
             long amount = pair.getValue();
             Optional<Dish> dish = dishDAO.getByName(pair.getKey());
             if (dish.isPresent()) {
@@ -97,7 +78,6 @@ public class OrderService {
         Order order = orderDAO.getById(orderID).get();
         order.setTotalSum(totalSum);
         orderDAO.update(order);
-
     }
 
 
