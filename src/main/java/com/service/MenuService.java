@@ -33,15 +33,14 @@ public class MenuService {
     }
 
     public Map<String, Map<String, Long>> getMenu() {
-        Map<String, Map<String, Long>> menu = new HashMap<>();
-        List<Dish> allDishes = dishDAO.getAll();
-        List<DishType> allDishTypes = dishTypeDAO.getAll();
 
+        List<DishType> allDishTypes = dishTypeDAO.getAll();
         Set<Long> allDishTypesNumbers = new HashSet<>();
         for (DishType dishType : allDishTypes) {
             allDishTypesNumbers.add(dishType.getId());
         }
 
+        Map<String, Map<String, Long>> menu = new HashMap<>();
         for (Long type : allDishTypesNumbers) {
             Map<String, Long> submenu = new HashMap<>();
             Optional<DishType> dishType = dishTypeDAO.getById(type);
@@ -50,6 +49,7 @@ public class MenuService {
             } else throw new NoSuchElementException("There is no such dishname type!");
         }
 
+        List<Dish> allDishes = dishDAO.getAll();
         for (Dish dish : allDishes) {
             if (dishTypeDAO.getById(dish.getDishTypeId()).isPresent()) {
                 String dishTypeName = dishTypeDAO.getById(dish.getDishTypeId()).get().getDishType();

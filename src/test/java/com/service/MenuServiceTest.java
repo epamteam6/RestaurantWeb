@@ -62,8 +62,8 @@ public class MenuServiceTest {
 
         verify(dishDAOMock, atLeastOnce()).getAll();
         verify(dishTypeDAOMock, times(1)).getAll();
-        verify(dishTypeDAOMock, times(1)).getById(1);
-        verify(dishTypeDAOMock, times(1)).getById(2);
+        verify(dishTypeDAOMock, times(3)).getById(1);
+        verify(dishTypeDAOMock, times(3)).getById(2);
 
         assertEquals(act, exp);
     }
