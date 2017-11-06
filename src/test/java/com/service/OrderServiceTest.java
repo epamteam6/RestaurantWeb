@@ -72,7 +72,7 @@ public class OrderServiceTest {
         when(dishDAOMock.getById(1)).thenReturn(Optional.of(dishes.get(0)));
         when(dishDAOMock.getById(2)).thenReturn(Optional.of(dishes.get(1)));
 
-        Map<Long, Map<String, Long>> ordersDetails = service.showOrdersWithDetails("Ivan", Order.Status.CREATED);
+        Map<Long, Map<String, Long>> ordersDetails = service.orderDetails("Ivan", Order.Status.CREATED);
 
         String act = ordersDetails.toString();
 
@@ -90,7 +90,7 @@ public class OrderServiceTest {
     public void showOrdersWithDetailsNoUser() {
 
         when(userDAOMock.getByName("Ivan")).thenReturn(Optional.ofNullable(null));
-        service.showOrdersWithDetails("Ivan", Order.Status.CREATED);
+        service.orderDetails("Ivan", Order.Status.CREATED);
     }
 
     @Test(expected = NoSuchElementException.class)
@@ -99,7 +99,7 @@ public class OrderServiceTest {
         when(userDAOMock.getByName("Ivan")).thenReturn(Optional.of(users.get(0)));
         when(orderDAOMock.getAll()).thenReturn(new ArrayList<>());
 
-        service.showOrdersWithDetails("Ivan", Order.Status.CREATED);
+        service.orderDetails("Ivan", Order.Status.CREATED);
     }
 
 

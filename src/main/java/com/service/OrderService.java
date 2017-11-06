@@ -81,7 +81,7 @@ public class OrderService {
     }
 
 
-    public Map<Long, Map<String, Long>> showOrdersWithDetails(String username, Order.Status status) {
+    public Map<Long, Map<String, Long>> orderDetails(String username, Order.Status status) {
 
         Optional<User> user = userDAO.getByName(username);
         if (!user.isPresent()) {
