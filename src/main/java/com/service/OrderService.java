@@ -86,13 +86,7 @@ public class OrderService {
         }
 
         long userId = user.get().getId();
-        List<Order> orders = new ArrayList<>();
-        for (Order order : orderDAO.getAll()) {
-
-            if (order.getUserId() == userId && order.getStatus() == status) {
-                orders.add(order);
-            }
-        }
+        List<Order> orders = orderDAO.getByUserAndStatus(userId, status);
 
         if (orders.size() < 1) {
             throw new NoSuchElementException("There is no order with this status!");
@@ -101,9 +95,9 @@ public class OrderService {
 
         Map<Long, Map<String, Long>> result = new HashMap<>();
         Map<String, Long> orderAndAmount;
-        List<DishOrder> dishOrders = dishOrderDAO.getAll();
 
         for (Order order : orders) {
+            List<DishOrder> dishOrders = dishOrderDAO.getByOrderId(order.getId());
             orderAndAmount = new HashMap<>();
 
             for (DishOrder dishOrder : dishOrders) {

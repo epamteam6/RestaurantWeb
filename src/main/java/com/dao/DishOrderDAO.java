@@ -52,8 +52,7 @@ public class DishOrderDAO implements RegularDAO<DishOrder> {
             sql.setLong(1, id);
             ResultSet rs = sql.executeQuery();
 
-            if (rs.next())
-            {
+            if (rs.next()) {
                 dishOrder = createDishOrderEntity(rs);
             }
 
@@ -155,9 +154,9 @@ public class DishOrderDAO implements RegularDAO<DishOrder> {
     }
 
 
-    public Optional<DishOrder> getByOrderId(long id) {
+    public List<DishOrder> getByOrderId(long id) {
 
-        DishOrder dishOrder = null;
+        List<DishOrder> dishOrders = new ArrayList<>();
 
         try (Connection con = dataSource.getConnection()) {
 
@@ -165,16 +164,15 @@ public class DishOrderDAO implements RegularDAO<DishOrder> {
             sql.setLong(1, id);
             ResultSet rs = sql.executeQuery();
 
-            if (rs.next())
-            {
-                dishOrder = createDishOrderEntity(rs);
+            while (rs.next()) {
+                dishOrders.add(createDishOrderEntity(rs));
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return Optional.ofNullable(dishOrder);
+        return dishOrders;
     }
 
     private DishOrder createDishOrderEntity(ResultSet rs) throws SQLException {
