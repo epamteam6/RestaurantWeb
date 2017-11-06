@@ -58,10 +58,8 @@ public class OrderService {
         }
 
         long totalSum = 0;
-        Iterator it = dishNamesAndAmount.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry<String, Long> pair = (Map.Entry) it.next();
-
+        for (Map.Entry<String, Long> pair : dishNamesAndAmount.entrySet())
+        {
             long amount = pair.getValue();
             Optional<Dish> dish = dishDAO.getByName(pair.getKey());
             if (dish.isPresent()) {
@@ -71,7 +69,6 @@ public class OrderService {
                 dishOrderDAO.create(new DishOrder(0, orderID,
                         dishId, amount, amount * price));
 
-                it.remove(); // avoids a ConcurrentModificationException
             } else throw new NoSuchElementException("There is no such dishname!");
         }
 
@@ -103,22 +100,22 @@ public class OrderService {
 
 
         Map<Long, Map<String, Long>> result = new HashMap<>();
-        Map<String, Long> orderDetails;
+        Map<String, Long> orderAndAmount;
         List<DishOrder> dishOrders = dishOrderDAO.getAll();
 
         for (Order order : orders) {
-            orderDetails = new HashMap<>();
+            orderAndAmount = new HashMap<>();
 
             for (DishOrder dishOrder : dishOrders) {
                 if (dishOrder.getOrderId() == order.getId()) {
                     String dishname = dishDAO.getById(dishOrder.getDishId()).get().getDishname();
                     long amount = dishOrder.getDishAmount();
 
-                    orderDetails.put(dishname, amount);
+                    orderAndAmount.put(dishname, amount);
                 }
             }
 
-            result.put(order.getId(), orderDetails);
+            result.put(order.getId(), orderAndAmount);
         }
 
         return result;
