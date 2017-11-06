@@ -83,6 +83,23 @@ public class OrderDAOTest {
         assertEquals(false, orderDAO.getById(3).isPresent());
     }
 
+    @Test
+    public void getByUserAndStatus() throws Exception {
+
+        List<Order> expected = Arrays.asList(
+                new Order(1, 1,
+                        LocalDateTime.of(2017, 10, 25, 13, 54, 19),
+                        475, Order.Status.CREATED),
+                new Order(4, 1,
+                        LocalDateTime.of(2017, 10, 25, 13, 54, 19),
+                        1000, Order.Status.CREATED)
+        );
+
+        List<Order> actual = orderDAO.getByUserAndStatus(1, Order.Status.CREATED);
+
+        assertThat(actual, is(expected));
+    }
+
     private DataSource getDataSource() {
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
         EmbeddedDatabase db = builder
@@ -93,5 +110,4 @@ public class OrderDAOTest {
 
         return db;
     }
-
 }
