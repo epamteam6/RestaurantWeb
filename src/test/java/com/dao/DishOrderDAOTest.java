@@ -11,6 +11,7 @@ import static org.hamcrest.CoreMatchers.*;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,14 +39,15 @@ public class DishOrderDAOTest {
     @Test
     public void add() throws Exception {
 
-        DishOrder exp = new DishOrder(6, 100, 100, 100, 1000);
-        dishOrderDAO.create(exp);
+        DishOrder dishOrder = new DishOrder(6, 100, 100, 100, 1000);
+        List<DishOrder> exp = Arrays.asList(dishOrder);
+        dishOrderDAO.create(dishOrder);
 
-        DishOrder act = dishOrderDAO.getByOrderId(100).get();
+        List<DishOrder> act = dishOrderDAO.getByOrderId(100);
         assertEquals(exp, act);
 
-        Optional<DishOrder> act2 = dishOrderDAO.getByOrderId(1000);
-        assertFalse(act2.isPresent());
+        List<DishOrder> act2 = dishOrderDAO.getByOrderId(1000);
+        assertFalse(act2.size() != 0);
     }
 
     @Test
@@ -96,8 +98,10 @@ public class DishOrderDAOTest {
     @Test
     public void getByOrderId() throws Exception {
 
-        DishOrder act = dishOrderDAO.getByOrderId(1).get();
-        DishOrder exp = new DishOrder(1, 1, 2, 2, 340);
+        List<DishOrder> act = dishOrderDAO.getByOrderId(1);
+        DishOrder dishOrder1 = new DishOrder(1, 1, 2, 2, 340);
+        DishOrder dishOrder2 = new DishOrder(2, 1, 6, 1, 135);
+        List<DishOrder> exp = Arrays.asList(dishOrder1, dishOrder2);
 
         assertThat(act, is(exp));
     }

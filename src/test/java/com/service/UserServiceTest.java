@@ -4,16 +4,20 @@ import com.dao.UserDAO;
 import com.model.User;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Optional;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+@RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {
 
+    @Mock private UserDAO userDAOMock;
     private UserService service;
-    private UserDAO userDAOMock;
 
     private String usernameExist = "Admin";
     private String usernameNotExist = "Temp";
@@ -25,7 +29,6 @@ public class UserServiceTest {
     @Before
     public void init() {
         service = UserService.getInstance();
-        userDAOMock = mock(UserDAO.class);
         service.setUserDAO(userDAOMock);
     }
 

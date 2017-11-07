@@ -15,12 +15,14 @@ public class OrderDAO implements RegularDAO<Order> {
     private static OrderDAO instance;
 
     private static final String UPDATE_QUERY = "UPDATE orders SET user_id=?, date_time=?, total_sum=?, status=? WHERE id=?";
-    private static final String INSERT_QUERY = "INSERT INTO orders(user_id, date_time, total_sum, status)  values (?,?,?,?)";
+    private static final String INSERT_QUERY = "INSERT INTO orders(user_id, date_time, total_sum, status)  VALUES (?,?,?,?)";
     private static final String SELECT_QUERY = "SELECT * FROM orders WHERE id = ?";
     private static final String DELETE_QUERY = "DELETE FROM orders WHERE id=?";
-    private static final String SELECT_ALL_QUERY = "SELECT * FROM orders";
+    private static final String SELECT_ALL_QUERY = "SELECT * FROM orders ";
+    private static final String SELECT_BY_USERS_STATUS_QUERY = "SELECT * FROM orders WHERE user_id=? AND status=?";
 
-    private OrderDAO() { }
+    private OrderDAO() {
+    }
 
     public static OrderDAO getInstance() {
         if (instance == null) {
@@ -39,7 +41,7 @@ public class OrderDAO implements RegularDAO<Order> {
     public Optional<Order> getById(long id) {
         Order order = null;
 
-        try (Connection connection  = dataSource.getConnection()){
+        try (Connection connection = dataSource.getConnection()) {
             PreparedStatement sql = connection.prepareStatement(SELECT_QUERY);
             sql.setLong(1, id);
 
@@ -61,7 +63,7 @@ public class OrderDAO implements RegularDAO<Order> {
     public List<Order> getAll() {
         List<Order> res = new ArrayList<>();
         Statement statement;
-        try (Connection connection  = dataSource.getConnection()){
+        try (Connection connection = dataSource.getConnection()) {
             statement = connection.createStatement();
 
             ResultSet rs = statement.executeQuery(SELECT_ALL_QUERY);
@@ -77,7 +79,7 @@ public class OrderDAO implements RegularDAO<Order> {
 
     @Override
     public boolean create(Order order) {
-        try (Connection connection  = dataSource.getConnection()){
+        try (Connection connection = dataSource.getConnection()) {
 
             PreparedStatement sql = connection.prepareStatement(INSERT_QUERY);
             sql.setLong(1, order.getUserId());
@@ -95,7 +97,7 @@ public class OrderDAO implements RegularDAO<Order> {
 
     @Override
     public boolean remove(long id) {
-        try (Connection connection  = dataSource.getConnection()){
+        try (Connection connection = dataSource.getConnection()) {
             PreparedStatement sql = connection.prepareStatement(DELETE_QUERY);
             sql.setLong(1, id);
             sql.executeUpdate();
@@ -110,7 +112,7 @@ public class OrderDAO implements RegularDAO<Order> {
 
     @Override
     public boolean update(Order order) {
-        try(Connection connection  = dataSource.getConnection()) {
+        try (Connection connection = dataSource.getConnection()) {
             PreparedStatement sql = connection.prepareStatement(UPDATE_QUERY);
             sql.setLong(1, order.getUserId());
             sql.setTimestamp(2, Timestamp.valueOf(order.getDateTime()));
@@ -126,6 +128,24 @@ public class OrderDAO implements RegularDAO<Order> {
         return false;
     }
 
+
+    public List<Order> getByUserAndStatus(long userId, Order.Status status) {
+        List<Order> res = new ArrayList<>();
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement sql = connection.prepareStatement(SELECT_BY_USERS_STATUS_QUERY);
+            sql.setLong(1, userId);
+            sql.setString(2, status.toString());
+
+            ResultSet rs = sql.executeQuery();
+
+            while (rs.next()) {
+                res.add(createOrderEntity(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
 
     private Order createOrderEntity(ResultSet rs) throws SQLException {
         return new Order(

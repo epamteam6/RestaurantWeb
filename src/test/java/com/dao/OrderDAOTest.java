@@ -40,7 +40,10 @@ public class OrderDAOTest {
                         290, Order.Status.CONFIRMED),
                 new Order(3, 4,
                         LocalDateTime.of(2017, 10, 25, 13, 54, 19),
-                        330, Order.Status.PAID)
+                        330, Order.Status.PAID),
+                new Order(4, 1,
+                        LocalDateTime.of(2017, 10, 25, 13, 54, 19),
+                        1000, Order.Status.CREATED)
         );
 
         assertThat(actual, is(expected));
@@ -60,9 +63,9 @@ public class OrderDAOTest {
 
     @Test
     public void createOrder() throws Exception {
-        Order toAdd = new Order(4, 2, LocalDateTime.now(), 7005, Order.Status.CONFIRMED);
+        Order toAdd = new Order(5, 2, LocalDateTime.now(), 7005, Order.Status.CONFIRMED);
         orderDAO.create(toAdd);
-        assertEquals(toAdd, orderDAO.getById(4).get());
+        assertEquals(toAdd, orderDAO.getById(5).get());
 
 
     }
@@ -83,6 +86,23 @@ public class OrderDAOTest {
         assertEquals(false, orderDAO.getById(3).isPresent());
     }
 
+    @Test
+    public void getByUserAndStatus() throws Exception {
+
+        List<Order> expected = Arrays.asList(
+                new Order(1, 1,
+                        LocalDateTime.of(2017, 10, 25, 13, 54, 19),
+                        475, Order.Status.CREATED),
+                new Order(4, 1,
+                        LocalDateTime.of(2017, 10, 25, 13, 54, 19),
+                        1000, Order.Status.CREATED)
+        );
+
+        List<Order> actual = orderDAO.getByUserAndStatus(1, Order.Status.CREATED);
+
+        assertThat(actual, is(expected));
+    }
+
     private DataSource getDataSource() {
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
         EmbeddedDatabase db = builder
@@ -93,5 +113,4 @@ public class OrderDAOTest {
 
         return db;
     }
-
 }

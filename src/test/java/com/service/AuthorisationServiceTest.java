@@ -2,18 +2,22 @@ package com.service;
 
 import com.dao.UserDAO;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+@RunWith(MockitoJUnitRunner.class)
 public class AuthorisationServiceTest {
 
     private final AuthorisationService service = AuthorisationService.getInstance();
+    @Mock UserDAO userDAO;
 
     @Test
     public void singInTest()
     {
-        UserDAO userDAO = mock(UserDAO.class);
 
         when(userDAO.validate("Admin", "admin")).thenReturn(true);
 

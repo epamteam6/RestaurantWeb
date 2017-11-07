@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `Dishes` (
   `id`           BIGINT(6)   NOT NULL,
-  `dish`         VARCHAR(32) NOT NULL,
+  `dishName`         VARCHAR(32) NOT NULL,
   `dish_type_id` BIGINT(6)   NOT NULL,
   `price`        BIGINT(6)   NOT NULL
 )

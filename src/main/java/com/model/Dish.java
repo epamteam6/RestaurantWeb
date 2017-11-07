@@ -7,7 +7,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class Dish {
     private long id;
-    private String dish;
+    private String dishname;
     private long dishTypeId;
     private long price;
 }
