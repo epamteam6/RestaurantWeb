@@ -58,7 +58,7 @@ public class MenuServiceTest {
         String act = menuToString(menu);
         String exp = "{DRINKS={MOJITO=100}, SHAVERMAS={BURRITO=100}}";
 
-        verify(dishDAOMock, atLeastOnce()).getAll();
+        verify(dishDAOMock, times(1)).getAll();
         verify(dishTypeDAOMock, times(1)).getAll();
         verify(dishTypeDAOMock, times(2)).getById(1);
         verify(dishTypeDAOMock, times(2)).getById(2);
