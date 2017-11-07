@@ -6,36 +6,30 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=windows-1256">
-    <title>Main Page</title>
+    <title>Order Page</title>
 </head>
-<body>
-<form method="post" action="/">
-    <table>
-        <c:forEach var="item1" items="${menu}">
-            <tr>
-                <td colspan="3"><center><c:out value="${item1.key}" /></center></td>
-            </tr>
-            <c:forEach var="item2" items="${item1.value}">
-                <tr>
-                    <td width="112px"><c:out value="${item2.key}" /></td>
-                    <td width="112px"><c:out value="${item2.value}" /></td>
 
-                    <td align="center" width="12px">
-                        <input type="number" name="${item2.key}"
-                               value="0" min="0" max="100"/>
-                    </td>
-                </tr>
-                <tr></tr>
-            </c:forEach>
-
-        </c:forEach>
-
+<form method="post" action="MainServlet">
+    <h1>
+        <font size="5" color="black">Sing in, please</font>
+        <br>
+    </h1>
+    <table border="2" width="2" bgcolor="#d3d3d3" style="color:black">
         <tr>
-            <td colspan="3" align="right"><input class="button" type="submit" value="Make order"></td>
+            <td><b>Username</b></td>
+            <td><input class="button" type="text" name="username"></td>
         </tr>
-
+        <tr>
+            <td><b>Password</b></td>
+            <td><input class="button" type="password" name="password"></td>
+        </tr>
+        <tr>
+            <td><input class="button" type="submit" value="Sing in"></td>
+        </tr>
     </table>
+
 </form>
+
 </body>
 </html>
 

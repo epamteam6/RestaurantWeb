@@ -6,7 +6,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=windows-1256">
-    <title>Login Page</title>
+    <title>Success Page</title>
 </head>
 <body>
 hurray!!
