@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/mvc
+	   http://www.springframework.org/schema/mvc/spring-mvc.xsd
+	   http://www.springframework.org/schema/context
+	   http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- ViewResolver bean config for mapping strings to jsp views -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <!-- Example: a logical view name of 'showMessage' is mapped to '/WEB-INF/jsp/showMessage.jsp' -->
+        <property name="order" value="1" />
+        <property name="prefix" value="/WEB-INF/view" />
+        <property name="suffix" value=".jsp" />
+    </bean>
+
+
+    <mvc:view-controller path="/index.html" view-name="/index"/>
+
+    <mvc:view-controller path="menu.html" view-name="/menu/menu"/>
+    <mvc:view-controller path="product-detail.html" view-name="/menu/product-detail"/>
+    <mvc:view-controller path="shop-page.html" view-name="/menu/shop-page"/>
+
+    <mvc:view-controller path="new-order.html" view-name="/order/new-order"/>
+    <mvc:view-controller path="make-bill.html" view-name="/order/make-bill"/>
+
+    <mvc:view-controller path="shopping-cart.html" view-name="/shopping-cart/shopping-cart"/>
+    <mvc:view-controller path="check-out.html" view-name="/shopping-cart/check-out"/>
+
+    <mvc:view-controller path="login.html" view-name="/login/login"/>
+    <mvc:view-controller path="join.html" view-name="/login/join"/>
+
+    <mvc:view-controller path="about.html" view-name="/about/about"/>
+
+    <mvc:resources mapping="/resources/**" location="/resources/" />
+
+
+
+</beans>
