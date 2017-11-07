@@ -83,6 +83,8 @@ public class OrderServiceTest {
         verify(dishOrderDAOMock, times(1)).getByOrderId(1);
         verify(dishDAOMock, times(2)).getById(anyLong());
 
+        verifyNoMoreInteractions(userDAOMock, orderDAOMock, dishOrderDAOMock, dishDAOMock);
+
         assertEquals(act, exp);
     }
 
@@ -109,6 +111,7 @@ public class OrderServiceTest {
 
         boolean check = service.cancelOrder(anyLong());
         verify(orderDAOMock, times(1)).remove(anyLong());
+        verifyNoMoreInteractions(orderDAOMock);
 
         assertTrue(check);
     }
@@ -155,5 +158,6 @@ public class OrderServiceTest {
         verify(orderDAOMock, times(1)).getById(orders.get(0).getId());
         verify(orderDAOMock, times(1)).update(orders.get(0));
 
+        verifyNoMoreInteractions(userDAOMock, orderDAOMock, dishDAOMock, dishOrderDAOMock);
     }
 }
