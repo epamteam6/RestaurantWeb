@@ -9,6 +9,7 @@
     <title>Order Page</title>
 </head>
 <body>
+<h3>Hello, ${username}! Choose your favorite dishes!</h3>
 <form method="post" action="makeOrder">
     <table>
         <c:forEach var="item1" items="${menu}">

@@ -8,6 +8,7 @@ import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,24 +30,24 @@ public class OrderServlet extends HttpServlet {
     private DishOrderDAO dishOrderDAO;
 
     {
-      try {
-          SimpleDriverDataSource dataSource = new SimpleDriverDataSource(new Driver(),
-                  "jdbc:mysql://localhost:3306/food?serverTimezone=UTC&verifyServerCertificate=false&useSSL=true", "root", "root");
+        try {
+            SimpleDriverDataSource dataSource = new SimpleDriverDataSource(new Driver(),
+                    "jdbc:mysql://localhost:3306/food?serverTimezone=UTC&verifyServerCertificate=false&useSSL=true", "root", "root");
 
-          dishDAO = DishDAO.getInstance();
-          userDAO = UserDAO.getInstance();
-          orderDAO = OrderDAO.getInstance();
-          dishOrderDAO = DishOrderDAO.getInstance();
-          dishTypeDAO = DishTypeDAO.getInstance();
+            dishDAO = DishDAO.getInstance();
+            userDAO = UserDAO.getInstance();
+            orderDAO = OrderDAO.getInstance();
+            dishOrderDAO = DishOrderDAO.getInstance();
+            dishTypeDAO = DishTypeDAO.getInstance();
 
-          userDAO.setDataSource(dataSource);
-          orderDAO.setDataSource(dataSource);
-          dishDAO.setDataSource(dataSource);
-          dishOrderDAO.setDataSource(dataSource);
-          dishTypeDAO.setDataSource(dataSource);
+            userDAO.setDataSource(dataSource);
+            orderDAO.setDataSource(dataSource);
+            dishDAO.setDataSource(dataSource);
+            dishOrderDAO.setDataSource(dataSource);
+            dishTypeDAO.setDataSource(dataSource);
 
-          menuService = MenuService.getInstance();
-          orderService = OrderService.getInstance();
+            menuService = MenuService.getInstance();
+            orderService = OrderService.getInstance();
 
 /*          menuService.setDishTypeDAO(dishTypeDAO);
           menuService.setDishDAO(dishDAO);
@@ -54,23 +55,33 @@ public class OrderServlet extends HttpServlet {
           orderService.setOrderDAO(orderDAO);
           orderService.setDishOrderDAO(dishOrderDAO);
           orderService.setDishDAO(dishDAO);*/
-      } catch (SQLException e) {
-          e.printStackTrace();
-      }
-  }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        Cookie[] cookies = request.getCookies();
+
+        String value = "";
+        for (int i = 0; i < cookies.length; i++) {
+            if (cookies[i].getName().equals("username")) {
+                value = cookies[i].getValue();
+                System.out.println(value);
+            }
+        }
         menu = menuService.getMenu();
 
 
         request.setAttribute("menu", menu);
+        request.setAttribute("username", value);
 
         RequestDispatcher dispatcher = request
                 .getRequestDispatcher("/make_order.jsp");
-        if (dispatcher != null){
+        if (dispatcher != null) {
             dispatcher.forward(request, response);
         }
     }
@@ -80,13 +91,12 @@ public class OrderServlet extends HttpServlet {
         request.getRequestDispatcher("make_order.jsp").include(request, response);
         Map<String, Long> dishNamesAndAmount = new HashMap<>();
 
-        for (Map.Entry<String, Map<String, Long>> pair : menu.entrySet())
-        {
-            for (Map.Entry<String, Long> subPair : pair.getValue().entrySet()){
+        for (Map.Entry<String, Map<String, Long>> pair : menu.entrySet()) {
+            for (Map.Entry<String, Long> subPair : pair.getValue().entrySet()) {
                 Long amount = Long.parseLong(request.getParameter(subPair.getKey()));
-                if (amount>0){
+                if (amount > 0) {
                     dishNamesAndAmount.put(subPair.getKey(), amount);
-                    System.out.println(subPair.getKey()+" "+amount);
+                    System.out.println(subPair.getKey() + " " + amount);
                 }
             }
 
