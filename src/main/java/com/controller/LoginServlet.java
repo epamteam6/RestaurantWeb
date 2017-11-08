@@ -3,6 +3,7 @@ package com.controller;
 import com.dao.UserDAO;
 import com.mysql.jdbc.Driver;
 import com.service.AuthorisationService;
+import com.service.UserService;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 
 import javax.servlet.RequestDispatcher;
@@ -18,6 +19,7 @@ public class LoginServlet extends HttpServlet {
 
 
     private AuthorisationService authorisationService;
+    private UserService userService;
     private SimpleDriverDataSource dataSource;
     private UserDAO userDAO;
 
@@ -31,6 +33,9 @@ public class LoginServlet extends HttpServlet {
             userDAO.setDataSource(dataSource);
             authorisationService = AuthorisationService.getInstance();
             authorisationService.setUserDAO(userDAO);
+
+            userService = UserService.getInstance();
+            userService.setUserDAO(userDAO);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -42,7 +47,7 @@ public class LoginServlet extends HttpServlet {
 
         RequestDispatcher dispatcher = request
                 .getRequestDispatcher("/login.jsp");
-        if (dispatcher != null){
+        if (dispatcher != null) {
             dispatcher.forward(request, response);
         }
     }
@@ -57,11 +62,21 @@ public class LoginServlet extends HttpServlet {
         if (isValid) {
             System.out.println(password);
 
+            boolean isAdmin = userService.getUserByName(username).get().isAdmin();
+
             Cookie user = new Cookie("username", username);
             response.addCookie(user);
-            response.sendRedirect("/makeOrder");
-        }
-        else response.sendRedirect("login.jsp");
+            if (isAdmin) {
+                user.setComment("ADMIN");
+                response.sendRedirect("/success.jsp");
+            }
+            else {
+                user.setComment("USER");
+                response.sendRedirect("/makeOrder");
+            }
+
+
+        } else response.sendRedirect("login.jsp");
 
         System.out.println(isValid);
 
