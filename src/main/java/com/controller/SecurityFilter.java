@@ -3,7 +3,6 @@ package com.controller;
 import com.dao.UserDAO;
 import com.model.User;
 import com.mysql.jdbc.Driver;
-import com.service.AuthorisationService;
 import com.service.UserService;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 
@@ -14,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Set;
 
 public class SecurityFilter implements Filter {
     private UserDAO userDAO;
