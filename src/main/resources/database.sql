@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `Dishes` (
   `id`           BIGINT(6)   NOT NULL,
-  `dishName`         VARCHAR(32) NOT NULL,
+  `dishName`     VARCHAR(32) NOT NULL,
   `dish_type_id` BIGINT(6)   NOT NULL,
   `price`        BIGINT(6)   NOT NULL
 )
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `Dishes` (
 -- Дамп данных таблицы `Dishes`
 --
 
-INSERT INTO `Dishes` (`id`, `dish`, `dish_type_id`, `price`) VALUES
+INSERT INTO `Dishes` (`id`, `dishName`, `dish_type_id`, `price`) VALUES
   (1, 'Borsch', 1, 150),
   (2, 'Kharcho', 1, 170),
   (3, 'Solyanka', 1, 200),
