@@ -24,7 +24,9 @@ public class UserService {
     }
 
     public boolean register(String username, String password) {
-        if (userDAO.getByName(username).isPresent())
+        if (password == null || username == null
+                || password.length() < 1 || username.length() < 1
+                || userDAO.getByName(username).isPresent())
             return false;
 
         return userDAO.add(username, password, false);
@@ -41,7 +43,7 @@ public class UserService {
 
         Optional<User> optional = userDAO.getByName(userName);
 
-        if (optional.isPresent()) {
+        if (optional.isPresent() || password != null || password.length() < 1) {
             boolean isAdmin = userDAO.getByName(userName).get().isAdmin();
             userDAO.update(userName, password, isAdmin);
 
@@ -64,8 +66,7 @@ public class UserService {
         return false;
     }
 
-    public Optional<User> getUserByName(String username)
-    {
+    public Optional<User> getUserByName(String username) {
         return userDAO.getByName(username);
     }
 }
