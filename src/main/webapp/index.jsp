@@ -28,8 +28,6 @@
         <!-- language -->
         <div class="icon-header col_header">
             <a href="#">Ru</a> <a href="#">Eng</a>
-
-
         </div>
     </div>
 
