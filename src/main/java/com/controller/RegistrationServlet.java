@@ -40,15 +40,15 @@ public class RegistrationServlet extends HttpServlet {
 
 
         RequestDispatcher dispatcher = request
-                .getRequestDispatcher("/registration.jsp");
-        if (dispatcher != null){
+                .getRequestDispatcher("/join.jsp");
+        if (dispatcher != null) {
             dispatcher.forward(request, response);
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("registration.jsp").include(request, response);
+        request.getRequestDispatcher("join.jsp").include(request, response);
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
@@ -59,11 +59,8 @@ public class RegistrationServlet extends HttpServlet {
             Cookie user = new Cookie("username", username);
             response.addCookie(user);
             response.sendRedirect("/makeOrder");
-            return;
-        }
 
-
-//        response.sendRedirect("/success.jsp");
+        } else response.sendRedirect("login_error.jsp");
 
 //        System.out.println(isValid);
 
