@@ -7,6 +7,7 @@
     <groupId>epamteam6</groupId>
     <artifactId>restaurant-web</artifactId>
     <version>1.0</version>
+    <packaging>war</packaging>
     <build>
         <plugins>
             <plugin>
