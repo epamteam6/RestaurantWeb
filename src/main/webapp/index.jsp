@@ -9,26 +9,19 @@
     <title>Order Page</title>
 </head>
 
-<form method="post" action="MainServlet">
-    <h1>
-        <font size="5" color="black">Sing in, please</font>
-        <br>
-    </h1>
-    <table border="2" width="2" bgcolor="#d3d3d3" style="color:black">
-        <tr>
-            <td><b>Username</b></td>
-            <td><input class="button" type="text" name="username"></td>
-        </tr>
-        <tr>
-            <td><b>Password</b></td>
-            <td><input class="button" type="password" name="password"></td>
-        </tr>
-        <tr>
-            <td><input class="button" type="submit" value="Sing in"></td>
-        </tr>
-    </table>
 
-</form>
+    <h1><font size="7" color="black">Epam Restaurant:</font></h1>
+
+    <h1><font size="4" color="black">to continue choose:</font></h1>
+    <br>
+    <form method="post" action="login">
+        <input class="button" style="width: 30%" type="submit" value="Login in system">
+    </form>
+
+    <form method="post" action="registration">
+        <input class="button" style="width: 30%" type="submit" value="Registration">
+    </form>
+
 
 </body>
 </html>

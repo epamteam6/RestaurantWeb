@@ -47,6 +47,13 @@ public class OrderServlet extends HttpServlet {
 
           menuService = MenuService.getInstance();
           orderService = OrderService.getInstance();
+
+/*          menuService.setDishTypeDAO(dishTypeDAO);
+          menuService.setDishDAO(dishDAO);
+          orderService.setUserDAO(userDAO);
+          orderService.setOrderDAO(orderDAO);
+          orderService.setDishOrderDAO(dishOrderDAO);
+          orderService.setDishDAO(dishDAO);*/
       } catch (SQLException e) {
           e.printStackTrace();
       }
