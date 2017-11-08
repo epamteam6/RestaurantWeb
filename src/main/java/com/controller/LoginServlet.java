@@ -68,7 +68,7 @@ public class LoginServlet extends HttpServlet {
             response.addCookie(user);
             if (isAdmin) {
                 user.setComment("ADMIN");
-                response.sendRedirect("/success.jsp");
+                response.sendRedirect("/confirmation");
             }
             else {
                 user.setComment("USER");

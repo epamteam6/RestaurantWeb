@@ -79,5 +79,14 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
         <url-pattern>/makeOrder</url-pattern>
     </filter-mapping>
 
+    <servlet>
+        <servlet-name>ConfirmationServlet</servlet-name>
+        <servlet-class>com.controller.ConfirmationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ConfirmationServlet</servlet-name>
+        <url-pattern>/confirmation</url-pattern>
+    </servlet-mapping>
+
 
 </web-app>

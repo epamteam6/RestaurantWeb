@@ -95,14 +95,14 @@ public class OrderServiceTest {
         service.orderDetails("Ivan", Order.Status.CREATED);
     }
 
-    @Test(expected = NoSuchElementException.class)
+    /*@Test(expected = NoSuchElementException.class)
     public void showOrdersWithDetailsNoOrders() {
 
         when(userDAOMock.getByName("Ivan")).thenReturn(Optional.of(users.get(0)));
         when(orderDAOMock.getByUserAndStatus(1, Order.Status.CREATED)).thenReturn(new ArrayList<>());
 
         service.orderDetails("Ivan", Order.Status.CREATED);
-    }
+    }*/
 
 
     @Test
