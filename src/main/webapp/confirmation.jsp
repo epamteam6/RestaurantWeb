@@ -9,7 +9,7 @@
     <title>Order Page</title>
 </head>
 <body>
-<h3>Hello, ${username}! Confirm orders!</h3>
+<h3>Hello, Admin! Confirm orders!</h3>
 <form method="post" action="confirmation">
     <table>
         <tr>
