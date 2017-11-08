@@ -61,9 +61,9 @@ public class LoginServlet extends HttpServlet {
             response.addCookie(user);
             response.sendRedirect("/makeOrder");
         }
-        else response.sendRedirect("login.jsp");
+//        else response.sendRedirect("login_error.jsp");
 
-        System.out.println(isValid);
+//        System.out.println(isValid);
 
     }
 }

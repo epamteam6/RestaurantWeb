@@ -6,12 +6,12 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=windows-1256">
-    <title>Order Page</title>
+    <title>Sing in</title>
 </head>
 
-<form method="post" action="login">
+<form method="post" action="registration">
     <h1>
-        <font size="5" color="black">Sing in, please</font>
+        <font size="5" color="black">Create an account, please</font>
         <br>
     </h1>
     <table border="2" width="2" bgcolor="#d3d3d3" style="color:black">
@@ -24,7 +24,7 @@
             <td><input class="button" type="password" name="password"></td>
         </tr>
         <tr>
-            <td><input class="button" type="submit" value="Sing in"></td>
+            <td><input class="button" type="submit" value="Join"></td>
         </tr>
     </table>
 
