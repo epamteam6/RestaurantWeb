@@ -63,4 +63,9 @@ public class UserService {
 
         return false;
     }
+
+    public Optional<User> getUserByName(String username)
+    {
+        return userDAO.getByName(username);
+    }
 }
