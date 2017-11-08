@@ -22,7 +22,7 @@ public class LoginServlet extends HttpServlet {
     private UserDAO userDAO;
 
     {
-        try {
+        try {//we're planining to make connection pool instead of this
             SimpleDriverDataSource dataSource = new SimpleDriverDataSource(new Driver(),
                     "jdbc:mysql://localhost:3306/food?serverTimezone=UTC&verifyServerCertificate=false&useSSL=true", "root", "root");
 
@@ -42,7 +42,7 @@ public class LoginServlet extends HttpServlet {
 
         RequestDispatcher dispatcher = request
                 .getRequestDispatcher("/login.jsp");
-        if (dispatcher != null) {
+        if (dispatcher != null){
             dispatcher.forward(request, response);
         }
     }
@@ -60,10 +60,10 @@ public class LoginServlet extends HttpServlet {
             Cookie user = new Cookie("username", username);
             response.addCookie(user);
             response.sendRedirect("/makeOrder");
+        }
+        else response.sendRedirect("login.jsp");
 
-        } else response.sendRedirect("login_error.jsp");
-
-//        System.out.println(isValid);
+        System.out.println(isValid);
 
     }
 }

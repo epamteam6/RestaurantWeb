@@ -30,7 +30,7 @@ public class OrderServlet extends HttpServlet {
     private DishOrderDAO dishOrderDAO;
 
     {
-        try {
+        try { //we're planining to make connection pool instead of this
             SimpleDriverDataSource dataSource = new SimpleDriverDataSource(new Driver(),
                     "jdbc:mysql://localhost:3306/food?serverTimezone=UTC&verifyServerCertificate=false&useSSL=true", "root", "root");
 
@@ -49,12 +49,6 @@ public class OrderServlet extends HttpServlet {
             menuService = MenuService.getInstance();
             orderService = OrderService.getInstance();
 
-/*          menuService.setDishTypeDAO(dishTypeDAO);
-          menuService.setDishDAO(dishDAO);
-          orderService.setUserDAO(userDAO);
-          orderService.setOrderDAO(orderDAO);
-          orderService.setDishOrderDAO(dishOrderDAO);
-          orderService.setDishDAO(dishDAO);*/
         } catch (SQLException e) {
             e.printStackTrace();
         }
