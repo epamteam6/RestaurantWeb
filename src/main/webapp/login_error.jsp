@@ -48,13 +48,10 @@
     <div id="main-section">
         <!-- Slider -->
         <div id="btn-slide-index">
-            <h4 class="title-l">Epam Restaurant</h4>
+
+            <h2 class="title-l">Epam Restaurant</h2>
             <h6>&nbsp;</h6>
-
-
-            <h2 class="title-l">Error occurred while session creation</h2>
-
-            <h6 class="title-s">You entered illegal data. Try again please.</h6>
+            <h6 class="title-s">You entered illegal data. Try again please</h6>
             <h6>&nbsp;</h6>
             <a href="join.jsp" class="btn1">JOIN</a>
             <a href="login.jsp" class="btn2">LOG IN</a>
