@@ -54,7 +54,7 @@ public class SecurityFilter implements Filter {
         if (logged) {
             chain.doFilter(request, response);
         } else {
-            res.sendRedirect("/");
+            res.sendRedirect("login_error.jsp");
         }
 
     }

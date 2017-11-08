@@ -6,13 +6,13 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=windows-1256">
-    <title>Order Page</title>
+    <title>Try again</title>
 </head>
 
 
-<h1><font size="7" color="black">Epam Restaurant:</font></h1>
+<h1><font size="7" color="black">Error occurred while session creation:</font></h1>
 
-<h1><font size="4" color="black">to continue choose:</font></h1>
+<h1><font size="4" color="black">You entered illegal data. Try again please:</font></h1>
 
 <body>
 
