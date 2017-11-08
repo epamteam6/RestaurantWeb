@@ -23,6 +23,15 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
 
+    <filter>
+        <filter-name>SecurityFilter</filter-name>
+        <filter-class>com.controller.SecurityFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>SecurityFilter</filter-name>
+        <url-pattern>/makeOrder</url-pattern>
+    </filter-mapping>
+
     <servlet>
         <servlet-name>OrderServlet</servlet-name>
         <servlet-class>com.controller.OrderServlet</servlet-class>

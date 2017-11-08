@@ -67,6 +67,7 @@ public class OrderServlet extends HttpServlet {
                 System.out.println(value);
             }
         }
+
         menu = menuService.getMenu();
 
 
