@@ -64,6 +64,8 @@ public class LoginServlet extends HttpServlet {
 
             boolean isAdmin = userService.getUserByName(username).get().isAdmin();
 
+            request.getSession().setAttribute("loggedInUser", username); //we need it for session management
+
             Cookie user = new Cookie("username", username);
             response.addCookie(user);
             if (isAdmin) {
