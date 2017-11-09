@@ -1,42 +1,109 @@
-<%@ page import="java.util.ArrayList" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page isELIgnored ="false" %>
-<%@ page session="true" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=windows-1256">
-    <title>Order Page</title>
-</head>
-<body>
-<h3>Hello, ${username}! Choose your favorite dishes!</h3>
+<%@include file="header.jsp" %>
+
+<head><title>Make order</title></head>
+
+
+<!-- Title Menu page -->
+<section>
+    <div class="bg-title-sub-page bg-menu-page-01">
+        <div class="wrap-title-sub-page">
+            <h2 class="title-l">Make Order</h2>
+            <h6 class="title-s">Home / Make Order</h6>
+        </div>
+    </div>
+</section>
+
+<section class="restyle-menu-03 home-onepage-menu content-reservation-03 pad-bt-80">
 <form method="post" action="makeOrder">
-    <table>
-        <c:forEach var="item1" items="${menu}">
-            <tr>
-                <td colspan="3"><center><c:out value="${item1.key}" /></center></td>
-            </tr>
-            <c:forEach var="item2" items="${item1.value}">
-                <tr>
-                    <td width="112px"><c:out value="${item2.key}" /></td>
-                    <td width="112px"><c:out value="${item2.value}" /></td>
 
-                    <td align="center" width="12px">
-                        <input type="number" name="${item2.key}"
-                               value="0" min="0" max="100"/>
-                    </td>
-                </tr>
-                <tr></tr>
-            </c:forEach>
+    <!-- Our menu 1-->
+    <c:forEach var="menu" items="${menu}">
 
-        </c:forEach>
 
-        <tr>
-            <td colspan="3" align="right"><input class="button" type="submit" value="Make order"></td>
-        </tr>
+        <section class="restyle-menu-03 home-onepage-menu content-reservation-03 pad-bt-80">
 
-    </table>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-content col-sm-10 col-md-8 col-lg-5">
+                        <div class="img-reservation-03 hover-img">
+                            <img src="${pageContext.request.contextPath}/resources/images/menu-03-img-01.jpg"
+                                 alt="img-menu"/>
+                        </div>
+                    </div>
+
+                    <div class="col-content col-sm-10 col-md-8 col-lg-7">
+                        <div class="col-right-reservation-03">
+                            <!-- title our menu -->
+                            <div class="wrap-title-our-menu row">
+                                <div class="col-12 title-our-menu">
+                                    <h6>try &amp; discover</h6>
+                                    <h2><c:out value="${menu.key}"/></h2>
+                                </div>
+                            </div>
+
+
+                            <!-- list food -->
+                            <div class="wrap-list-food">
+                                <div class="row list-food">
+                                    <div class="col-12">
+                                        <!-- item food -->
+                                        <c:forEach var="dishType" items="${menu.value}">
+
+                                            <div class="item-food row wow fadeInRight" data-wow-delay="0.2s">
+                                                <div class="col-12 col-sm-10 text-list-food ">
+                                                    <div class="name-price row">
+                                                        <div class="name-food col-12 col-sm-auto"><a
+                                                                class="hover-link-color"
+                                                                href="./product-detail.html"><c:out
+                                                                value="${dishType.key}"/></a></div>
+                                                        <div class="line-food col">
+                                                            <div class="add-line-run"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-12 col-sm-12 info-food">
+                                                            About
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="price-food col-12 col-sm-2">&#36;<c:out
+                                                        value="${dishType.value}"/>
+                                                    <input type="number" name="${dishType.key}"
+                                                           value="0" min="0" max="100"/>
+                                                </div>
+                                            </div>
+
+                                        </c:forEach>
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </c:forEach>
+
+
+    <section>
+        <div class="container">
+            <div class="wrap-btn-login col-md-2">
+                <button class="btn-with-bg" type="submit">Place Order</button>
+            </div>
+        </div>
+    </section>
+
 </form>
+
+</section>
+
+<%@include file="footer.jsp" %>
+
 </body>
 </html>
 

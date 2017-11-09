@@ -52,12 +52,20 @@
                     <li><a href="about.jsp">About us</a>
                     </li>
 
-                    <li><a href="index.html">Your account</a>
+                    <li><a href="index.html">${username}</a>
                         <ul class="sub_menu">
-                            <li><a href="login.html">Login</a></li>
-                            <li><a href="join.html">Join</a></li>
+                            <li><a href="login.html">My orders</a></li>
+                            <li><a href="#" onclick="">Log Out</a></li>
                         </ul>
                     </li>
+
+                    <li>
+                    <form action="" method="post">
+                        <input type="submit" value="Logout" >
+                    </form>
+                    </li>
+
+
                 </ul>
             </nav>
         </div>
