@@ -20,7 +20,7 @@ public class UnPaidOrdersServlet extends HttpServlet {
 
     private UserService userService = UserService.getInstance();
     private OrderService orderService = OrderService.getInstance();
-    private Map<String, Map<Long, Map<String, Long>>> usersOrders;
+    private List<List> usersOrders;
     private List<Long> orderNumbers;
 
 
@@ -31,7 +31,7 @@ public class UnPaidOrdersServlet extends HttpServlet {
         List<User> allUsers = userService.getUserDAO().getAll();
         System.out.println(allUsers);
 
-        usersOrders = new HashMap<>();
+        usersOrders = new ArrayList<>();
         orderNumbers = new ArrayList<>();
 
         for (User user : allUsers) {
@@ -39,8 +39,13 @@ public class UnPaidOrdersServlet extends HttpServlet {
             if (!ordersDetails.isEmpty()) {
                 for (Long number : ordersDetails.keySet()) {
                     orderNumbers.add(number);
+                    List details = new ArrayList();
+                    details.add(user.getUserName());
+                    details.add(number);
+                    details.add(ordersDetails.get(number));
+                    details.add(orderService.getOrderDAO().getById(number).get().getTotalSum());
+                    usersOrders.add(details);
                 }
-                usersOrders.put(user.getUserName(), ordersDetails);
             }
         }
 

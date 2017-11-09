@@ -25,11 +25,9 @@ import java.util.Map;
 
 public class ConfirmationServlet extends HttpServlet {
 
-    private Map<String, Map<String, Long>> menu;
     private UserService userService = UserService.getInstance();
     private OrderService orderService = OrderService.getInstance();
     private OrderStatusService orderStatusService = OrderStatusService.getInstance();
-    //private Map<String, Map<Long, Map<String, Long>>> usersOrders;
     private List<List> usersOrders;
     private List<Long> orderNumbers;
 
@@ -41,7 +39,6 @@ public class ConfirmationServlet extends HttpServlet {
         List<User> allUsers = userService.getUserDAO().getAll();
         System.out.println(allUsers);
 
-        //usersOrders = new HashMap<>();
         usersOrders = new ArrayList<>();
         orderNumbers = new ArrayList<>();
 

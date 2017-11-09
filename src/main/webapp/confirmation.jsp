@@ -13,6 +13,7 @@
 <form method="post" action="confirmation">
     <table>
         <tr>
+            <td width="112px"><c:out value="Number" /></td>
             <td width="112px"><c:out value="UserName" /></td>
             <td width="112px"><c:out value="Order ID" /></td>
             <td width="112px"><c:out value="Dish and Amount" /></td>
@@ -20,6 +21,7 @@
         </tr>
         <c:forEach var="item1" items="${usersOrders}" varStatus="i">
         <tr>
+            <td width="112px"><c:out value="${i.count}" /></td>
             <td width="112px"><c:out value="${item1[0]}" /></td>
             <td width="112px"><c:out value="${item1[1]}" /></td>
             <td width="112px">
@@ -37,10 +39,10 @@
         </c:forEach>
 
         <tr>
-        <td colspan="3" align="right"><input name="Confirm" type="submit" value="Confirm"></td>
+        <td colspan="4" align="right"><input name="Confirm" type="submit" value="Confirm"></td>
         </tr>
         <tr>
-            <td colspan="3" align="right"><input name="Cancel" type="submit" value="Cancel"></td>
+            <td colspan="4" align="right"><input name="Cancel" type="submit" value="Cancel"></td>
         </tr>
 
     </table>

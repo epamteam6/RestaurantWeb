@@ -16,33 +16,31 @@
             <td width="112px"><c:out value="UserName" /></td>
             <td width="112px"><c:out value="Order ID" /></td>
             <td width="112px"><c:out value="Dish and Amount" /></td>
+            <td width="112px"><c:out value="Sum" /></td>
         </tr>
-        <c:forEach var="item1" items="${usersOrders}">
-        <tr>
-            <c:forEach var="item2" items="${item1.value}">
-                <td width="112px"><c:out value="${item1.key}" /></td>
-                <td width="112px"><c:out value="${item2.key}" /></td>
+        <c:forEach var="item1" items="${usersOrders}" varStatus="i">
+            <tr>
+                <td width="112px"><c:out value="${item1[0]}" /></td>
+                <td width="112px"><c:out value="${item1[1]}" /></td>
                 <td width="112px">
-                <c:forEach var="item3" items="${item2.value}">
+                    <c:forEach var="item2" items="${item1[2]}">
 
-                        <c:out value="${item3.key} :" />
-                        <c:out value="${item3.value}"/>
+                        <c:out value="${item2.key} :" />
+                        <c:out value="${item2.value}"/>
                         </br>
-                </c:forEach>
-
+                    </c:forEach>
                 </td>
+                <td width="112px"><c:out value="${item1[3]}" /></td>
 
-                <td><input type="checkbox" name="${item2.key}" ></td>
-                </tr>
-            </c:forEach>
-
+                <td><input type="checkbox" name="${item1[1]}" ></td>
+            </tr>
         </c:forEach>
 
         <tr>
-        <td colspan="3" align="right"><input name="Bill" type="submit" value="Make bill"></td>
+        <td colspan="4" align="right"><input name="Bill" type="submit" value="Make bill"></td>
         </tr>
         <tr>
-            <td colspan="3" align="right"><input name="Cancel" type="submit" value="Cancel"></td>
+            <td colspan="4" align="right"><input name="Cancel" type="submit" value="Cancel"></td>
         </tr>
 
     </table>
