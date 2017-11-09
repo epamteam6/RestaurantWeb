@@ -64,7 +64,7 @@ public class ConfirmationServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("make_order.jsp").include(request, response);
+        request.getRequestDispatcher("confirmation.jsp").include(request, response);
 
 
         System.out.println(orderNumbers);

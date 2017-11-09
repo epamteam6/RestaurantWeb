@@ -115,6 +115,15 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
         <servlet-name>ConfirmationServlet</servlet-name>
         <url-pattern>/confirmation</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>BillCreationServlet</servlet-name>
+        <servlet-class>com.controller.BillCreationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BillCreationServlet</servlet-name>
+        <url-pattern>/bill</url-pattern>
+    </servlet-mapping>
+
 
 
 </web-app>
