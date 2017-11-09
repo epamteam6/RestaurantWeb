@@ -37,26 +37,19 @@ public class SecurityFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
-        Cookie[] cookies = req.getCookies();
-        List<User> allUsers = userDAO.getAll();
-        boolean logged = false;
-        for (User user : allUsers) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("username")) {
-                    if (user.getUserName().equals(cookie.getValue())) {
-                        logged = true;
-                    }
-                }
+        // for details look at doPost method in LoginServlet & LogoutServlet
+        Object o = req.getSession().getAttribute("loggedInUser");
+        if (o != null) {
+            String username = (String) o;
+            boolean logged = userService.getUserByName(username).isPresent();
+
+            if (logged) {
+                chain.doFilter(request, response);
+                return;
             }
         }
 
-
-        if (logged) {
-            chain.doFilter(request, response);
-        } else {
-            res.sendRedirect("login_error.jsp");
-        }
-
+        res.sendRedirect("login_error.jsp");
     }
 
     public void destroy() {

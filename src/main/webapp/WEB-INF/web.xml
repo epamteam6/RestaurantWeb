@@ -24,6 +24,15 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>com.controller.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>RegistrationServlet</servlet-name>
         <servlet-class>com.controller.RegistrationServlet</servlet-class>
     </servlet>
@@ -76,6 +85,15 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
     </filter>
     <filter-mapping>
         <filter-name>SecurityFilter</filter-name>
+        <url-pattern>/makeOrder</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>SessionSecurityFilter</filter-name>
+        <filter-class>com.controller.SessionSecurityFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>SessionSecurityFilter</filter-name>
         <url-pattern>/makeOrder</url-pattern>
     </filter-mapping>
 
