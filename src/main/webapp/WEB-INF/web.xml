@@ -148,6 +148,15 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
         <url-pattern>/done</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>CreatedOrdersServlet</servlet-name>
+        <servlet-class>com.controller.CreatedOrdersServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CreatedOrdersServlet</servlet-name>
+        <url-pattern>/createdOrders</url-pattern>
+    </servlet-mapping>
+
 
 
     <filter>
