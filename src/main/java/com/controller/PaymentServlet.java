@@ -37,8 +37,7 @@ public class PaymentServlet extends HttpServlet {
         String username = (String) request.getSession().getAttribute("loggedInUser");
         Optional<User> optional = userService.getUserByName(username);
 
-        if (!optional.isPresent())
-        {
+        if (!optional.isPresent()) {
             response.sendRedirect("make_order.jsp");
             return;
         }

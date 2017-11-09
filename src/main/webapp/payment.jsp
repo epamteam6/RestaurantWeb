@@ -15,6 +15,7 @@
         <tr>
             <td width="112px"><c:out value="Order ID" /></td>
             <td width="112px"><c:out value="Dish and Amount" /></td>
+            <td width="112px"><c:out value="Total price" /></td>
         </tr>
         <c:forEach var="item1" items="${usersOrders}">
         <tr>
