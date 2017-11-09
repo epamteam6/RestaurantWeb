@@ -46,6 +46,38 @@ Title:	18px/1.6 'OpenSans', Arial, sans-serif;
 	background-position-y: bottom;
 }
 
+#error-login-section {
+
+	width:100%;
+	display:block;
+	height:100vh;
+	background-image:url("../../resources/images/slide-02.jpg");
+	position:static;
+	background-position-y: bottom;
+}
+
+#error-session-section {
+
+	width:100%;
+	display:block;
+	height:100vh;
+	background-image:url("../../resources/images/slide-03.jpg");
+	position:static;
+	background-position-y: bottom;
+}
+
+
+#main-404-section {
+
+	width:100%;
+	display:block;
+	height:100vh;
+	background-image:url("../../resources/images/slide-04.jpg");
+	position:static;
+	background-position-y: bottom;
+}
+
+
 #btn-slide-index {
 	text-align: center !important;
     padding-top: 15%;
