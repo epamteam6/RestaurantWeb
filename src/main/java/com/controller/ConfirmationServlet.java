@@ -28,7 +28,7 @@ public class ConfirmationServlet extends HttpServlet {
     private Map<String, Map<String, Long>> menu;
     private UserService userService = UserService.getInstance();
     private OrderService orderService = OrderService.getInstance();
-    private OrderStatusService orderStatusService  = OrderStatusService.getInstance();
+    private OrderStatusService orderStatusService = OrderStatusService.getInstance();
     private Map<String, Map<Long, Map<String, Long>>> usersOrders;
     private List<Long> orderNumbers;
 
@@ -66,11 +66,21 @@ public class ConfirmationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("make_order.jsp").include(request, response);
 
+
         System.out.println(orderNumbers);
+
+        Boolean isConfirmButtonClicked = request.getParameter("Confirm") != null;
+        Boolean isCancelButtonClicked = request.getParameter("Cancel") != null;
+
         for (Long number : orderNumbers) {
             Boolean checked = request.getParameter(number.toString()) != null;
             if (checked) {
-                orderStatusService.confirmOrder(number);
+                if (isConfirmButtonClicked) {
+                    orderStatusService.confirmOrder(number);
+                }
+                if (isCancelButtonClicked) {
+                    orderService.cancelOrder(number);
+                }
             }
         }
 

@@ -39,7 +39,10 @@
         </c:forEach>
 
         <tr>
-            <td colspan="3" align="right"><input class="button" type="submit" value="Confirm"></td>
+        <td colspan="3" align="right"><input name="Confirm" type="submit" value="Confirm"></td>
+        </tr>
+        <tr>
+            <td colspan="3" align="right"><input name="Cancel" type="submit" value="Cancel"></td>
         </tr>
 
     </table>
