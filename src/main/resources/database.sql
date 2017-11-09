@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `Dishes_Orders` (
   `order_id` BIGINT(6)  NOT NULL,
   `dish_id`  BIGINT(6)  NOT NULL,
   `amount`   INT(4)     NOT NULL,
-  `price`    BIGINT(11) NOT NULL
+  `item_sum` BIGINT(11) NOT NULL
 )
   ENGINE = InnoDB
   AUTO_INCREMENT = 6
@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS `Dishes_Orders` (
 -- Дамп данных таблицы `Dishes_Orders`
 --
 
-INSERT INTO `Dishes_Orders` (`id`, `order_id`, `dish_id`, `amount`, `price`) VALUES
+INSERT INTO `Dishes_Orders` (`id`, `order_id`, `dish_id`, `amount`, `item_sum`) VALUES
   (1, 1, 2, 2, 340),
   (2, 1, 6, 1, 135),
   (3, 2, 4, 1, 180),
