@@ -111,6 +111,9 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
         <url-pattern>/payment</url-pattern>
         <url-pattern>/payment.jsp</url-pattern>
         <url-pattern>/payment.html</url-pattern>
+        <url-pattern>/bill.html</url-pattern>
+        <url-pattern>/bill</url-pattern>
+        <url-pattern>/bill_creation.jsp</url-pattern>
     </filter-mapping>
 
     <servlet>
