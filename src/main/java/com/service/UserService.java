@@ -32,6 +32,7 @@ public class UserService {
             e.printStackTrace();
         }
     }
+
     public static UserService getInstance() {
         if (instance == null)
             instance = new UserService();

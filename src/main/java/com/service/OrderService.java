@@ -3,12 +3,14 @@ package com.service;
 import com.dao.*;
 import com.model.*;
 import com.mysql.jdbc.Driver;
+import lombok.Data;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.*;
 
+@Data
 public class OrderService {
     private OrderDAO orderDAO = OrderDAO.getInstance();
     private UserDAO userDAO = UserDAO.getInstance();
@@ -35,22 +37,6 @@ public class OrderService {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    public void setOrderDAO(OrderDAO orderDAO) {
-        this.orderDAO = orderDAO;
-    }
-
-    public void setUserDAO(UserDAO userDAO) {
-        this.userDAO = userDAO;
-    }
-
-    public void setDishDAO(DishDAO dishDAO) {
-        this.dishDAO = dishDAO;
-    }
-
-    public void setDishOrderDAO(DishOrderDAO dishOrderDAO) {
-        this.dishOrderDAO = dishOrderDAO;
     }
 
     public static OrderService getInstance() {
