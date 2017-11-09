@@ -58,17 +58,28 @@ public class OrderServlet extends HttpServlet {
 
         for (Map.Entry<String, Map<String, Long>> pair : menu.entrySet()) {
             for (Map.Entry<String, Long> subPair : pair.getValue().entrySet()) {
-                Long amount = Long.parseLong(request.getParameter(subPair.getKey()));
+                String number = request.getParameter(subPair.getKey());
+                if (number.equals("")) {
+                    continue;
+                }
+                Long amount = Long.parseLong(number);
                 if (amount > 0) {
                     dishNamesAndAmount.put(subPair.getKey(), amount);
                     System.out.println(subPair.getKey() + " " + amount);
                 }
             }
+
         }
 
-
-        orderService.makeOrder(userName, dishNamesAndAmount);
-        response.sendRedirect("/success.jsp");
+        if (!dishNamesAndAmount.isEmpty()) {
+            orderService.makeOrder(userName, dishNamesAndAmount);
+            response.sendRedirect("/success.jsp");
+        }
+        else {
+            request.setAttribute("message","You didn't choose any dishes!");
+         //   request.getRequestDispatcher("/make_order.jsp").include(request, response);
+            response.sendRedirect("/make_order.jsp");
+        }
 
     }
 }
