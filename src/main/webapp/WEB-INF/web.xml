@@ -152,7 +152,6 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
         <url-pattern>/ready</url-pattern>
     </servlet-mapping>
 
-
     <servlet>
         <servlet-name>PaymentServlet</servlet-name>
         <servlet-class>com.controller.PaymentServlet</servlet-class>
@@ -160,6 +159,15 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
     <servlet-mapping>
         <servlet-name>PaymentServlet</servlet-name>
         <url-pattern>/payment</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>DoneOrdersServlet</servlet-name>
+        <servlet-class>com.controller.DoneOrdersServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DoneOrdersServlet</servlet-name>
+        <url-pattern>/done</url-pattern>
     </servlet-mapping>
 
 
