@@ -80,7 +80,7 @@ public class PaymentServlet extends HttpServlet {
         }
 
 
-        response.sendRedirect("/done_page.jsp");
+        response.sendRedirect("done");
 
     }
 }
