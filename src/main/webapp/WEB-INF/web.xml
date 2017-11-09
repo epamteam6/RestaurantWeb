@@ -94,28 +94,6 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
         <url-pattern>/join.html</url-pattern>
     </filter-mapping>
 
-    <filter>
-        <filter-name>SecurityFilter</filter-name>
-        <filter-class>com.controller.SecurityFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>SecurityFilter</filter-name>
-        <url-pattern>/makeOrder</url-pattern>
-        <url-pattern>/make_order.jsp</url-pattern>
-        <url-pattern>/logout</url-pattern>
-        <url-pattern>/logout.jsp</url-pattern>
-        <url-pattern>/logout.html</url-pattern>
-        <url-pattern>/confirmation.html</url-pattern>
-        <url-pattern>/confirmation.jsp</url-pattern>
-        <url-pattern>/confirmation</url-pattern>
-        <url-pattern>/payment</url-pattern>
-        <url-pattern>/payment.jsp</url-pattern>
-        <url-pattern>/payment.html</url-pattern>
-        <url-pattern>/bill.html</url-pattern>
-        <url-pattern>/bill</url-pattern>
-        <url-pattern>/bill_creation.jsp</url-pattern>
-    </filter-mapping>
-
     <servlet>
         <servlet-name>ConfirmationServlet</servlet-name>
         <servlet-class>com.controller.ConfirmationServlet</servlet-class>
@@ -171,4 +149,29 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
     </servlet-mapping>
 
 
+
+    <filter>
+        <filter-name>SecurityFilter</filter-name>
+        <filter-class>com.controller.SecurityFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>SecurityFilter</filter-name>
+        <url-pattern>/makeOrder</url-pattern>
+        <url-pattern>/make_order.jsp</url-pattern>
+        <url-pattern>/logout</url-pattern>
+        <url-pattern>/logout.html</url-pattern>
+        <url-pattern>/logout.jsp</url-pattern>
+        <url-pattern>/confirmation</url-pattern>
+        <url-pattern>/confirmation.html</url-pattern>
+        <url-pattern>/confirmation.jsp</url-pattern>
+        <url-pattern>/payment</url-pattern>
+        <url-pattern>/payment.html</url-pattern>
+        <url-pattern>/payment.jsp</url-pattern>
+        <url-pattern>/bill</url-pattern>
+        <url-pattern>/bill.html</url-pattern>
+        <url-pattern>/bill_creation.jsp</url-pattern>
+        <url-pattern>/done</url-pattern>
+        <url-pattern>/done.html</url-pattern>
+        <url-pattern>/done_page.jsp</url-pattern>
+    </filter-mapping>
 </web-app>
