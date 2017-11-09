@@ -164,12 +164,18 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
         <url-pattern>/confirmation</url-pattern>
         <url-pattern>/confirmation.html</url-pattern>
         <url-pattern>/confirmation.jsp</url-pattern>
-        <url-pattern>/payment</url-pattern>
-        <url-pattern>/payment.html</url-pattern>
-        <url-pattern>/payment.jsp</url-pattern>
         <url-pattern>/bill</url-pattern>
         <url-pattern>/bill.html</url-pattern>
         <url-pattern>/bill_creation.jsp</url-pattern>
+        <url-pattern>/ready</url-pattern>
+        <url-pattern>/ready.html</url-pattern>
+        <url-pattern>/completed_orders.jsp</url-pattern>
+        <url-pattern>/payment</url-pattern>
+        <url-pattern>/payment.html</url-pattern>
+        <url-pattern>/payment.jsp</url-pattern>
+        <url-pattern>/paid</url-pattern>
+        <url-pattern>/paid.html</url-pattern>
+        <url-pattern>/paid_orders.jsp</url-pattern>
         <url-pattern>/done</url-pattern>
         <url-pattern>/done.html</url-pattern>
         <url-pattern>/done_page.jsp</url-pattern>
