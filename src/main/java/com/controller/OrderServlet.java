@@ -20,40 +20,9 @@ import java.util.Map;
 public class OrderServlet extends HttpServlet {
 
     private Map<String, Map<String, Long>> menu;
-    private MenuService menuService;
-    private OrderService orderService;
-    private SimpleDriverDataSource dataSource;
-    private OrderDAO orderDAO;
-    private UserDAO userDAO;
-    private DishTypeDAO dishTypeDAO;
-    private DishDAO dishDAO;
-    private DishOrderDAO dishOrderDAO;
+    private MenuService menuService = MenuService.getInstance();
+    private OrderService orderService = OrderService.getInstance();
     private String userName = "";
-
-    {
-        try { //we're planining to make connection pool instead of this
-            SimpleDriverDataSource dataSource = new SimpleDriverDataSource(new Driver(),
-                    "jdbc:mysql://localhost:3306/food?serverTimezone=UTC&verifyServerCertificate=false&useSSL=true", "root", "root");
-
-            dishDAO = DishDAO.getInstance();
-            userDAO = UserDAO.getInstance();
-            orderDAO = OrderDAO.getInstance();
-            dishOrderDAO = DishOrderDAO.getInstance();
-            dishTypeDAO = DishTypeDAO.getInstance();
-
-            userDAO.setDataSource(dataSource);
-            orderDAO.setDataSource(dataSource);
-            dishDAO.setDataSource(dataSource);
-            dishOrderDAO.setDataSource(dataSource);
-            dishTypeDAO.setDataSource(dataSource);
-
-            menuService = MenuService.getInstance();
-            orderService = OrderService.getInstance();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -95,7 +64,6 @@ public class OrderServlet extends HttpServlet {
                     System.out.println(subPair.getKey() + " " + amount);
                 }
             }
-
         }
 
 

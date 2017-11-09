@@ -15,23 +15,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class SecurityFilter implements Filter {
-    private UserDAO userDAO;
-    private UserService userService;
-    private SimpleDriverDataSource dataSource;
 
-    {
-        try {//we're planining to make connection pool instead of this
-            SimpleDriverDataSource dataSource = new SimpleDriverDataSource(new Driver(),
-                    "jdbc:mysql://localhost:3306/food?serverTimezone=UTC&verifyServerCertificate=false&useSSL=true", "root", "root");
-
-            userDAO = UserDAO.getInstance();
-            userDAO.setDataSource(dataSource);
-            userService = UserService.getInstance();
-            userService.setUserDAO(userDAO);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+    private UserService userService = UserService.getInstance();
 
     /**
      * SecurityFilter does not allow to open any page before log in (Use this filter in most cases)

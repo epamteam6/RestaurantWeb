@@ -12,23 +12,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class SessionSecurityFilter implements Filter {
-    private UserDAO userDAO;
-    private UserService userService;
-    private SimpleDriverDataSource dataSource;
 
-    {
-        try {//we're planining to make connection pool instead of this
-            SimpleDriverDataSource dataSource = new SimpleDriverDataSource(new Driver(),
-                    "jdbc:mysql://localhost:3306/food?serverTimezone=UTC&verifyServerCertificate=false&useSSL=true", "root", "root");
-
-            userDAO = UserDAO.getInstance();
-            userDAO.setDataSource(dataSource);
-            userService = UserService.getInstance();
-            userService.setUserDAO(userDAO);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+    private UserService userService = UserService.getInstance();
 
     /**
      * SessionSecurityFilter does not allow to register or log in until previous session finished (logged out)

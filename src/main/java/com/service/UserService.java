@@ -2,8 +2,11 @@ package com.service;
 
 import com.dao.UserDAO;
 import com.model.User;
+import com.mysql.jdbc.Driver;
 import lombok.Data;
+import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 
+import java.sql.SQLException;
 import java.util.Optional;
 
 @Data
@@ -16,6 +19,19 @@ public class UserService {
 
     }
 
+    {
+        try {
+            SimpleDriverDataSource dataSource = new SimpleDriverDataSource(new Driver(),
+                    "jdbc:mysql://localhost:3306/food?serverTimezone=UTC&verifyServerCertificate=false&useSSL=true", "root", "root");
+
+
+            userDAO.setDataSource(dataSource);
+            setUserDAO(userDAO);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     public static UserService getInstance() {
         if (instance == null)
             instance = new UserService();

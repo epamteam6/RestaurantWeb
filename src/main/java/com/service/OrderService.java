@@ -2,7 +2,10 @@ package com.service;
 
 import com.dao.*;
 import com.model.*;
+import com.mysql.jdbc.Driver;
+import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -14,6 +17,24 @@ public class OrderService {
     private static OrderService instance;
 
     private OrderService() {
+    }
+
+    {
+        try {
+            SimpleDriverDataSource dataSource = new SimpleDriverDataSource(new Driver(),
+                    "jdbc:mysql://localhost:3306/food?serverTimezone=UTC&verifyServerCertificate=false&useSSL=true", "root", "root");
+
+            dishDAO.setDataSource(dataSource);
+            orderDAO.setDataSource(dataSource);
+            userDAO.setDataSource(dataSource);
+            dishOrderDAO.setDataSource(dataSource);
+            setDishDAO(dishDAO);
+            setOrderDAO(orderDAO);
+            setUserDAO(userDAO);
+            setDishOrderDAO(dishOrderDAO);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setOrderDAO(OrderDAO orderDAO) {

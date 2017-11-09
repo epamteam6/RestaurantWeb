@@ -2,7 +2,10 @@ package com.service;
 
 import com.dao.OrderDAO;
 import com.model.Order;
+import com.mysql.jdbc.Driver;
+import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 
+import java.sql.SQLException;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -23,6 +26,17 @@ public class OrderStatusService {
             instance = new OrderStatusService();
         }
         return instance;
+    }
+
+    {
+        try {
+            SimpleDriverDataSource dataSource = new SimpleDriverDataSource(new Driver(),
+                    "jdbc:mysql://localhost:3306/food?serverTimezone=UTC&verifyServerCertificate=false&useSSL=true", "root", "root");
+            orderDAO.setDataSource(dataSource);
+            setOrderDAO(orderDAO);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 

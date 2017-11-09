@@ -18,28 +18,8 @@ import java.sql.SQLException;
 public class LoginServlet extends HttpServlet {
 
 
-    private AuthorisationService authorisationService;
-    private UserService userService;
-    private SimpleDriverDataSource dataSource;
-    private UserDAO userDAO;
-
-    {
-        try {//we're planining to make connection pool instead of this
-            SimpleDriverDataSource dataSource = new SimpleDriverDataSource(new Driver(),
-                    "jdbc:mysql://localhost:3306/food?serverTimezone=UTC&verifyServerCertificate=false&useSSL=true", "root", "root");
-
-            userDAO = UserDAO.getInstance();
-
-            userDAO.setDataSource(dataSource);
-            authorisationService = AuthorisationService.getInstance();
-            authorisationService.setUserDAO(userDAO);
-
-            userService = UserService.getInstance();
-            userService.setUserDAO(userDAO);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+    private AuthorisationService authorisationService = AuthorisationService.getInstance();
+    private UserService userService = UserService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
