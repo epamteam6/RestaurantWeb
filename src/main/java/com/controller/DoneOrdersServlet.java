@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 
-public class PaymentServlet extends HttpServlet {
+public class DoneOrdersServlet extends HttpServlet {
 
     private Map<String, Map<String, Long>> menu;
     private UserService userService = UserService.getInstance();
@@ -44,7 +44,7 @@ public class PaymentServlet extends HttpServlet {
         }
 
         User user = optional.get();
-        Map<Long, Map<String, Long>> ordersDetails = orderService.orderDetails(user.getUserName(), Order.Status.READY);
+        Map<Long, Map<String, Long>> ordersDetails = orderService.orderDetails(user.getUserName(), Order.Status.PAID);
         if (!ordersDetails.isEmpty()) {
             for (Long number : ordersDetails.keySet()) {
                 orderNumbers.add(number);
@@ -54,7 +54,7 @@ public class PaymentServlet extends HttpServlet {
 
         request.setAttribute("usersOrders", usersOrders);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/payment.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/done_page.jsp");
         if (dispatcher != null) {
             dispatcher.forward(request, response);
         }
@@ -63,24 +63,7 @@ public class PaymentServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("payment.jsp").include(request, response);
-
-
-        System.out.println(orderNumbers);
-
-        Boolean isConfirmButtonClicked = request.getParameter("Pay") != null;
-
-        for (Long number : orderNumbers) {
-            Boolean checked = request.getParameter(number.toString()) != null;
-            if (checked) {
-                if (isConfirmButtonClicked) {
-                    orderStatusService.payOrder(number);
-                }
-            }
-        }
-
-
-        response.sendRedirect("done");
+        request.getRequestDispatcher("done_page.jsp").include(request, response);
 
     }
 }
