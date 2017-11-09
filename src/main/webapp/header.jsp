@@ -5,14 +5,15 @@
 <%@ page session="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+
 <head>
-    <link rel="stylesheet" type="text/css" href="resources/vendor/bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="resources/css/main.css" />
-    <link rel="stylesheet" type="text/css" href="resources/vendor/css-hamburgers/hamburgers.min.css" />
+    <link rel="stylesheet" type="text/css" href="resources/vendor/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="resources/css/main.css"/>
+    <link rel="stylesheet" type="text/css" href="resources/vendor/css-hamburgers/hamburgers.min.css"/>
 
     <!--Mobile Specific Metas-->
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 </head>
 
 <body class="animsition">
@@ -22,7 +23,7 @@
     <div id="wrap_header">
         <!-- Logo -->
         <div class="logo col_header">
-            <a href="index.jsp"><img alt="logo-rest" src="resources/images/icons/logo.png" /></a>
+            <a href="index.jsp"><img alt="logo-rest" src="resources/images/icons/logo.png"/></a>
         </div>
         <!-- Menu -->
         <div class="main_nav">
@@ -60,9 +61,9 @@
                     </li>
 
                     <li>
-                    <form action="" method="post">
-                        <input type="submit" value="Logout" >
-                    </form>
+                        <form action="logout" method="post">
+                            <input type="submit" value="Logout">
+                        </form>
                     </li>
 
 
@@ -75,7 +76,6 @@
             <a href="#">Ru</a> <a href="#">Eng</a>
 
 
-
         </div>
     </div>
 
@@ -84,7 +84,7 @@
 
         <!-- Logo moblie -->
         <div class="logo-mobile">
-            <a href="index.jsp"><img alt="logo-deli" src="resources/images/icons/logo-mobile.png" /></a>
+            <a href="index.jsp"><img alt="logo-deli" src="resources/images/icons/logo-mobile.png"/></a>
         </div>
 
         <!-- Button show menu -->
