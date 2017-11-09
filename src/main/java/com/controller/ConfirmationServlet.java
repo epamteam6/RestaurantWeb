@@ -1,9 +1,13 @@
 package com.controller;
 
 import com.dao.*;
+import com.model.Order;
+import com.model.User;
 import com.mysql.jdbc.Driver;
 import com.service.MenuService;
 import com.service.OrderService;
+import com.service.OrderStatusService;
+import com.service.UserService;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 
 import javax.servlet.RequestDispatcher;
@@ -14,21 +18,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class OrderServlet extends HttpServlet {
+public class ConfirmationServlet extends HttpServlet {
 
     private Map<String, Map<String, Long>> menu;
-    private MenuService menuService;
     private OrderService orderService;
+    private OrderStatusService orderStatusService;
+    private UserService userService;
     private SimpleDriverDataSource dataSource;
     private OrderDAO orderDAO;
     private UserDAO userDAO;
     private DishTypeDAO dishTypeDAO;
     private DishDAO dishDAO;
     private DishOrderDAO dishOrderDAO;
-    private String userName = "";
+    private Map<String, Map<Long, Map<String, Long>>> usersOrders;
+    private List<Long> orderNumbers;
 
     {
         try { //we're planining to make connection pool instead of this
@@ -36,19 +44,28 @@ public class OrderServlet extends HttpServlet {
                     "jdbc:mysql://localhost:3306/food?serverTimezone=UTC&verifyServerCertificate=false&useSSL=true", "root", "root");
 
             dishDAO = DishDAO.getInstance();
-            userDAO = UserDAO.getInstance();
-            orderDAO = OrderDAO.getInstance();
-            dishOrderDAO = DishOrderDAO.getInstance();
-            dishTypeDAO = DishTypeDAO.getInstance();
-
-            userDAO.setDataSource(dataSource);
-            orderDAO.setDataSource(dataSource);
             dishDAO.setDataSource(dataSource);
+            dishOrderDAO = DishOrderDAO.getInstance();
             dishOrderDAO.setDataSource(dataSource);
-            dishTypeDAO.setDataSource(dataSource);
+            orderDAO = OrderDAO.getInstance();
+            orderDAO.setDataSource(dataSource);
+            userDAO = UserDAO.getInstance();
+            userDAO.setDataSource(dataSource);
+            orderDAO = OrderDAO.getInstance();
+            orderDAO.setDataSource(dataSource);
 
-            menuService = MenuService.getInstance();
+            userService = UserService.getInstance();
+            userService.setUserDAO(userDAO);
+
             orderService = OrderService.getInstance();
+            orderService.setDishDAO(dishDAO);
+            orderService.setDishOrderDAO(dishOrderDAO);
+            orderService.setOrderDAO(orderDAO);
+            orderService.setUserDAO(userDAO);
+
+            orderStatusService = OrderStatusService.getInstance();
+            orderStatusService.setOrderDAO(orderDAO);
+
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -59,47 +76,44 @@ public class OrderServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        Cookie[] cookies = request.getCookies();
+        List<User> allUsers = userDAO.getAll();
+        System.out.println(allUsers);
 
+        usersOrders = new HashMap<>();
+        orderNumbers = new ArrayList<>();
 
-        for (int i = 0; i < cookies.length; i++) {
-            if (cookies[i].getName().equals("username")) {
-                userName = cookies[i].getValue();
-                System.out.println(userName);
+        for (User user : allUsers) {
+            Map<Long, Map<String, Long>> ordersDetails = orderService.orderDetails(user.getUserName(), Order.Status.CREATED);
+            if (!ordersDetails.isEmpty()) {
+                for (Long number : ordersDetails.keySet()) {
+                    orderNumbers.add(number);
+                }
+                usersOrders.put(user.getUserName(), ordersDetails);
             }
         }
 
-        menu = menuService.getMenu();
+        request.setAttribute("usersOrders", usersOrders);
 
-
-        request.setAttribute("menu", menu);
-        request.setAttribute("username", userName);
-
-        RequestDispatcher dispatcher = request
-                .getRequestDispatcher("/make_order.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/confirmation.jsp");
         if (dispatcher != null) {
             dispatcher.forward(request, response);
         }
+
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("make_order.jsp").include(request, response);
         Map<String, Long> dishNamesAndAmount = new HashMap<>();
-
-        for (Map.Entry<String, Map<String, Long>> pair : menu.entrySet()) {
-            for (Map.Entry<String, Long> subPair : pair.getValue().entrySet()) {
-                Long amount = Long.parseLong(request.getParameter(subPair.getKey()));
-                if (amount > 0) {
-                    dishNamesAndAmount.put(subPair.getKey(), amount);
-                    System.out.println(subPair.getKey() + " " + amount);
-                }
+        System.out.println(orderNumbers);
+        for (Long number : orderNumbers) {
+            Boolean checked = request.getParameter(number.toString()) != null;
+            if (checked) {
+                orderStatusService.confirmOrder(number);
             }
-
         }
 
 
-        orderService.makeOrder(userName, dishNamesAndAmount);
         response.sendRedirect("/success.jsp");
 
     }
