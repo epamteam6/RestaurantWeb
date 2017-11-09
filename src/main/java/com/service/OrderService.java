@@ -79,7 +79,7 @@ public class OrderService {
 
 
     public Map<Long, Map<String, Long>> orderDetails(String username, Order.Status status) {
-
+        Map<Long, Map<String, Long>> result = new HashMap<>();
         Optional<User> user = userDAO.getByName(username);
         if (!user.isPresent()) {
             throw new NoSuchElementException("There is no such user!");
@@ -89,11 +89,12 @@ public class OrderService {
         List<Order> orders = orderDAO.getByUserAndStatus(userId, status);
 
         if (orders.size() < 1) {
-            throw new NoSuchElementException("There is no order with this status!");
+            return  result;
+            //throw new NoSuchElementException("There is no order with this status!");
         }
 
 
-        Map<Long, Map<String, Long>> result = new HashMap<>();
+
         Map<String, Long> orderAndAmount;
 
         for (Order order : orders) {

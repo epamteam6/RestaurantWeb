@@ -26,7 +26,7 @@ public class OrderStatusService {
     }
 
 
-    public void confirmOrder(int id) {
+    public void confirmOrder(long id) {
         Optional<Order> order = orderDAO.getById(id);
         if (order.isPresent()) {
             order.get().setStatus(Order.Status.CONFIRMED);
@@ -38,7 +38,7 @@ public class OrderStatusService {
 
     }
 
-    public void payOrder(int id) {
+    public void payOrder(long id) {
         Optional<Order> order = orderDAO.getById(id);
         if (order.isPresent()) {
             order.get().setStatus(Order.Status.PAID);
@@ -49,7 +49,7 @@ public class OrderStatusService {
         }
     }
 
-    public void makeBill(int id) {
+    public void makeBill(long id) {
         Optional<Order> order = orderDAO.getById(id);
         if (order.isPresent()) {
             order.get().setStatus(Order.Status.READY);
