@@ -6,7 +6,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <head>
-    <title>Try again</title>
+    <title>Login error</title>
 
     <link rel="stylesheet" type="text/css" href="resources/vendor/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/main.css" />
@@ -45,13 +45,13 @@
 
 
 <section>
-    <div id="main-section">
+    <div id="error-login-section">
         <!-- Slider -->
         <div id="btn-slide-index">
 
-            <h2 class="title-l">Epam Restaurant</h2>
+            <h2 class="title-l">Enter correct data</h2>
             <h6>&nbsp;</h6>
-            <h6 class="title-s">You entered illegal data. Try again please</h6>
+            <h6 class="title-s">Epam Restaurant</h6>
             <h6>&nbsp;</h6>
             <a href="join.jsp" class="btn1">JOIN</a>
             <a href="login.jsp" class="btn2">LOG IN</a>

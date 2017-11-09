@@ -1,5 +1,48 @@
+<!DOCTYPE html>
+<%@ page import="java.util.ArrayList" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page isELIgnored="false" %>
+<%@ page session="true" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%@include file="header.jsp"%>
+<head>
+    <title>Join us</title>
+
+    <link rel="stylesheet" type="text/css" href="resources/vendor/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/main.css" />
+    <!--Mobile Specific Metas-->
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+
+<body class="animsition">
+
+<header>
+    <!-- Header desktop -->
+    <div id="wrap_header">
+        <!-- Logo -->
+        <div class="logo col_header">
+            <a href="index.jsp"><img alt="logo-deli" src="resources/images/icons/logo.png"/></a>
+        </div>
+        <!-- language -->
+        <div class="icon-header col_header">
+            <a href="#">Ru</a> <a href="#">Eng</a>
+        </div>
+    </div>
+
+    <!-- Header Mobile -->
+    <div id="wrap_header_mobile">
+
+        <!-- Logo moblie -->
+        <div class="logo-mobile">
+            <a href="index.jsp"><img alt="logo-deli" src="resources/images/icons/logo-mobile.png"/></a>
+        </div>
+
+    </div>
+
+</header>
+
 
 <head><title>Log in</title></head>
 
@@ -42,7 +85,16 @@
     </div>
 </section>
 
-<%@include file="footer.jsp"%>
+<footer>
+    <div class="wrap-bottom-footer">
+        <div class="container">
+            <div class="bottom-footer row justify-content-between">
+                <div class="col-12 col-sm-7">© 2017 All rights reserved</div>
+                <div class="col-12 col-sm-5"><span>Privacy policy</span><span>Terms of use</span></div>
+            </div>
+        </div>
+    </div>
+</footer>
 
 </body>
 </html>
