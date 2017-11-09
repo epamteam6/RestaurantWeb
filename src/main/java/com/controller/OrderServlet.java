@@ -27,7 +27,6 @@ public class OrderServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         Cookie[] cookies = request.getCookies();
 
 
@@ -74,11 +73,11 @@ public class OrderServlet extends HttpServlet {
         if (!dishNamesAndAmount.isEmpty()) {
             orderService.makeOrder(userName, dishNamesAndAmount);
             response.sendRedirect("/success.jsp");
-        }
-        else {
-            request.setAttribute("message","You didn't choose any dishes!");
-         //   request.getRequestDispatcher("/make_order.jsp").include(request, response);
-            response.sendRedirect("/make_order.jsp");
+        } else {
+            request.setAttribute("message", "You didn't choose any dishes!");
+            request.setAttribute("menu", menu);
+            request.setAttribute("username", userName);
+            request.getRequestDispatcher("/make_order.jsp").forward(request, response);
         }
 
     }
