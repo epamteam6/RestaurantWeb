@@ -1,20 +1,17 @@
 package com.controller;
 
 import com.dao.UserDAO;
-import com.model.User;
 import com.mysql.jdbc.Driver;
 import com.service.UserService;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 
 import javax.servlet.*;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
 
-public class SecurityFilter implements Filter {
+public class SessionSecurityFilter implements Filter {
     private UserDAO userDAO;
     private UserService userService;
     private SimpleDriverDataSource dataSource;
@@ -34,7 +31,7 @@ public class SecurityFilter implements Filter {
     }
 
     /**
-     * SecurityFilter does not allow to open any page before log in (Use this filter in most cases)
+     * SessionSecurityFilter does not allow to register or log in until previous session finished (logged out)
      */
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
@@ -47,12 +44,12 @@ public class SecurityFilter implements Filter {
             boolean logged = userService.getUserByName(username).isPresent();
 
             if (logged) {
-                chain.doFilter(request, response);
+                res.sendRedirect("session_error.jsp");
                 return;
             }
         }
 
-        res.sendRedirect("login_error.jsp");
+        chain.doFilter(request, response);
     }
 
     public void destroy() {

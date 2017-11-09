@@ -56,9 +56,12 @@ public class RegistrationServlet extends HttpServlet {
         if (isValid) {
             System.out.println(password);
 
+            request.getSession().setAttribute("loggedInUser", username); //we need it for session management
+
             Cookie user = new Cookie("username", username);
             response.addCookie(user);
             response.sendRedirect("/makeOrder");
+            System.out.println("I AM HERE");
 
         } else response.sendRedirect("login_error.jsp");
 

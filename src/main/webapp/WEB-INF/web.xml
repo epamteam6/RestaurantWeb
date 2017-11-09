@@ -38,7 +38,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
     </servlet>
     <servlet-mapping>
         <servlet-name>RegistrationServlet</servlet-name>
-        <url-pattern>/registration</url-pattern>
+        <url-pattern>/join</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -79,6 +79,21 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
         <url-pattern>*.css</url-pattern>
     </servlet-mapping>
 
+    <!--USE IT ONLY FOE SESSION CONTROL!!!-->
+    <filter>
+        <filter-name>SessionSecurityFilter</filter-name>
+        <filter-class>com.controller.SessionSecurityFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>SessionSecurityFilter</filter-name>
+        <url-pattern>/login</url-pattern>
+        <url-pattern>/login.jsp</url-pattern>
+        <url-pattern>/login.html</url-pattern>
+        <url-pattern>/join</url-pattern>
+        <url-pattern>/join.jsp</url-pattern>
+        <url-pattern>/join.html</url-pattern>
+    </filter-mapping>
+
     <filter>
         <filter-name>SecurityFilter</filter-name>
         <filter-class>com.controller.SecurityFilter</filter-class>
@@ -86,15 +101,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
     <filter-mapping>
         <filter-name>SecurityFilter</filter-name>
         <url-pattern>/makeOrder</url-pattern>
-    </filter-mapping>
-
-    <filter>
-        <filter-name>SessionSecurityFilter</filter-name>
-        <filter-class>com.controller.SessionSecurityFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>SessionSecurityFilter</filter-name>
-        <url-pattern>/makeOrder</url-pattern>
+        <url-pattern>/make_order.jsp</url-pattern>
+        <url-pattern>/logout</url-pattern>
+        <url-pattern>/logout.jsp</url-pattern>
+        <url-pattern>/logout.html</url-pattern>
     </filter-mapping>
 
 

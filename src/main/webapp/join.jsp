@@ -17,7 +17,7 @@
     <div class="container">
 
         <!-- 01/Check out method -->
-        <form method="post" action="registration">
+        <form method="post" action="join">
             <div class="wrap-check-out-method">
                 <h4 class="medium-text-2">Join</h4>
                 <p>
