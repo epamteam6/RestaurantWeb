@@ -61,7 +61,6 @@ public class RegistrationServlet extends HttpServlet {
             Cookie user = new Cookie("username", username);
             response.addCookie(user);
             response.sendRedirect("/makeOrder");
-            System.out.println("I AM HERE");
 
         } else response.sendRedirect("login_error.jsp");
 
