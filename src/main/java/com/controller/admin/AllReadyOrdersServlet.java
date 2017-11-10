@@ -51,7 +51,7 @@ public class AllReadyOrdersServlet extends HttpServlet {
 
         request.setAttribute("usersOrders", usersOrders);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("view/admin/all_ready_orders.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("admin_ready_orders.jsp");
         if (dispatcher != null) {
             dispatcher.forward(request, response);
         }
@@ -60,7 +60,7 @@ public class AllReadyOrdersServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("view/admin/all_ready_orders.jsp").include(request, response);
+        request.getRequestDispatcher("admin_ready_orders.jsp").include(request, response);
 
 
         System.out.println(orderNumbers);
@@ -72,6 +72,6 @@ public class AllReadyOrdersServlet extends HttpServlet {
             }
         }
 
-        response.sendRedirect("/success.jsp");
+        response.sendRedirect("success");
     }
 }

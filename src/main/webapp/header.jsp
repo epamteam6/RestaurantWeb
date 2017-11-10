@@ -30,7 +30,7 @@
             <nav class="menu col_header">
                 <ul class="main_menu">
 
-                    <li><a href="view/user/create_order.jsp">Menu</a>
+                    <li><a href="user_create_order">Menu</a>
                         <ul class="sub_menu">
                             <li><a href="menu.html">Our Menu</a></li>
                             <li><a href="product-detail.html">Product Detail</a></li>
@@ -50,18 +50,18 @@
                             <li><a href="make-bill.html">Make bill</a></li>
                         </ul>
                     </li>
-                    <li><a href="about.jsp">About us</a>
+                    <li><a href="about">About us</a>
                     </li>
 
                     <li><a href="index.html">${username}</a>
                         <ul class="sub_menu">
-                            <li><a href="login.html">My orders</a></li>
-                            <li><a href="#" onclick="">Log Out</a></li>
+                            <li><a href="login">My orders</a></li>
+                            <li><a href="session_logout" onclick="">Log Out</a></li>
                         </ul>
                     </li>
 
                     <li>
-                        <form action="logout" method="post">
+                        <form action="session_logout" method="post">
                             <input type="submit" value="Logout">
                         </form>
                     </li>
@@ -123,7 +123,7 @@
                     <i class="arrow-main-menu fa fa-angle-right" aria-hidden="true"></i>
                     <ul class="sub-menu">
                         <li><a href="new-order.html">New order</a></li>
-                        <li><a href="make-bill.html">Make bill</a></li>
+                        <li><a href="admin_bill_creation">Make bill</a></li>
                     </ul>
                 </li>
                 <li>
@@ -133,8 +133,8 @@
                     <a href="index.html">Your account</a>
                     <i class="arrow-main-menu fa fa-angle-right" aria-hidden="true"></i>
                     <ul class="sub-menu">
-                        <li><a href="login.html">Login</a></li>
-                        <li><a href="join.html">Join</a></li>
+                        <li><a href="session_login">Login</a></li>
+                        <li><a href="session_join">Join</a></li>
                     </ul>
                 </li>
             </ul>

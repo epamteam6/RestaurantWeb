@@ -1,4 +1,4 @@
-package com.controller;
+package com.controller.user;
 
 import com.model.Order;
 import com.model.User;
@@ -39,7 +39,7 @@ public class DoneOrdersServlet extends HttpServlet {
 
         if (!optional.isPresent())
         {
-            response.sendRedirect("create_order.jsp");
+            response.sendRedirect("user_create_order.jsp");
             return;
         }
 
@@ -54,16 +54,16 @@ public class DoneOrdersServlet extends HttpServlet {
 
         request.setAttribute("usersOrders", usersOrders);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/done_page.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("user_done_orders.jsp");
+
         if (dispatcher != null) {
             dispatcher.forward(request, response);
         }
-
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("done_page.jsp").include(request, response);
 
+        request.getRequestDispatcher("user_done_orders.jsp").include(request, response);
     }
 }

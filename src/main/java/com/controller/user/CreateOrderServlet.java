@@ -44,7 +44,7 @@ public class CreateOrderServlet extends HttpServlet {
         request.setAttribute("username", userName);
 
         RequestDispatcher dispatcher = request
-                .getRequestDispatcher("view/user/create_order.jsp");
+                .getRequestDispatcher("user_create_order.jsp");
         if (dispatcher != null) {
             dispatcher.forward(request, response);
         }
@@ -52,7 +52,7 @@ public class CreateOrderServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("view/user/create_order.jsp").include(request, response);
+        request.getRequestDispatcher("user_create_order.jsp").include(request, response);
         Map<String, Long> dishNamesAndAmount = new HashMap<>();
 
         for (Map.Entry<String, Map<String, Long>> pair : menu.entrySet()) {
@@ -72,12 +72,13 @@ public class CreateOrderServlet extends HttpServlet {
 
         if (!dishNamesAndAmount.isEmpty()) {
             orderService.makeOrder(userName, dishNamesAndAmount);
-            response.sendRedirect("/success.jsp");
+            response.sendRedirect("success.jsp");
         } else {
             request.setAttribute("message", "You didn't choose any dishes!");
             request.setAttribute("menu", menu);
             request.setAttribute("username", userName);
-            request.getRequestDispatcher("view/user/create_order.jsp").forward(request, response);
+
+            request.getRequestDispatcher("user_create_order").forward(request, response);
         }
 
     }

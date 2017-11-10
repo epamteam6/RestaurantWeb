@@ -14,7 +14,7 @@ public class MainServlet extends HttpServlet {
             throws ServletException, IOException {
 
         RequestDispatcher dispatcher = request
-                .getRequestDispatcher("/index.jsp");
+                .getRequestDispatcher("index.jsp");
         if (dispatcher != null){
             dispatcher.forward(request, response);
         }

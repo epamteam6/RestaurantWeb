@@ -1,4 +1,4 @@
-package com.controller;
+package com.controller.user;
 
 import com.model.Order;
 import com.model.User;
@@ -38,7 +38,7 @@ public class CreatedOrdersServlet extends HttpServlet {
         Optional<User> optional = userService.getUserByName(username);
 
         if (!optional.isPresent()) {
-            response.sendRedirect("create_order.jsp");
+            response.sendRedirect("user_create_order.jsp");
             return;
         }
 
@@ -53,7 +53,7 @@ public class CreatedOrdersServlet extends HttpServlet {
 
         request.setAttribute("usersOrders", usersOrders);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/created_orders.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("user_created_orders.jsp");
         if (dispatcher != null) {
             dispatcher.forward(request, response);
         }
@@ -62,6 +62,6 @@ public class CreatedOrdersServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        request.getRequestDispatcher("/created_orders.jsp").include(request, response);
+        request.getRequestDispatcher("user_created_orders.jsp").include(request, response);
     }
 }

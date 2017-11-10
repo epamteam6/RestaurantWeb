@@ -5,7 +5,7 @@
 </head>
 <body>
 <h3>Are you sure you want to log out?</h3>
-<form action="" method="post">
+<form action="session_logout" method="post">
     <input type="submit" value="Logout" >
 </form>
 </body>

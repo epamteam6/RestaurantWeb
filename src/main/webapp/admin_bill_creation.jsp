@@ -9,8 +9,8 @@
     <title>Order Page</title>
 </head>
 <body>
-<h3>Hello, Admin!</h3>
-<form method="post" action="ready">
+<h3>Hello, Admin! Confirm orders!</h3>
+<form method="post" action="admin_bill_creation">
     <table>
         <tr>
             <td width="112px"><c:out value="UserName" /></td>
@@ -36,6 +36,9 @@
             </tr>
         </c:forEach>
 
+        <tr>
+        <td colspan="4" align="right"><input name="Bill" type="submit" value="Make bill"></td>
+        </tr>
         <tr>
             <td colspan="4" align="right"><input name="Cancel" type="submit" value="Cancel"></td>
         </tr>

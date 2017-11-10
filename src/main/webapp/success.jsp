@@ -1,15 +1,21 @@
-<%@ page import="java.util.ArrayList" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page isELIgnored ="false" %>
-<%@ page session="true" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=windows-1256">
-    <title>Success Page</title>
-</head>
-<body>
-hurray!!
+
+<%@include file="header.jsp"%>
+
+<head><title>Success</title></head>
+
+<section>
+    <div id="main-success-section">
+        <!-- Slider -->
+        <div id="btn-slide-index">
+            <h2 class="title-l">Success</h2>
+            <h6>&nbsp;</h6>
+            <h6 class="title-s">Epam Restaurant</h6>
+
+            <h6>&nbsp;</h6>
+        </div>
+
+    </div>
+</section>
+
 </body>
 </html>
-

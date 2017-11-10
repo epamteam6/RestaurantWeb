@@ -54,7 +54,7 @@ public class BillCreationServlet extends HttpServlet {
 
         request.setAttribute("usersOrders", usersOrders);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/view/admin/bill_creation.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("admin_bill_creation.jsp");
         if (dispatcher != null) {
             dispatcher.forward(request, response);
         }
@@ -63,7 +63,7 @@ public class BillCreationServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/view/admin/bill_creation.jsp").include(request, response);
+        request.getRequestDispatcher("admin_bill_creation.jsp").include(request, response);
 
 
         System.out.println(orderNumbers);
@@ -84,7 +84,7 @@ public class BillCreationServlet extends HttpServlet {
         }
 
 
-        response.sendRedirect("/success.jsp");
+        response.sendRedirect("success");
 
     }
 }

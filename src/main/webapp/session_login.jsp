@@ -61,7 +61,7 @@
     <div class="container">
 
         <!-- 01/Check out method -->
-        <form method="post" action="login">
+        <form method="post" action="session_login">
             <div class="wrap-check-out-method">
                 <h4 class="medium-text-2">Login</h4>
                 <p>

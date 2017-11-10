@@ -53,8 +53,8 @@
             <h6>&nbsp;</h6>
             <h6 class="title-s">Epam Restaurant</h6>
             <h6>&nbsp;</h6>
-            <a href="join.jsp" class="btn1">JOIN</a>
-            <a href="login.jsp" class="btn2">LOG IN</a>
+            <a href="session_join" class="btn1">JOIN</a>
+            <a href="session_login" class="btn2">LOG IN</a>
 
         </div>
 
