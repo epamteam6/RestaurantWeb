@@ -15,30 +15,26 @@
         <tr>
             <td width="112px"><c:out value="Order ID" /></td>
             <td width="112px"><c:out value="Dish and Amount" /></td>
-            <td width="112px"><c:out value="Total price" /></td>
+            <td width="112px"><c:out value="Sum" /></td>
         </tr>
-        <c:forEach var="item1" items="${usersOrders}">
-        <tr>
-            <c:forEach var="item2" items="${item1.value}">
-                <td width="112px"><c:out value="${item2.key}" /></td>
+        <c:forEach var="item1" items="${usersOrders}" varStatus="i">
+            <tr>
+                <td width="112px"><c:out value="${item1[0]}" /></td>
                 <td width="112px">
-                <c:forEach var="item3" items="${item2.value}">
+                    <c:forEach var="item2" items="${item1[1]}">
 
-                        <c:out value="${item3.key} :" />
-                        <c:out value="${item3.value}"/>
+                        <c:out value="${item2.key} :" />
+                        <c:out value="${item2.value}"/>
                         </br>
-                </c:forEach>
-
+                    </c:forEach>
                 </td>
-
-                <td><input type="checkbox" name="${item2.key}" ></td>
-                </tr>
-            </c:forEach>
-
+                <td><c:out value="${item1[2]}" /></td>
+                <td><input type="checkbox" name="${item1[0]}" ></td>
+            </tr>
         </c:forEach>
 
         <tr>
-        <td colspan="3" align="right"><input name="Pay" type="submit" value="Pay"></td>
+        <td colspan="4" align="right"><input name="Pay" type="submit" value="Pay"></td>
         </tr>
 
     </table>

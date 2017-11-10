@@ -20,7 +20,7 @@ public class DoneOrdersServlet extends HttpServlet {
     private UserService userService = UserService.getInstance();
     private OrderService orderService = OrderService.getInstance();
     private OrderStatusService orderStatusService = OrderStatusService.getInstance();
-    private Map<String, Map<Long, Map<String, Long>>> usersOrders;
+    private List<List> usersOrders;
     private List<Long> orderNumbers;
 
 
@@ -28,10 +28,7 @@ public class DoneOrdersServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        List<User> allUsers = userService.getUserDAO().getAll();
-        System.out.println(allUsers);
-
-        usersOrders = new HashMap<>();
+        usersOrders = new ArrayList<>();
         orderNumbers = new ArrayList<>();
 
         String username = (String) request.getSession().getAttribute("loggedInUser");
@@ -48,8 +45,12 @@ public class DoneOrdersServlet extends HttpServlet {
         if (!ordersDetails.isEmpty()) {
             for (Long number : ordersDetails.keySet()) {
                 orderNumbers.add(number);
+                List details = new ArrayList();
+                details.add(number);
+                details.add(ordersDetails.get(number));
+                details.add(orderService.getOrderDAO().getById(number).get().getTotalSum());
+                usersOrders.add(details);
             }
-            usersOrders.put(user.getUserName(), ordersDetails);
         }
 
         request.setAttribute("usersOrders", usersOrders);
