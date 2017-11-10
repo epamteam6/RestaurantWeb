@@ -38,7 +38,7 @@ public class PaymentServlet extends HttpServlet {
         Optional<User> optional = userService.getUserByName(username);
 
         if (!optional.isPresent()) {
-            response.sendRedirect("make_order.jsp");
+            response.sendRedirect("create_order.jsp");
             return;
         }
 

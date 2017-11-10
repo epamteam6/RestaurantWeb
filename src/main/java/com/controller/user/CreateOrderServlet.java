@@ -1,4 +1,4 @@
-package com.controller;
+package com.controller.user;
 
 import com.dao.*;
 import com.mysql.jdbc.Driver;
@@ -17,7 +17,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class OrderServlet extends HttpServlet {
+public class CreateOrderServlet extends HttpServlet {
 
     private Map<String, Map<String, Long>> menu;
     private MenuService menuService = MenuService.getInstance();
@@ -44,7 +44,7 @@ public class OrderServlet extends HttpServlet {
         request.setAttribute("username", userName);
 
         RequestDispatcher dispatcher = request
-                .getRequestDispatcher("/make_order.jsp");
+                .getRequestDispatcher("view/user/create_order.jsp");
         if (dispatcher != null) {
             dispatcher.forward(request, response);
         }
@@ -52,7 +52,7 @@ public class OrderServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("make_order.jsp").include(request, response);
+        request.getRequestDispatcher("view/user/create_order.jsp").include(request, response);
         Map<String, Long> dishNamesAndAmount = new HashMap<>();
 
         for (Map.Entry<String, Map<String, Long>> pair : menu.entrySet()) {
@@ -77,7 +77,7 @@ public class OrderServlet extends HttpServlet {
             request.setAttribute("message", "You didn't choose any dishes!");
             request.setAttribute("menu", menu);
             request.setAttribute("username", userName);
-            request.getRequestDispatcher("/make_order.jsp").forward(request, response);
+            request.getRequestDispatcher("view/user/create_order.jsp").forward(request, response);
         }
 
     }

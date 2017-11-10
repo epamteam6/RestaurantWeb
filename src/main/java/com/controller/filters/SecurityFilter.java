@@ -1,4 +1,4 @@
-package com.controller;
+package com.controller.filters;
 
 import com.dao.UserDAO;
 import com.model.User;

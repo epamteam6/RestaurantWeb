@@ -1,23 +1,18 @@
-package com.controller;
+package com.controller.filters;
 
-import com.dao.UserDAO;
-import com.mysql.jdbc.Driver;
+import com.model.User;
 import com.service.UserService;
-import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
+import java.util.Optional;
 
-public class SessionSecurityFilter implements Filter {
+public class RestrictionSecurityFilter implements Filter {
 
     private UserService userService = UserService.getInstance();
 
-    /**
-     * SessionSecurityFilter does not allow to register or log in until previous session finished (logged out)
-     */
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
@@ -26,22 +21,27 @@ public class SessionSecurityFilter implements Filter {
         Object o = req.getSession().getAttribute("loggedInUser");
         if (o != null) {
             String username = (String) o;
-            boolean logged = userService.getUserByName(username).isPresent();
+            Optional<User> opt = userService.getUserByName(username);
+            boolean isAdmin = false;
+            if (opt.isPresent())
+                isAdmin = opt.get().isAdmin();
 
-            if (logged) {
-                res.sendRedirect("session_error.jsp");
+            if (isAdmin) {
+                chain.doFilter(request, response);
                 return;
             }
         }
 
-        chain.doFilter(request, response);
+        res.sendRedirect("404.jsp");
     }
 
-    public void destroy() {
-    }
-
+    @Override
     public void init(FilterConfig filterConfig) throws ServletException {
+
     }
 
+    @Override
+    public void destroy() {
 
+    }
 }

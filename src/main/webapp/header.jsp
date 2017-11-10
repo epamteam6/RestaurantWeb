@@ -30,7 +30,7 @@
             <nav class="menu col_header">
                 <ul class="main_menu">
 
-                    <li><a href="make_order.jsp">Menu</a>
+                    <li><a href="view/user/create_order.jsp">Menu</a>
                         <ul class="sub_menu">
                             <li><a href="menu.html">Our Menu</a></li>
                             <li><a href="product-detail.html">Product Detail</a></li>

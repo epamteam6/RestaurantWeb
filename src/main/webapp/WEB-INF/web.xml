@@ -52,7 +52,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
 
     <servlet>
         <servlet-name>OrderServlet</servlet-name>
-        <servlet-class>com.controller.OrderServlet</servlet-class>
+        <servlet-class>com.controller.user.CreateOrderServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>OrderServlet</servlet-name>
@@ -82,7 +82,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
     <!--USE IT ONLY FOE SESSION CONTROL!!!-->
     <filter>
         <filter-name>SessionSecurityFilter</filter-name>
-        <filter-class>com.controller.SessionSecurityFilter</filter-class>
+        <filter-class>com.controller.filters.SessionSecurityFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>SessionSecurityFilter</filter-name>
@@ -96,17 +96,17 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
 
     <servlet>
         <servlet-name>ConfirmationServlet</servlet-name>
-        <servlet-class>com.controller.ConfirmationServlet</servlet-class>
+        <servlet-class>com.controller.admin.ConfirmationServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ConfirmationServlet</servlet-name>
         <url-pattern>/confirmation</url-pattern>
     </servlet-mapping>
+
     <servlet>
         <servlet-name>BillCreationServlet</servlet-name>
-        <servlet-class>com.controller.BillCreationServlet</servlet-class>
+        <servlet-class>com.controller.admin.BillCreationServlet</servlet-class>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>BillCreationServlet</servlet-name>
         <url-pattern>/bill</url-pattern>
@@ -123,7 +123,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
 
     <servlet>
         <servlet-name>UnPaidOrdersServlet</servlet-name>
-        <servlet-class>com.controller.UnPaidOrdersServlet</servlet-class>
+        <servlet-class>com.controller.admin.AllReadyOrdersServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UnPaidOrdersServlet</servlet-name>
@@ -161,7 +161,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
 
     <filter>
         <filter-name>SecurityFilter</filter-name>
-        <filter-class>com.controller.SecurityFilter</filter-class>
+        <filter-class>com.controller.filters.SecurityFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>SecurityFilter</filter-name>
@@ -188,5 +188,16 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
         <url-pattern>/done</url-pattern>
         <url-pattern>/done.html</url-pattern>
         <url-pattern>/done_page.jsp</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>RestrictionSecurityFilter</filter-name>
+        <filter-class>com.controller.filters.RestrictionSecurityFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>RestrictionSecurityFilter</filter-name>
+        <url-pattern>/bill</url-pattern>
+        <url-pattern>/confirmation</url-pattern>
+        <url-pattern>/</url-pattern>
     </filter-mapping>
 </web-app>

@@ -1,4 +1,4 @@
-<%@include file="header.jsp" %>
+<%@include file="../../header.jsp" %>
 
 <head><title>Make order</title></head>
 
@@ -103,7 +103,7 @@
 
 </section>
 
-<%@include file="footer.jsp" %>
+<%@include file="../../footer.jsp" %>
 
 </body>
 </html>

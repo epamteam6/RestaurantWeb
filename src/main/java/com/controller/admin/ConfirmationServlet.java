@@ -1,25 +1,33 @@
-package com.controller;
+package com.controller.admin;
 
+import com.dao.*;
 import com.model.Order;
 import com.model.User;
+import com.mysql.jdbc.Driver;
+import com.service.MenuService;
 import com.service.OrderService;
+import com.service.OrderStatusService;
 import com.service.UserService;
+import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class UnPaidOrdersServlet extends HttpServlet {
+public class ConfirmationServlet extends HttpServlet {
 
     private UserService userService = UserService.getInstance();
     private OrderService orderService = OrderService.getInstance();
+    private OrderStatusService orderStatusService = OrderStatusService.getInstance();
     private List<List> usersOrders;
     private List<Long> orderNumbers;
 
@@ -35,7 +43,7 @@ public class UnPaidOrdersServlet extends HttpServlet {
         orderNumbers = new ArrayList<>();
 
         for (User user : allUsers) {
-            Map<Long, Map<String, Long>> ordersDetails = orderService.orderDetails(user.getUserName(), Order.Status.READY);
+            Map<Long, Map<String, Long>> ordersDetails = orderService.orderDetails(user.getUserName(), Order.Status.CREATED);
             if (!ordersDetails.isEmpty()) {
                 for (Long number : ordersDetails.keySet()) {
                     orderNumbers.add(number);
@@ -49,9 +57,10 @@ public class UnPaidOrdersServlet extends HttpServlet {
             }
         }
 
+        System.out.println(usersOrders);
         request.setAttribute("usersOrders", usersOrders);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/completed_orders.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/confirmation.jsp");
         if (dispatcher != null) {
             dispatcher.forward(request, response);
         }
@@ -60,15 +69,23 @@ public class UnPaidOrdersServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("completed_orders.jsp").include(request, response);
+        request.getRequestDispatcher("confirmation.jsp").include(request, response);
 
 
         System.out.println(orderNumbers);
 
+        Boolean isConfirmButtonClicked = request.getParameter("Confirm") != null;
+        Boolean isCancelButtonClicked = request.getParameter("Cancel") != null;
+
         for (Long number : orderNumbers) {
             Boolean checked = request.getParameter(number.toString()) != null;
             if (checked) {
-                orderService.cancelOrder(number);
+                if (isConfirmButtonClicked) {
+                    orderStatusService.confirmOrder(number);
+                }
+                if (isCancelButtonClicked) {
+                    orderService.cancelOrder(number);
+                }
             }
         }
 

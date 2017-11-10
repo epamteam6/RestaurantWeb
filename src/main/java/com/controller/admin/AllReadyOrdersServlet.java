@@ -1,9 +1,8 @@
-package com.controller;
+package com.controller.admin;
 
 import com.model.Order;
 import com.model.User;
 import com.service.OrderService;
-import com.service.OrderStatusService;
 import com.service.UserService;
 
 import javax.servlet.RequestDispatcher;
@@ -17,12 +16,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class BillCreationServlet extends HttpServlet {
+public class AllReadyOrdersServlet extends HttpServlet {
 
-    private Map<String, Map<String, Long>> menu;
     private UserService userService = UserService.getInstance();
     private OrderService orderService = OrderService.getInstance();
-    private OrderStatusService orderStatusService = OrderStatusService.getInstance();
     private List<List> usersOrders;
     private List<Long> orderNumbers;
 
@@ -38,7 +35,7 @@ public class BillCreationServlet extends HttpServlet {
         orderNumbers = new ArrayList<>();
 
         for (User user : allUsers) {
-            Map<Long, Map<String, Long>> ordersDetails = orderService.orderDetails(user.getUserName(), Order.Status.CONFIRMED);
+            Map<Long, Map<String, Long>> ordersDetails = orderService.orderDetails(user.getUserName(), Order.Status.READY);
             if (!ordersDetails.isEmpty()) {
                 for (Long number : ordersDetails.keySet()) {
                     orderNumbers.add(number);
@@ -54,7 +51,7 @@ public class BillCreationServlet extends HttpServlet {
 
         request.setAttribute("usersOrders", usersOrders);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/bill_creation.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("view/admin/all_ready_orders.jsp");
         if (dispatcher != null) {
             dispatcher.forward(request, response);
         }
@@ -63,28 +60,18 @@ public class BillCreationServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("bill_creation.jsp").include(request, response);
+        request.getRequestDispatcher("view/admin/all_ready_orders.jsp").include(request, response);
 
 
         System.out.println(orderNumbers);
 
-        Boolean isBillButtonClicked = request.getParameter("Bill") != null;
-        Boolean isCancelButtonClicked = request.getParameter("Cancel") != null;
-
         for (Long number : orderNumbers) {
             Boolean checked = request.getParameter(number.toString()) != null;
             if (checked) {
-                if (isBillButtonClicked) {
-                    orderStatusService.makeBill(number);
-                }
-                if (isCancelButtonClicked) {
-                    orderService.cancelOrder(number);
-                }
+                orderService.cancelOrder(number);
             }
         }
 
-
         response.sendRedirect("/success.jsp");
-
     }
 }

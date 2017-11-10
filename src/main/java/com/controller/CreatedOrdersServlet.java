@@ -37,9 +37,8 @@ public class CreatedOrdersServlet extends HttpServlet {
         String username = (String) request.getSession().getAttribute("loggedInUser");
         Optional<User> optional = userService.getUserByName(username);
 
-        if (!optional.isPresent())
-        {
-            response.sendRedirect("make_order.jsp");
+        if (!optional.isPresent()) {
+            response.sendRedirect("create_order.jsp");
             return;
         }
 
@@ -58,7 +57,6 @@ public class CreatedOrdersServlet extends HttpServlet {
         if (dispatcher != null) {
             dispatcher.forward(request, response);
         }
-
     }
 
     @Override
