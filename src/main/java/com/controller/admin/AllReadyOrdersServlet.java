@@ -1,4 +1,4 @@
-package com.controller;
+package com.controller.admin;
 
 import com.model.Order;
 import com.model.User;
@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class UnPaidOrdersServlet extends HttpServlet {
+public class AllReadyOrdersServlet extends HttpServlet {
 
     private UserService userService = UserService.getInstance();
     private OrderService orderService = OrderService.getInstance();
@@ -51,7 +51,7 @@ public class UnPaidOrdersServlet extends HttpServlet {
 
         request.setAttribute("usersOrders", usersOrders);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/completed_orders.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("admin_ready_orders.jsp");
         if (dispatcher != null) {
             dispatcher.forward(request, response);
         }
@@ -60,7 +60,7 @@ public class UnPaidOrdersServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("completed_orders.jsp").include(request, response);
+        request.getRequestDispatcher("admin_ready_orders.jsp").include(request, response);
 
 
         System.out.println(orderNumbers);
@@ -72,8 +72,6 @@ public class UnPaidOrdersServlet extends HttpServlet {
             }
         }
 
-
-        response.sendRedirect("/success.jsp");
-
+        response.sendRedirect("success");
     }
 }

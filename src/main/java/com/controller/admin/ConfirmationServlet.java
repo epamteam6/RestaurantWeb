@@ -1,4 +1,4 @@
-package com.controller;
+package com.controller.admin;
 
 import com.dao.*;
 import com.model.Order;
@@ -60,7 +60,7 @@ public class ConfirmationServlet extends HttpServlet {
         System.out.println(usersOrders);
         request.setAttribute("usersOrders", usersOrders);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/confirmation.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("admin_confirmation.jsp");
         if (dispatcher != null) {
             dispatcher.forward(request, response);
         }
@@ -69,7 +69,7 @@ public class ConfirmationServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("confirmation.jsp").include(request, response);
+        request.getRequestDispatcher("admin_confirmation.jsp").include(request, response);
 
 
         System.out.println(orderNumbers);
@@ -90,7 +90,7 @@ public class ConfirmationServlet extends HttpServlet {
         }
 
 
-        response.sendRedirect("/success.jsp");
+        response.sendRedirect("success.jsp");
 
     }
 }

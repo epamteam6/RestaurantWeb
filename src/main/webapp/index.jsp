@@ -51,8 +51,8 @@
             <h2 class="title-l">Epam Restaurant</h2>
             <h6 class="title-s">the most delicious dishes you've ever enjoyed</h6>
             <h6>&nbsp;</h6>
-            <a href="join.jsp" class="btn1">JOIN</a>
-            <a href="login.jsp" class="btn2">LOG IN</a>
+            <a href="session_join" class="btn1">JOIN</a>
+            <a href="session_login" class="btn2">LOG IN</a>
 
         </div>
 

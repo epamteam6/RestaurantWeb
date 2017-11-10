@@ -1,4 +1,4 @@
-package com.controller;
+package com.controller.user;
 
 import com.model.Order;
 import com.model.User;
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 
-public class DoneOrdersServlet extends HttpServlet {
+public class CreatedOrdersServlet extends HttpServlet {
 
     private Map<String, Map<String, Long>> menu;
     private UserService userService = UserService.getInstance();
@@ -37,14 +37,13 @@ public class DoneOrdersServlet extends HttpServlet {
         String username = (String) request.getSession().getAttribute("loggedInUser");
         Optional<User> optional = userService.getUserByName(username);
 
-        if (!optional.isPresent())
-        {
-            response.sendRedirect("make_order.jsp");
+        if (!optional.isPresent()) {
+            response.sendRedirect("user_create_order.jsp");
             return;
         }
 
         User user = optional.get();
-        Map<Long, Map<String, Long>> ordersDetails = orderService.orderDetails(user.getUserName(), Order.Status.PAID);
+        Map<Long, Map<String, Long>> ordersDetails = orderService.orderDetails(user.getUserName(), Order.Status.CREATED);
         if (!ordersDetails.isEmpty()) {
             for (Long number : ordersDetails.keySet()) {
                 orderNumbers.add(number);
@@ -54,16 +53,15 @@ public class DoneOrdersServlet extends HttpServlet {
 
         request.setAttribute("usersOrders", usersOrders);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/done_page.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("user_created_orders.jsp");
         if (dispatcher != null) {
             dispatcher.forward(request, response);
         }
-
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("done_page.jsp").include(request, response);
 
+        request.getRequestDispatcher("user_created_orders.jsp").include(request, response);
     }
 }

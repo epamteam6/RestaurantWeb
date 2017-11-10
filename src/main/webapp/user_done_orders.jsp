@@ -10,7 +10,7 @@
 </head>
 <body>
 <h3>All your paid orders!</h3>
-<form method="post" action="done">
+<form method="post" action="user_done_orders">
     <table>
         <tr>
             <td width="112px"><c:out value="Order ID" /></td>

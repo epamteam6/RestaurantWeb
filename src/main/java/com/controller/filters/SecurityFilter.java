@@ -1,4 +1,4 @@
-package com.controller;
+package com.controller.filters;
 
 import com.dao.UserDAO;
 import com.model.User;
@@ -37,7 +37,7 @@ public class SecurityFilter implements Filter {
             }
         }
 
-        res.sendRedirect("login_error.jsp");
+        res.sendRedirect("session_login_error");
     }
 
     public void destroy() {

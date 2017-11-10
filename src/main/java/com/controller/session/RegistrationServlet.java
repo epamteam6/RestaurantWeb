@@ -1,7 +1,9 @@
-package com.controller;
+package com.controller.session;
 
-import com.service.AuthorisationService;
+import com.dao.UserDAO;
+import com.mysql.jdbc.Driver;
 import com.service.UserService;
+import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,19 +12,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 
-public class LoginServlet extends HttpServlet {
+public class RegistrationServlet extends HttpServlet {
 
-
-    private AuthorisationService authorisationService = AuthorisationService.getInstance();
     private UserService userService = UserService.getInstance();
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 
         RequestDispatcher dispatcher = request
-                .getRequestDispatcher("/login.jsp");
+                .getRequestDispatcher("session_join.jsp");
         if (dispatcher != null) {
             dispatcher.forward(request, response);
         }
@@ -30,33 +31,23 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("login.jsp").include(request, response);
+        request.getRequestDispatcher("session_join.jsp").include(request, response);
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        boolean isValid = authorisationService.singIn(username, password);
+        boolean isValid = userService.register(username, password);
         if (isValid) {
             System.out.println(password);
-
-            boolean isAdmin = userService.getUserByName(username).get().isAdmin();
 
             request.getSession().setAttribute("loggedInUser", username); //we need it for session management
 
             Cookie user = new Cookie("username", username);
             response.addCookie(user);
-            if (isAdmin) {
-                user.setComment("ADMIN");
-                response.sendRedirect("/confirmation");
-            }
-            else {
-                user.setComment("USER");
-                response.sendRedirect("/makeOrder");
-            }
+            response.sendRedirect("user_create_order");
 
+        } else response.sendRedirect("session_login_error");
 
-        } else response.sendRedirect("login_error.jsp");
-
-        System.out.println(isValid);
+//        System.out.println(isValid);
 
     }
 }

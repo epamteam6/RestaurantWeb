@@ -67,13 +67,13 @@
                             <li><a href="make-bill.html">Make bill</a></li>
                         </ul>
                     </li>
-                    <li><a href="about.html">About Us</a>
+                    <li><a href="about.jsp">About Us</a>
                     </li>
 
                     <li><a href="index.html">Your account</a>
                         <ul class="sub_menu">
-                            <li><a href="login.html">Login</a></li>
-                            <li><a href="join.html">Join</a></li>
+                            <li><a href="session_login">Login</a></li>
+                            <li><a href="session_join">Join</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -143,8 +143,8 @@
                     <a href="index.html">Your account</a>
                     <i class="arrow-main-menu fa fa-angle-right" aria-hidden="true"></i>
                     <ul class="sub-menu">
-                        <li><a href="login.html">Login</a></li>
-                        <li><a href="join.html">Join</a></li>
+                        <li><a href="session_login">Login</a></li>
+                        <li><a href="session_join">Join</a></li>
                     </ul>
                 </li>
             </ul>

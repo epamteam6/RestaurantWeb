@@ -10,7 +10,7 @@
 </head>
 <body>
 <h3>Hello, Admin!</h3>
-<form method="post" action="paid">
+<form method="post" action="admin_ready_orders">
     <table>
         <tr>
             <td width="112px"><c:out value="UserName" /></td>

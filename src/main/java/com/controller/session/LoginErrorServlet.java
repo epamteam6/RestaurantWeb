@@ -1,4 +1,4 @@
-package com.controller;
+package com.controller.session;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,7 +14,7 @@ public class LoginErrorServlet extends HttpServlet {
             throws ServletException, IOException {
 
         RequestDispatcher dispatcher = request
-                .getRequestDispatcher("/login_error.jsp");
+                .getRequestDispatcher("session_login_error.jsp");
         if (dispatcher != null) {
             dispatcher.forward(request, response);
         }

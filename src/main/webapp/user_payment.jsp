@@ -9,13 +9,13 @@
     <title>Order Page</title>
 </head>
 <body>
-<h3>Your new orders!</h3>
-<form method="post" action="created_orders.jsp">
+<h3>Hi! Here you can pay for your orders!</h3>
+<form method="post" action="user_payment">
     <table>
         <tr>
             <td width="112px"><c:out value="Order ID" /></td>
             <td width="112px"><c:out value="Dish and Amount" /></td>
-            <td width="112px"><c:out value="Dish and Amount" /></td>
+            <td width="112px"><c:out value="Total price" /></td>
         </tr>
         <c:forEach var="item1" items="${usersOrders}">
         <tr>
@@ -31,12 +31,15 @@
 
                 </td>
 
+                <td><input type="checkbox" name="${item2.key}" ></td>
                 </tr>
             </c:forEach>
 
         </c:forEach>
 
         <tr>
+        <td colspan="3" align="right"><input name="Pay" type="submit" value="Pay"></td>
+        </tr>
 
     </table>
 </form>
