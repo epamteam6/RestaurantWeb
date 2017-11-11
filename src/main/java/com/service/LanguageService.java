@@ -24,8 +24,8 @@ public class LanguageService {
      * Specify language for localisation
      */
     public enum Language {
-        ENGLISH,
-        RUSSIAN
+        EN, //english
+        RU, //russian
     }
 
     /**
