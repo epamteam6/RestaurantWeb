@@ -12,7 +12,9 @@ import java.util.Optional;
 public class UserDAO implements DAO<User> {
 
     private boolean isTestMode = false;
+
     private DataSource dataSource;
+    private Connection connection;
     private static UserDAO instance;
 
     private static final String VALIDATION_QUERY = "SELECT * FROM users WHERE user_name = ? AND password_hash = ?";
@@ -29,11 +31,24 @@ public class UserDAO implements DAO<User> {
     public static UserDAO getInstance() {
 
         if (instance == null) {
-
             instance = new UserDAO();
         }
 
         return instance;
+    }
+
+    public void setTestMode(boolean testMode) {
+
+        if (dataSource != null && testMode) {
+
+            try {
+                this.connection = dataSource.getConnection();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        isTestMode = testMode;
     }
 
 
@@ -41,6 +56,15 @@ public class UserDAO implements DAO<User> {
     public void setDataSource(DataSource dataSource) {
 
         this.dataSource = dataSource;
+
+        if (isTestMode) {
+
+            try {
+                this.connection = dataSource.getConnection();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -48,7 +72,7 @@ public class UserDAO implements DAO<User> {
 
         User user = null;
 
-        try (Connection connection = dataSource.getConnection()) {
+        try {
 
             PreparedStatement sql = connection.prepareStatement(GET_BY_ID_QUERY);
             sql.setLong(1, id);
@@ -71,7 +95,7 @@ public class UserDAO implements DAO<User> {
 
         List<User> users = new ArrayList<>();
 
-        try (Connection connection = dataSource.getConnection()) {
+        try {
 
             PreparedStatement sql = connection.prepareStatement(GET_ALL_QUERY);
 
@@ -91,7 +115,7 @@ public class UserDAO implements DAO<User> {
 
     public boolean add(String userName, String password, boolean isAdmin) {
 
-        try (Connection connection = dataSource.getConnection()) {
+        try {
 
             PreparedStatement sql = connection.prepareStatement(ADD_QUERY);
             sql.setString(1, userName);
@@ -112,7 +136,7 @@ public class UserDAO implements DAO<User> {
 
     public boolean remove(String userName) {
 
-        try (Connection connection = dataSource.getConnection()) {
+        try {
 
             PreparedStatement sql = connection.prepareStatement(REMOVE_QUERY);
             sql.setString(1, userName);
@@ -131,7 +155,7 @@ public class UserDAO implements DAO<User> {
 
     public boolean update(String userName, String password, boolean isAdmin) {
 
-        try (Connection connection = dataSource.getConnection()) {
+        try {
 
             PreparedStatement sql = connection.prepareStatement(UPDATE_QUERY);
             sql.setBoolean(1, isAdmin);
@@ -152,7 +176,7 @@ public class UserDAO implements DAO<User> {
 
     public boolean validate(String userName, String password) {
 
-        try (Connection connection = dataSource.getConnection()) {
+        try {
 
             PreparedStatement sql = connection.prepareStatement(VALIDATION_QUERY);
             sql.setString(1, userName);
@@ -173,7 +197,7 @@ public class UserDAO implements DAO<User> {
 
         User user = null;
 
-        try (Connection connection = dataSource.getConnection()) {
+        try {
 
             PreparedStatement sql = connection.prepareStatement(GET_BY_NAME_QUERY);
             sql.setString(1, userName);
