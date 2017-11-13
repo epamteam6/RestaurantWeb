@@ -112,12 +112,6 @@
                         </ul>
                     </li>
 
-                    <li>
-                        <form action="session_logout" method="post">
-                            <input type="submit" value="Logout">
-                        </form>
-                    </li>
-
 
                 </ul>
             </nav>

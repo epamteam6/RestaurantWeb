@@ -117,7 +117,9 @@
 
                     <li><a href="#">${username} Admin</a>
                         <ul class="sub_menu">
-                            <li><a href="LogoutServlet" onclick=" " method="post">Log Out</a></li>
+                            <form action="session_logout" method="post">
+                                <li><a href="session_logout" >Log Out</a></li>
+                            </form>
                         </ul>
                     </li>
 
