@@ -80,10 +80,13 @@
             <nav class="menu col_header">
                 <ul class="main_menu">
 
-                    <li><a href="user_create_order">Create order</a>
+                    <li><a href="user_create_order">Menu</a>
                     </li>
 
                     <li><a href="user_created_orders">New orders</a>
+                    </li>
+
+                    <li><a href="user_confirmed_orders">Confirmed orders</a>
                     </li>
 
                     <li><a href="user_payment">Ready orders</a>
@@ -92,8 +95,9 @@
                     <li><a href="user_done_orders">Paid orders</a>
                     </li>
 
-                    <li><a href="about">About us</a>
+                    <li><a href="about.jsp">About</a>
                     </li>
+
 
                     <li><a href="#">${username}</a>
                         <ul class="sub_menu">
@@ -108,8 +112,8 @@
 
         <!-- language -->
         <div class="icon-header col_header">
-            <a href="#">Ru</a> <a href="#">Eng</a>
-
+            <a href="#">Ru</a>
+            <a href="#">Eng</a>
 
         </div>
     </div>
