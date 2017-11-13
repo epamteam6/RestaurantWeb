@@ -78,7 +78,7 @@ public class CreateOrderServlet extends HttpServlet {
             request.setAttribute("menu", menu);
             request.setAttribute("username", userName);
 
-            request.getRequestDispatcher("user_create_order").forward(request, response);
+            request.getRequestDispatcher("user_create_order.jsp").forward(request, response);
         }
 
     }

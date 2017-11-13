@@ -30,15 +30,30 @@ public class ConfirmationServlet extends HttpServlet {
     private OrderStatusService orderStatusService = OrderStatusService.getInstance();
     private List<List> usersOrders;
     private List<Long> orderNumbers;
+    private List<User> allUsers;
 
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        List<User> allUsers = userService.getUserDAO().getAll();
+        allUsers = userService.getUserDAO().getAll();
         System.out.println(allUsers);
 
+        getCreatedOrders();
+
+        System.out.println(usersOrders);
+        request.setAttribute("usersOrders", usersOrders);
+        request.setAttribute("orderNumbers", orderNumbers);
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/admin_confirmation.jsp");
+        if (dispatcher != null) {
+            dispatcher.forward(request, response);
+        }
+
+    }
+
+    private void getCreatedOrders() {
         usersOrders = new ArrayList<>();
         orderNumbers = new ArrayList<>();
 
@@ -56,15 +71,6 @@ public class ConfirmationServlet extends HttpServlet {
                 }
             }
         }
-
-        System.out.println(usersOrders);
-        request.setAttribute("usersOrders", usersOrders);
-
-        RequestDispatcher dispatcher = request.getRequestDispatcher("admin_confirmation.jsp");
-        if (dispatcher != null) {
-            dispatcher.forward(request, response);
-        }
-
     }
 
     @Override
@@ -77,11 +83,14 @@ public class ConfirmationServlet extends HttpServlet {
         Boolean isConfirmButtonClicked = request.getParameter("Confirm") != null;
         Boolean isCancelButtonClicked = request.getParameter("Cancel") != null;
 
+        Boolean isAnyOptionChosen = false;
         for (Long number : orderNumbers) {
             Boolean checked = request.getParameter(number.toString()) != null;
             if (checked) {
+                isAnyOptionChosen = true;
                 if (isConfirmButtonClicked) {
                     orderStatusService.confirmOrder(number);
+
                 }
                 if (isCancelButtonClicked) {
                     orderService.cancelOrder(number);
@@ -89,8 +98,24 @@ public class ConfirmationServlet extends HttpServlet {
             }
         }
 
+        getCreatedOrders();
+        request.setAttribute("usersOrders", usersOrders);
+        request.setAttribute("orderNumbers", orderNumbers);
 
-        response.sendRedirect("success.jsp");
+        if(!isAnyOptionChosen){
+            request.setAttribute("message", "You didn't choose any dishes!");
+        }
+
+        else if (isConfirmButtonClicked) {
+            request.setAttribute("message", "You confirmed selected orders!");
+        }
+
+        else if (isCancelButtonClicked) {
+            request.setAttribute("message", "You canceled selected orders!");
+        }
+
+        getServletContext().getRequestDispatcher("/admin_confirmation.jsp").forward(request, response);
+
 
     }
 }
