@@ -60,7 +60,7 @@ public class UserService {
 
         Optional<User> optional = userDAO.getByName(userName);
 
-        if (optional.isPresent() && password != null && password.length() < 1) {
+        if (optional.isPresent() && password != null && password.length() > 0) {
             boolean isAdmin = optional.get().isAdmin();
             userDAO.update(userName, password, isAdmin);
 
