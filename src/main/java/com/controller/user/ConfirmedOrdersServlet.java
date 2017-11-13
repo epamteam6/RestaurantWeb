@@ -55,6 +55,7 @@ public class ConfirmedOrdersServlet extends HttpServlet {
         }
 
         request.setAttribute("usersOrders", usersOrders);
+        request.setAttribute("username", (String) request.getSession().getAttribute("loggedInUser"));
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("user_confirmed_orders.jsp");
         if (dispatcher != null) {

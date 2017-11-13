@@ -39,6 +39,7 @@ public class BillCreationServlet extends HttpServlet {
 
         request.setAttribute("usersOrders", usersOrders);
         request.setAttribute("orderNumbers", orderNumbers);
+        request.setAttribute("username", (String) request.getSession().getAttribute("loggedInUser"));
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("admin_bill_creation.jsp");
         if (dispatcher != null) {
@@ -75,6 +76,7 @@ public class BillCreationServlet extends HttpServlet {
         getConfirmedOrders();
         request.setAttribute("usersOrders", usersOrders);
         request.setAttribute("orderNumbers", orderNumbers);
+        request.setAttribute("username", (String) request.getSession().getAttribute("loggedInUser"));
 
         if(!isAnyOptionChosen){
             request.setAttribute("message", "You didn't choose any orders!");

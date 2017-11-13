@@ -37,6 +37,7 @@ public class PaidOrdersServlet extends HttpServlet {
 
         request.setAttribute("usersOrders", usersOrders);
         request.setAttribute("orderNumbers", orderNumbers);
+        request.setAttribute("username", (String) request.getSession().getAttribute("loggedInUser"));
 
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("admin_paid_orders.jsp");
@@ -66,6 +67,7 @@ public class PaidOrdersServlet extends HttpServlet {
         getPaidOrders();
         request.setAttribute("usersOrders", usersOrders);
         request.setAttribute("orderNumbers", orderNumbers);
+        request.setAttribute("username", (String) request.getSession().getAttribute("loggedInUser"));
 
         if(!isAnyOptionChosen){
             request.setAttribute("message", "You didn't choose any orders!");

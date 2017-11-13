@@ -44,6 +44,7 @@ public class PaymentServlet extends HttpServlet {
         getUserOrders();
 
         request.setAttribute("usersOrders", usersOrders);
+        request.setAttribute("username", (String) request.getSession().getAttribute("loggedInUser"));
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("user_payment.jsp");
         if (dispatcher != null) {
@@ -78,6 +79,7 @@ public class PaymentServlet extends HttpServlet {
 
         request.setAttribute("usersOrders", usersOrders);
         request.setAttribute("orderNumbers", orderNumbers);
+        request.setAttribute("username", (String) request.getSession().getAttribute("loggedInUser"));
 
         if(!isAnyOptionChosen){
             request.setAttribute("message", "You didn't choose any orders!");

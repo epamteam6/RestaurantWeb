@@ -45,6 +45,7 @@ public class ConfirmationServlet extends HttpServlet {
         System.out.println(usersOrders);
         request.setAttribute("usersOrders", usersOrders);
         request.setAttribute("orderNumbers", orderNumbers);
+        request.setAttribute("username", (String) request.getSession().getAttribute("loggedInUser"));
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/admin_confirmation.jsp");
         if (dispatcher != null) {
@@ -81,6 +82,7 @@ public class ConfirmationServlet extends HttpServlet {
         getCreatedOrders();
         request.setAttribute("usersOrders", usersOrders);
         request.setAttribute("orderNumbers", orderNumbers);
+        request.setAttribute("username", (String) request.getSession().getAttribute("loggedInUser"));
 
         if(!isAnyOptionChosen){
             request.setAttribute("message", "You didn't choose any orders!");

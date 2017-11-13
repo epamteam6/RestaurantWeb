@@ -95,7 +95,7 @@
                     <li><a href="about">About us</a>
                     </li>
 
-                    <li><a href="#">Admin</a>
+                    <li><a href="#">${username}</a>
                         <ul class="sub_menu">
                                 <li><a href="session_logout" >Log Out</a></li>
 

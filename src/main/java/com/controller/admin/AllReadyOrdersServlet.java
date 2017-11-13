@@ -34,6 +34,7 @@ public class AllReadyOrdersServlet extends HttpServlet {
 
         getReadyOrders();
 
+        request.setAttribute("username", (String) request.getSession().getAttribute("loggedInUser"));
         request.setAttribute("usersOrders", usersOrders);
         request.setAttribute("orderNumbers", orderNumbers);
 
@@ -61,6 +62,7 @@ public class AllReadyOrdersServlet extends HttpServlet {
         }
 
         getReadyOrders();
+        request.setAttribute("username", (String) request.getSession().getAttribute("loggedInUser"));
         request.setAttribute("usersOrders", usersOrders);
         request.setAttribute("orderNumbers", orderNumbers);
 
