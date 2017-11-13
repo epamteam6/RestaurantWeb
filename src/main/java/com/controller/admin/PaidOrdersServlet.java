@@ -23,15 +23,63 @@ public class PaidOrdersServlet extends HttpServlet {
     private OrderService orderService = OrderService.getInstance();
     private List<List> usersOrders;
     private List<Long> orderNumbers;
+    private List<User> allUsers;
 
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        List<User> allUsers = userService.getUserDAO().getAll();
+        allUsers = userService.getUserDAO().getAll();
         System.out.println(allUsers);
 
+        getPaidOrders();
+
+        request.setAttribute("usersOrders", usersOrders);
+        request.setAttribute("orderNumbers", orderNumbers);
+
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher("admin_paid_orders.jsp");
+        if (dispatcher != null) {
+            dispatcher.forward(request, response);
+        }
+
+    }
+
+
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("admin_paid_orders.jsp").include(request, response);
+
+        System.out.println(orderNumbers);
+
+        Boolean isAnyOptionChosen = false;
+        for (Long number : orderNumbers) {
+            Boolean checked = request.getParameter(number.toString()) != null;
+            if (checked) {
+                isAnyOptionChosen = true;
+                orderService.cancelOrder(number);
+            }
+        }
+
+        getPaidOrders();
+        request.setAttribute("usersOrders", usersOrders);
+        request.setAttribute("orderNumbers", orderNumbers);
+
+        if(!isAnyOptionChosen){
+            request.setAttribute("message", "You didn't choose any orders!");
+        }
+
+        else {
+            request.setAttribute("message", "You canceled selected orders!");
+        }
+
+        getServletContext().getRequestDispatcher("/admin_paid_orders.jsp").forward(request, response);
+
+    }
+
+    private void getPaidOrders() {
         usersOrders = new ArrayList<>();
         orderNumbers = new ArrayList<>();
 
@@ -49,29 +97,5 @@ public class PaidOrdersServlet extends HttpServlet {
                 }
             }
         }
-
-        request.setAttribute("usersOrders", usersOrders);
-
-        RequestDispatcher dispatcher = request.getRequestDispatcher("admin_paid_orders.jsp");
-        if (dispatcher != null) {
-            dispatcher.forward(request, response);
-        }
-
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("admin_paid_orders.jsp").include(request, response);
-
-        System.out.println(orderNumbers);
-
-        for (Long number : orderNumbers) {
-            Boolean checked = request.getParameter(number.toString()) != null;
-            if (checked) {
-                orderService.cancelOrder(number);
-            }
-        }
-
-        response.sendRedirect("success");
     }
 }
