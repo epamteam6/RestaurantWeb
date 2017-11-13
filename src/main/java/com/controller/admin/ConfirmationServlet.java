@@ -53,26 +53,6 @@ public class ConfirmationServlet extends HttpServlet {
 
     }
 
-    private void getCreatedOrders() {
-        usersOrders = new ArrayList<>();
-        orderNumbers = new ArrayList<>();
-
-        for (User user : allUsers) {
-            Map<Long, Map<String, Long>> ordersDetails = orderService.orderDetails(user.getUserName(), Order.Status.CREATED);
-            if (!ordersDetails.isEmpty()) {
-                for (Long number : ordersDetails.keySet()) {
-                    orderNumbers.add(number);
-                    List details = new ArrayList();
-                    details.add(user.getUserName());
-                    details.add(number);
-                    details.add(ordersDetails.get(number));
-                    details.add(orderService.getOrderDAO().getById(number).get().getTotalSum());
-                    usersOrders.add(details);
-                }
-            }
-        }
-    }
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("admin_confirmation.jsp").include(request, response);
@@ -103,7 +83,7 @@ public class ConfirmationServlet extends HttpServlet {
         request.setAttribute("orderNumbers", orderNumbers);
 
         if(!isAnyOptionChosen){
-            request.setAttribute("message", "You didn't choose any dishes!");
+            request.setAttribute("message", "You didn't choose any orders!");
         }
 
         else if (isConfirmButtonClicked) {
@@ -117,5 +97,25 @@ public class ConfirmationServlet extends HttpServlet {
         getServletContext().getRequestDispatcher("/admin_confirmation.jsp").forward(request, response);
 
 
+    }
+
+    private void getCreatedOrders() {
+        usersOrders = new ArrayList<>();
+        orderNumbers = new ArrayList<>();
+
+        for (User user : allUsers) {
+            Map<Long, Map<String, Long>> ordersDetails = orderService.orderDetails(user.getUserName(), Order.Status.CREATED);
+            if (!ordersDetails.isEmpty()) {
+                for (Long number : ordersDetails.keySet()) {
+                    orderNumbers.add(number);
+                    List details = new ArrayList();
+                    details.add(user.getUserName());
+                    details.add(number);
+                    details.add(ordersDetails.get(number));
+                    details.add(orderService.getOrderDAO().getById(number).get().getTotalSum());
+                    usersOrders.add(details);
+                }
+            }
+        }
     }
 }
