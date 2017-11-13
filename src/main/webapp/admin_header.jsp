@@ -80,44 +80,23 @@
             <nav class="menu col_header">
                 <ul class="main_menu">
 
-                    <li><a href="#">Our menu</a>
-                        <ul class="sub_menu">
-                            <li><a href="user_create_order.jsp">Our Menu</a></li>
-                            <li><a href="shop_page.jsp">Shop page</a></li>
-                        </ul>
+                    <li><a href="admin_confirmation">New orders</a>
                     </li>
 
-                    <li><a href="#">My orders</a>
-                        <ul class="sub_menu">
-                            <li><a href="user_created_orders">New Orders</a></li>
-                            <li><a href="user_payment">Unpaid Orders</a></li>
-                            <li><a href="user_done_orders">Closed Orders</a></li>
-                        </ul>
+                    <li><a href="admin_bill_creation">Confirm orders</a>
                     </li>
 
-                    <li><a href="#">Cart</a>
-                        <ul class="sub_menu">
-                            <li><a href="check_out.jsp">Check Out</a></li>
-                            <li><a href="shopping_cart.jsp">Shopping Cart</a></li>
-                            <li><a href="shop_page.jsp">Shop page</a></li>
-                        </ul>
+                    <li><a href="admin_ready_orders">Ready orders</a>
                     </li>
 
-                    <li><a href="#">Client Order</a>
-                        <ul class="sub_menu">
-                            <li><a href="admin_confirmation">Order Confirmation</a></li>
-                            <li><a href="admin_bill_creation">Bill Creation</a></li>
-                            <li><a href="admin_ready_orders">Payment Waiting</a></li>
-                            <li><a href="admin_paid_orders">Closed Orders</a></li>
-                        </ul>
+                    <li><a href="admin_paid_orders.jsp">Paid orders</a>
                     </li>
 
                     <li><a href="about.jsp">About us</a>
                     </li>
 
-                    <li><a href="#">${username} Admin</a>
+                    <li><a href="#">${username} </a>
                         <ul class="sub_menu">
-
                                 <li><a href="session_logout" >Log Out</a></li>
 
                         </ul>
