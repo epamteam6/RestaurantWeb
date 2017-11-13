@@ -14,7 +14,7 @@
 <section class="content-shopping-cart-page">
     <div class="container">
         <h6 class="title-s">${message}</h6>
-        <h6 class="title-s">Your order has been placed. <br> Administrator will be confirmed it very soon.</h6>
+        <h6 class="title-s">Here you can see all your new orders waiting for administrator confirmation.</h6>
 
         <form method="post" action="user_created_orders">
             <div class="wrap-table-shopping-cart">
@@ -50,7 +50,7 @@
                             <td class="column-4">$ <c:out value="${item1[2]}" /></td>
 
                             <td class="column-6">
-                                <input type="checkbox" name="${item1[1]}" >
+                                <input type="checkbox" name="${item1[0]}" >
                             </td>
 
                         </tr>
@@ -63,7 +63,7 @@
             <div class="wrap-total clearfix" >
 
                 <div class="style-pos col-right">
-                    <input class="btn-with-bg" name="Cancel" type="submit" value="Delete">
+                    <input class="btn-with-bg" name="Delete" type="submit" value="Delete">
 
                 </div>
 
