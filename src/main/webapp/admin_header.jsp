@@ -89,13 +89,13 @@
 
                     <li><a href="#">My orders</a>
                         <ul class="sub_menu">
-                            <li><a href="user_created_orders.jsp">Created Orders</a></li>
-                            <li><a href="user_payment.jsp">Done Orders</a></li>
-                            <li><a href="user_done_orders.jsp">Paid Orders</a></li>
+                            <li><a href="user_created_orders">New Orders</a></li>
+                            <li><a href="user_payment">Unpaid Orders</a></li>
+                            <li><a href="user_done_orders">Closed Orders</a></li>
                         </ul>
                     </li>
 
-                    <li><a href="#">Shopping Cart</a>
+                    <li><a href="#">Cart</a>
                         <ul class="sub_menu">
                             <li><a href="check_out.jsp">Check Out</a></li>
                             <li><a href="shopping_cart.jsp">Shopping Cart</a></li>
@@ -103,30 +103,23 @@
                         </ul>
                     </li>
 
-                    <li><a href="#">User orders</a>
+                    <li><a href="#">Client Order</a>
                         <ul class="sub_menu">
-                            <li><a href="admin_confirmation.jsp">Created Orders</a></li>
-                            <li><a href="admin_bill_creation.jsp">Done Orders</a></li>
-                            <li><a href="admin_ready_orders.jsp">Paid Orders</a></li>
-                            <li><a href="admin_paid_orders.jsp">Paid Orders</a></li>
+                            <li><a href="admin_confirmation">Order Confirmation</a></li>
+                            <li><a href="admin_bill_creation">Bill Creation</a></li>
+                            <li><a href="admin_ready_orders">Payment Waiting</a></li>
+                            <li><a href="admin_paid_orders">Closed Orders</a></li>
                         </ul>
                     </li>
 
                     <li><a href="about.jsp">About us</a>
                     </li>
 
-                    <li><a href="#">${username}</a>
+                    <li><a href="#">${username} Admin</a>
                         <ul class="sub_menu">
-                            <li><a href="session_logout" onclick="">Log Out</a></li>
+                            <li><a href="LogoutServlet" onclick=" " method="post">Log Out</a></li>
                         </ul>
                     </li>
-
-                    <li>
-                        <form action="session_logout" method="post">
-                            <input type="submit" value="Logout">
-                        </form>
-                    </li>
-
 
                 </ul>
             </nav>
