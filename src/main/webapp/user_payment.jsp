@@ -50,7 +50,7 @@
                             <td class="column-4">$ <c:out value="${item1[2]}" /></td>
 
                             <td class="column-6">
-                                <input type="checkbox" name="${item1[1]}" >
+                                <input type="checkbox" name="${item1[0]}" >
                             </td>
                         </tr>
                     </c:forEach>
