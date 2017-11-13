@@ -16,16 +16,16 @@ public class ConnectionPoolManager {
         initialize();
     }
 
-    public ConnectionPoolManager(
-            String databaseUrl,
-            String userName,
-            String password
-    ) {
-        this.databaseUrl = databaseUrl;
-        this.userName = userName;
-        this.password = password;
-        initialize();
-    }
+//    public ConnectionPoolManager(
+//            String databaseUrl,
+//            String userName,
+//            String password
+//    ) {
+//        this.databaseUrl = databaseUrl;
+//        this.userName = userName;
+//        this.password = password;
+//        initialize();
+//    }
 
     private void initialize() {
         initializeConnectionPool();
@@ -47,14 +47,14 @@ public class ConnectionPoolManager {
 
     //Creating a connection
     private Connection createNewConnectionForPool() {
-        Connection connection = null;
+        Connection connection;
 
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+//            Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(databaseUrl, userName, password);
             System.out.println("Connection: " + connection);
 
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
 
             e.printStackTrace();
 
@@ -64,21 +64,27 @@ public class ConnectionPoolManager {
         return connection;
     }
 
-    public synchronized Connection getConnectionFromPool() {
-        Connection connection = null;
+    public Connection getConnectionFromPool() {
 
-        if (connectionPool.size() > 0) {
-            connection = connectionPool.poll();
+        synchronized (connectionPool) {
+
+            while (connectionPool.isEmpty()) {
+                try {
+                    connectionPool.wait();
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return connectionPool.poll();
         }
-        return connection;
     }
 
     public synchronized void returnConnectionToPool(Connection connection) {
-        connectionPool.add(connection);
+        synchronized (connectionPool) {
+            connectionPool.offer(connection);
+            connectionPool.notify();
+        }
     }
-
-//    public static void main(String args[]) {
-//        ConnectionPoolManager ConnectionPoolManager = new ConnectionPoolManager();
-//    }
-
 }

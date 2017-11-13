@@ -11,6 +11,7 @@ import java.util.Optional;
 
 public class UserDAO implements DAO<User> {
 
+    private boolean isTestMode = false;
     private DataSource dataSource;
     private static UserDAO instance;
 
