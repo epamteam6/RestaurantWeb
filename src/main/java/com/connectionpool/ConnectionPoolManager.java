@@ -5,11 +5,12 @@ import java.sql.*;
 
 public class ConnectionPoolManager {
 
-    String databaseUrl = "jdbc:mysql://localhost:3306/food?serverTimezone=UTC&verifyServerCertificate=false&useSSL=true";
-    String userName = "root";
-    String password = "root";
+    private String databaseUrl = "jdbc:mysql://localhost:3306/food?serverTimezone=UTC&verifyServerCertificate=false&useSSL=true";
+    private String userName = "root";
+    private String password = "root";
 
-    Vector connectionPool = new Vector();
+    private Queue<Connection> connectionPool = new LinkedList<>();
+    private final int MAX_POOL_SIZE = 5;
 
     public ConnectionPoolManager() {
         initialize();
@@ -33,20 +34,15 @@ public class ConnectionPoolManager {
     private void initializeConnectionPool() {
         while (!checkIfConnectionPoolIsFull()) {
             System.out.println("Connection Pool is NOT full. Proceeding with adding new connections");
-            connectionPool.addElement(createNewConnectionForPool());
+            connectionPool.add(createNewConnectionForPool());
         }
         System.out.println("Connection Pool is full.");
     }
 
     private synchronized boolean checkIfConnectionPoolIsFull() {
-        final int MAX_POOL_SIZE = 5;
 
         //Check if the pool size
-        if (connectionPool.size() < 5) {
-            return false;
-        }
-
-        return true;
+        return (connectionPool.size() < MAX_POOL_SIZE);
     }
 
     //Creating a connection
@@ -57,11 +53,11 @@ public class ConnectionPoolManager {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(databaseUrl, userName, password);
             System.out.println("Connection: " + connection);
-        } catch (SQLException sqle) {
-            System.err.println("SQLException: " + sqle);
-            return null;
-        } catch (ClassNotFoundException cnfe) {
-            System.err.println("ClassNotFoundException: " + cnfe);
+
+        } catch (SQLException | ClassNotFoundException e) {
+
+            e.printStackTrace();
+
             return null;
         }
 
@@ -72,18 +68,17 @@ public class ConnectionPoolManager {
         Connection connection = null;
 
         if (connectionPool.size() > 0) {
-            connection = (Connection) connectionPool.firstElement();
-            connectionPool.removeElementAt(0);
+            connection = connectionPool.poll();
         }
         return connection;
     }
 
     public synchronized void returnConnectionToPool(Connection connection) {
-        connectionPool.addElement(connection);
+        connectionPool.add(connection);
     }
 
-    public static void main(String args[]) {
-        ConnectionPoolManager ConnectionPoolManager = new ConnectionPoolManager();
-    }
+//    public static void main(String args[]) {
+//        ConnectionPoolManager ConnectionPoolManager = new ConnectionPoolManager();
+//    }
 
 }
