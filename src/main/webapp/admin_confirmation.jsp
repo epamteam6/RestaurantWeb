@@ -68,7 +68,7 @@
             </div>
 
             <div class="style-pos col-right" style="padding-right: 25px">
-                <input class="btn-with-bg-white" name="Cancel" type="submit" value="Cancel">
+                <input class="btn-with-bg-white" name="Cancel" type="submit" value="Delete">
 
             </div>
 
