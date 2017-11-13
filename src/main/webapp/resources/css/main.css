@@ -82,6 +82,10 @@ Title:	18px/1.6 'OpenSans', Arial, sans-serif;
 	text-align: center !important;
     padding-top: 15%;
 }
+#btn-slide-index-left {
+	text-align: end;
+	padding-top: 15%;
+}
 
 @font-face {
 	font-family: OpenSans;
@@ -194,6 +198,31 @@ iframe {
 	background-color: #c60b1b;
 }
 
+.btn-with-bg-white:hover {
+	cursor: pointer;
+	background-color: #c60b1b;
+	color: white;
+
+}
+
+.btn-with-bg-white {
+
+	width: 100%;
+	height: 50px;
+	line-height: 46px;
+	text-align: center;
+	font-size: 14px;
+	text-decoration: none;
+	font-family: OpenSans;
+	text-transform: uppercase;
+	background-color: white;
+	color: #e52233;
+	border: 2px solid #e52233;;
+	-webkit-transition: all 0.4s;
+	-o-transition: all 0.4s;
+	-moz-transition: all 0.4s;
+	transition: all 0.4s;
+}
 /*///////////////////////////////////////////////////////////////////////////////////// Index /*/
 
 /*=================================================================== Header Desktop ===*/

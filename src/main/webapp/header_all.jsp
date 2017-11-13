@@ -15,17 +15,17 @@
         <%@include file="resources/css/animate.css"%>
         <%@include file="resources/css/slide100.css"%>
         <%@include file="resources/vendor/css-hamburgers/hamburgers.min.css"%>
-        <%@include file="resources/vendor/select2/select2.min.css"%>
-        <%@include file="resources/vendor/daterangepicker-bootstrap/daterangepicker.css"%>
+        <%@include file="resources/vendor/select2/select2.min.css"%> //настраивать блоки выбора из списка
+        <%@include file="resources/vendor/daterangepicker-bootstrap/daterangepicker.css"%> //календарные даты
         <%@include file="resources/vendor/animsition/dist/css/animsition.min.css"%>
         <%@include file="resources/js/main.js"%>
         <%@include file="resources/vendor/wow/wow.min.js"%>
         <%@include file="resources/vendor/animsition/dist/js/animsition.min.js"%>
         <%@include file="resources/vendor/bootstrap/js/popper.min.js"%>
         <%@include file="resources/vendor/bootstrap/js/bootstrap.min.js"%>
-        <%@include file="resources/vendor/select2/select2.min.js"%>
-        <%@include file="resources/vendor/daterangepicker-bootstrap/moment.min.js"%>
-        <%@include file="resources/vendor/daterangepicker-bootstrap/daterangepicker.js"%>
+        <%@include file="resources/vendor/select2/select2.min.js"%> //настраивать блоки выбора из списка
+        <%@include file="resources/vendor/daterangepicker-bootstrap/moment.min.js"%>       //календарные даты
+        <%@include file="resources/vendor/daterangepicker-bootstrap/daterangepicker.js"%> //календарные даты
         <%@include file="resources/js/main.js"%>
     </style>
     <!--Mobile Specific Metas-->

@@ -150,6 +150,11 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
         <url-pattern>*.css</url-pattern>
     </servlet-mapping>
 
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.js</url-pattern>
+    </servlet-mapping>
+
 
     <!--FILTERS-->
 
@@ -184,6 +189,9 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
         <url-pattern>/user_done_page.jsp</url-pattern>
         <url-pattern>/user_payment</url-pattern>
         <url-pattern>/user_payment.jsp</url-pattern>
+
+        <url-pattern>/about</url-pattern>
+        <url-pattern>/about.jsp</url-pattern>
 
         <!--admin-pages-->
         <url-pattern>/admin_ready_orders</url-pattern>

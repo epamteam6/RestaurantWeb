@@ -1,5 +1,5 @@
 
-<%@include file="header.jsp"%>
+<%@include file="user_header.jsp"%>
 
 <head><title>404 error</title></head>
 

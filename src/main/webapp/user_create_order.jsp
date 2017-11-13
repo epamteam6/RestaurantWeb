@@ -1,4 +1,4 @@
-<%@include file="header.jsp" %>
+<%@include file="user_header.jsp" %>
 
 <head><title>Create Order</title></head>
 
@@ -47,17 +47,16 @@
                             <!-- list food -->
                             <div class="wrap-list-food">
                                 <div class="row list-food">
-                                    <div class="col-12">
+                                    <div class="col-12" >
                                         <!-- item food -->
                                         <c:forEach var="dishType" items="${menu.value}">
 
                                             <div class="item-food row wow fadeInRight" data-wow-delay="0.2s">
                                                 <div class="col-12 col-sm-10 text-list-food ">
                                                     <div class="name-price row">
-                                                        <div class="name-food col-12 col-sm-auto"><a
-                                                                class="hover-link-color"
-                                                                href="./product-detail.html"><c:out
-                                                                value="${dishType.key}"/></a></div>
+                                                        <div class="name-food col-12 col-sm-auto">
+                                                            <a class="hover-link-color"
+                                                                href="./product-detail.html"><c:out value="${dishType.key}"/></a></div>
                                                         <div class="line-food col">
                                                             <div class="add-line-run"></div>
                                                         </div>
@@ -90,14 +89,14 @@
 
     </c:forEach>
 
+    <div class="container">
+    <div class="wrap-total clearfix" >
 
-    <section>
-        <div class="container">
-            <div class="wrap-btn-login col-md-2">
-                <button class="btn-with-bg" type="submit">Place Order</button>
-            </div>
+        <div class="style-pos col-right">
+            <input class="btn-with-bg" name="Create Order" type="submit" value="Create Order">
         </div>
-    </section>
+
+    </div></div>
 
 </form>
 
