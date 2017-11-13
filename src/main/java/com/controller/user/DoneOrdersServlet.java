@@ -54,6 +54,7 @@ public class DoneOrdersServlet extends HttpServlet {
         }
 
         request.setAttribute("usersOrders", usersOrders);
+        request.setAttribute("username", (String) request.getSession().getAttribute("loggedInUser"));
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("user_done_orders.jsp");
 

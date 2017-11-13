@@ -27,15 +27,15 @@ public class CreateOrderServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Cookie[] cookies = request.getCookies();
+        //Cookie[] cookies = request.getCookies();
 
-
-        for (int i = 0; i < cookies.length; i++) {
+        userName = (String) request.getSession().getAttribute("loggedInUser");
+        /*for (int i = 0; i < cookies.length; i++) {
             if (cookies[i].getName().equals("username")) {
                 userName = cookies[i].getValue();
                 System.out.println(userName);
             }
-        }
+        }*/
 
         menu = menuService.getMenu();
 
@@ -78,7 +78,7 @@ public class CreateOrderServlet extends HttpServlet {
             request.setAttribute("menu", menu);
             request.setAttribute("username", userName);
 
-            request.getRequestDispatcher("user_create_order").forward(request, response);
+            request.getRequestDispatcher("user_create_order.jsp").forward(request, response);
         }
 
     }

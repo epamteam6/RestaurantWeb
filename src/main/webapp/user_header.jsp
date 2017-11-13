@@ -80,42 +80,25 @@
             <nav class="menu col_header">
                 <ul class="main_menu">
 
-                    <li><a href="#">Our menu</a>
-                        <ul class="sub_menu">
-                            <li><a href="user_create_order.jsp">Our Menu</a></li>
-                            <li><a href="shop_page.jsp">Shop page</a></li>
-                        </ul>
+                    <li><a href="user_create_order">Create order</a>
                     </li>
 
-                    <li><a href="#">My orders</a>
-                        <ul class="sub_menu">
-                            <li><a href="user_created_orders.jsp">Created Orders</a></li>
-                            <li><a href="user_payment.jsp">Done Orders</a></li>
-                            <li><a href="user_done_orders.jsp">Paid Orders</a></li>
-                        </ul>
+                    <li><a href="user_created_orders">New orders</a>
                     </li>
 
-                    <li><a href="#">Shopping Cart</a>
-                        <ul class="sub_menu">
-                            <li><a href="check_out.jsp">Check Out</a></li>
-                            <li><a href="shopping_cart.jsp">Shopping Cart</a></li>
-                            <li><a href="shop_page.jsp">Shop page</a></li>
-                        </ul>
+                    <li><a href="user_payment">Ready orders</a>
                     </li>
 
-                    <li><a href="about.jsp">About us</a>
+                    <li><a href="user_done_orders">Paid orders</a>
+                    </li>
+
+                    <li><a href="about">About us</a>
                     </li>
 
                     <li><a href="#">${username}</a>
                         <ul class="sub_menu">
                             <li><a href="session_logout" onclick="">Log Out</a></li>
                         </ul>
-                    </li>
-
-                    <li>
-                        <form action="session_logout" method="post">
-                            <input type="submit" value="Logout">
-                        </form>
                     </li>
 
 

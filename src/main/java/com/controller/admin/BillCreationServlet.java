@@ -25,34 +25,21 @@ public class BillCreationServlet extends HttpServlet {
     private OrderStatusService orderStatusService = OrderStatusService.getInstance();
     private List<List> usersOrders;
     private List<Long> orderNumbers;
+    private List<User> allUsers;
 
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        List<User> allUsers = userService.getUserDAO().getAll();
+        allUsers = userService.getUserDAO().getAll();
         System.out.println(allUsers);
 
-        usersOrders = new ArrayList<>();
-        orderNumbers = new ArrayList<>();
-
-        for (User user : allUsers) {
-            Map<Long, Map<String, Long>> ordersDetails = orderService.orderDetails(user.getUserName(), Order.Status.CONFIRMED);
-            if (!ordersDetails.isEmpty()) {
-                for (Long number : ordersDetails.keySet()) {
-                    orderNumbers.add(number);
-                    List details = new ArrayList();
-                    details.add(user.getUserName());
-                    details.add(number);
-                    details.add(ordersDetails.get(number));
-                    details.add(orderService.getOrderDAO().getById(number).get().getTotalSum());
-                    usersOrders.add(details);
-                }
-            }
-        }
+        getConfirmedOrders();
 
         request.setAttribute("usersOrders", usersOrders);
+        request.setAttribute("orderNumbers", orderNumbers);
+        request.setAttribute("username", (String) request.getSession().getAttribute("loggedInUser"));
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("admin_bill_creation.jsp");
         if (dispatcher != null) {
@@ -71,9 +58,11 @@ public class BillCreationServlet extends HttpServlet {
         Boolean isBillButtonClicked = request.getParameter("Bill") != null;
         Boolean isCancelButtonClicked = request.getParameter("Cancel") != null;
 
+        Boolean isAnyOptionChosen = false;
         for (Long number : orderNumbers) {
             Boolean checked = request.getParameter(number.toString()) != null;
             if (checked) {
+                isAnyOptionChosen = true;
                 if (isBillButtonClicked) {
                     orderStatusService.makeBill(number);
                 }
@@ -84,7 +73,45 @@ public class BillCreationServlet extends HttpServlet {
         }
 
 
-        response.sendRedirect("success");
+        getConfirmedOrders();
+        request.setAttribute("usersOrders", usersOrders);
+        request.setAttribute("orderNumbers", orderNumbers);
+        request.setAttribute("username", (String) request.getSession().getAttribute("loggedInUser"));
 
+        if(!isAnyOptionChosen){
+            request.setAttribute("message", "You didn't choose any orders!");
+        }
+
+        else if (isBillButtonClicked) {
+            request.setAttribute("message", "You made bill to selected orders!");
+        }
+
+        else if (isCancelButtonClicked) {
+            request.setAttribute("message", "You canceled selected orders!");
+        }
+
+        getServletContext().getRequestDispatcher("/admin_bill_creation.jsp").forward(request, response);
+
+
+    }
+
+    private void getConfirmedOrders() {
+        usersOrders = new ArrayList<>();
+        orderNumbers = new ArrayList<>();
+
+        for (User user : allUsers) {
+            Map<Long, Map<String, Long>> ordersDetails = orderService.orderDetails(user.getUserName(), Order.Status.CONFIRMED);
+            if (!ordersDetails.isEmpty()) {
+                for (Long number : ordersDetails.keySet()) {
+                    orderNumbers.add(number);
+                    List details = new ArrayList();
+                    details.add(user.getUserName());
+                    details.add(number);
+                    details.add(ordersDetails.get(number));
+                    details.add(orderService.getOrderDAO().getById(number).get().getTotalSum());
+                    usersOrders.add(details);
+                }
+            }
+        }
     }
 }

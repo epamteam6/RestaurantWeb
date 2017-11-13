@@ -73,6 +73,16 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>ConfirmedOrdersServlet</servlet-name>
+        <servlet-class>com.controller.user.ConfirmedOrdersServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ConfirmedOrdersServlet</servlet-name>
+        <url-pattern>/user_confirmed_orders</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
         <servlet-name>DoneOrdersServlet</servlet-name>
         <servlet-class>com.controller.user.DoneOrdersServlet</servlet-class>
     </servlet>

@@ -22,6 +22,7 @@ public class PaymentServlet extends HttpServlet {
     private OrderStatusService orderStatusService = OrderStatusService.getInstance();
     private List<List> usersOrders;
     private List<Long> orderNumbers;
+    private User user;
 
 
     @Override
@@ -39,7 +40,57 @@ public class PaymentServlet extends HttpServlet {
             return;
         }
 
-        User user = optional.get();
+        user = optional.get();
+        getUserOrders();
+
+        request.setAttribute("usersOrders", usersOrders);
+        request.setAttribute("username", (String) request.getSession().getAttribute("loggedInUser"));
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher("user_payment.jsp");
+        if (dispatcher != null) {
+            dispatcher.forward(request, response);
+        }
+
+    }
+
+
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("user_payment.jsp").include(request, response);
+
+
+        System.out.println(orderNumbers);
+
+        Boolean isConfirmButtonClicked = request.getParameter("Pay") != null;
+
+        Boolean isAnyOptionChosen = false;
+        for (Long number : orderNumbers) {
+            Boolean checked = request.getParameter(number.toString()) != null;
+            if (checked) {
+                if (isConfirmButtonClicked) {
+                    isAnyOptionChosen = true;
+                    orderStatusService.payOrder(number);
+                }
+            }
+        }
+
+        getUserOrders();
+
+        request.setAttribute("usersOrders", usersOrders);
+        request.setAttribute("orderNumbers", orderNumbers);
+        request.setAttribute("username", (String) request.getSession().getAttribute("loggedInUser"));
+
+        if(!isAnyOptionChosen){
+            request.setAttribute("message", "You didn't choose any orders!");
+        }
+
+        getServletContext().getRequestDispatcher("/user_payment.jsp").forward(request, response);
+
+
+    }
+
+    private void getUserOrders() {
         Map<Long, Map<String, Long>> ordersDetails = orderService.orderDetails(user.getUserName(), Order.Status.READY);
         if (!ordersDetails.isEmpty()) {
             for (Long number : ordersDetails.keySet()) {
@@ -51,34 +102,5 @@ public class PaymentServlet extends HttpServlet {
                 usersOrders.add(details);
             }
         }
-
-        request.setAttribute("usersOrders", usersOrders);
-
-        RequestDispatcher dispatcher = request.getRequestDispatcher("user_payment.jsp");
-        if (dispatcher != null) {
-            dispatcher.forward(request, response);
-        }
-
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("user_payment.jsp").include(request, response);
-
-
-        System.out.println(orderNumbers);
-
-        Boolean isConfirmButtonClicked = request.getParameter("Pay") != null;
-
-        for (Long number : orderNumbers) {
-            Boolean checked = request.getParameter(number.toString()) != null;
-            if (checked) {
-                if (isConfirmButtonClicked) {
-                    orderStatusService.payOrder(number);
-                }
-            }
-        }
-
-        response.sendRedirect("user_done_orders");
     }
 }

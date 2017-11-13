@@ -7,14 +7,14 @@
         <div class="wrap-title-sub-page">
             <h2 class="title-l">Order Confirmation</h2>
             <h6 class="title-s">Home / Order Confirmation</h6>
-            <h6 class="title-s">${message}</h6>
         </div>
     </div>
 </section>
 
 <section class="content-shopping-cart-page">
     <div class="container">
-
+        <h6 class="title-s">${message}</h6>
+        
         <form method="post" action="admin_confirmation">
         <div class="wrap-table-shopping-cart">
 

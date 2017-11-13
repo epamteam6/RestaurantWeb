@@ -12,11 +12,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
-public class CreatedOrdersServlet extends HttpServlet {
+public class ConfirmedOrdersServlet extends HttpServlet {
 
-    private Map<String, Map<String, Long>> menu;
     private UserService userService = UserService.getInstance();
     private OrderService orderService = OrderService.getInstance();
     private OrderStatusService orderStatusService = OrderStatusService.getInstance();
@@ -40,7 +42,7 @@ public class CreatedOrdersServlet extends HttpServlet {
         }
 
         User user = optional.get();
-        Map<Long, Map<String, Long>> ordersDetails = orderService.orderDetails(user.getUserName(), Order.Status.CREATED);
+        Map<Long, Map<String, Long>> ordersDetails = orderService.orderDetails(user.getUserName(), Order.Status.CONFIRMED);
         if (!ordersDetails.isEmpty()) {
             for (Long number : ordersDetails.keySet()) {
                 orderNumbers.add(number);
@@ -55,7 +57,7 @@ public class CreatedOrdersServlet extends HttpServlet {
         request.setAttribute("usersOrders", usersOrders);
         request.setAttribute("username", (String) request.getSession().getAttribute("loggedInUser"));
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("user_created_orders.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("user_confirmed_orders.jsp");
         if (dispatcher != null) {
             dispatcher.forward(request, response);
         }
@@ -64,6 +66,6 @@ public class CreatedOrdersServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        request.getRequestDispatcher("user_created_orders.jsp").include(request, response);
+        request.getRequestDispatcher("user_confirmed_orders.jsp").include(request, response);
     }
 }
