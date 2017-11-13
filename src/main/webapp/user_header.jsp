@@ -86,13 +86,13 @@
                     <li><a href="user_created_orders">New orders</a>
                     </li>
 
-                    <li><a href="user_payment.jsp">Ready orders</a>
+                    <li><a href="user_payment">Ready orders</a>
                     </li>
 
-                    <li><a href="user_done_orders.jsp">Paid orders</a>
+                    <li><a href="user_done_orders">Paid orders</a>
                     </li>
 
-                    <li><a href="about.jsp">About us</a>
+                    <li><a href="about">About us</a>
                     </li>
 
                     <li><a href="#">${username}</a>

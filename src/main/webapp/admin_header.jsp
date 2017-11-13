@@ -89,10 +89,10 @@
                     <li><a href="admin_ready_orders">Ready orders</a>
                     </li>
 
-                    <li><a href="admin_paid_orders.jsp">Paid orders</a>
+                    <li><a href="admin_paid_orders ">Paid orders</a>
                     </li>
 
-                    <li><a href="about.jsp">About us</a>
+                    <li><a href="about">About us</a>
                     </li>
 
                     <li><a href="#">${username} </a>
