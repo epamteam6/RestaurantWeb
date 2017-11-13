@@ -117,9 +117,9 @@
 
                     <li><a href="#">${username} Admin</a>
                         <ul class="sub_menu">
-                            <form action="session_logout" method="post">
+
                                 <li><a href="session_logout" >Log Out</a></li>
-                            </form>
+
                         </ul>
                     </li>
 
