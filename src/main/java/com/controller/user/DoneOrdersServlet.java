@@ -16,7 +16,7 @@ import java.util.*;
 
 public class DoneOrdersServlet extends HttpServlet {
 
-    private static final Logger log = Logger.getLogger(CreateOrderServlet.class);
+    private static final Logger log = Logger.getLogger(DoneOrdersServlet.class);
 
     private UserService userService = UserService.getInstance();
     private OrderService orderService = OrderService.getInstance();

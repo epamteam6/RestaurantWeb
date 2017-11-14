@@ -5,6 +5,7 @@ import com.model.User;
 import com.service.OrderService;
 import com.service.OrderStatusService;
 import com.service.UserService;
+import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,7 +17,8 @@ import java.util.*;
 
 public class PaymentServlet extends HttpServlet {
 
-    private Map<String, Map<String, Long>> menu;
+    private static final Logger log = Logger.getLogger(PaymentServlet.class);
+
     private UserService userService = UserService.getInstance();
     private OrderService orderService = OrderService.getInstance();
     private OrderStatusService orderStatusService = OrderStatusService.getInstance();
@@ -28,6 +30,8 @@ public class PaymentServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        log.info("(user) Initializing...");
 
         String username = (String) request.getSession().getAttribute("loggedInUser");
         Optional<User> optional = userService.getUserByName(username);
@@ -52,13 +56,13 @@ public class PaymentServlet extends HttpServlet {
     }
 
 
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("user_payment.jsp").include(request, response);
 
+        log.info("(user) Processing...");
 
-        System.out.println(orderNumbers);
+//        System.out.println(orderNumbers);
 
         Boolean isConfirmButtonClicked = request.getParameter("Pay") != null;
 
@@ -87,7 +91,6 @@ public class PaymentServlet extends HttpServlet {
         }
 
         getServletContext().getRequestDispatcher("/user_payment.jsp").forward(request, response);
-
 
     }
 
