@@ -87,7 +87,7 @@ public class OrderService {
         Optional<User> user = userDAO.getByName(username);
         if (!user.isPresent()) {
 
-            log.info("no such user - orderDetails(userName, status) " + username);
+            log.error("no such user - orderDetails(userName, status) " + username);
             throw new NoSuchElementException("There is no such user!");
         }
 
