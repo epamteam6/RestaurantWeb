@@ -3,11 +3,14 @@ package com.service;
 import com.dao.UserDAO;
 import com.model.User;
 import lombok.Data;
+import org.apache.log4j.Logger;
 
 import java.util.Optional;
 
 @Data
 public class UserService {
+
+    private static final Logger log = Logger.getLogger(UserService.class);
 
     private UserDAO userDAO = UserDAO.getInstance();
 
@@ -24,6 +27,9 @@ public class UserService {
     }
 
     public boolean register(String username, String password) {
+
+        log.info("register() " + username);
+
         if (password == null || username == null
                 || password.length() < 1 || username.length() < 1
                 || userDAO.getByName(username).isPresent())
@@ -33,6 +39,9 @@ public class UserService {
     }
 
     public boolean remove(String username) {
+
+        log.info("remove() " + username);
+
         if (!userDAO.getByName(username).isPresent())
             return false;
 
@@ -40,6 +49,8 @@ public class UserService {
     }
 
     public boolean changePassword(String userName, String password) {
+
+        log.info("changePassword() " + userName);
 
         Optional<User> optional = userDAO.getByName(userName);
 
@@ -55,6 +66,8 @@ public class UserService {
 
     public boolean changeAdminStatus(String userName, boolean isAdmin) {
 
+        log.info("changeAdminStatus(username, isAdmin) " + userName + ", " + isAdmin);
+
         Optional<User> optional = userDAO.getByName(userName);
 
         if (optional.isPresent()) {
@@ -67,6 +80,9 @@ public class UserService {
     }
 
     public Optional<User> getUserByName(String username) {
+
+        log.info("getUserByName() " + username);
+
         return userDAO.getByName(username);
     }
 }
