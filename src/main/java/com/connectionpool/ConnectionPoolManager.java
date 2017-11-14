@@ -69,7 +69,7 @@ public class ConnectionPoolManager {
         synchronized (connectionPool) {
 
             while (connectionPool.isEmpty()) {
-                System.out.println(connectionPool.size());
+
                 try {
                     connectionPool.wait(100);
 
