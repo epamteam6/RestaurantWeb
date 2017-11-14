@@ -73,7 +73,7 @@
     <div id="wrap_header">
         <!-- Logo -->
         <div class="logo col_header">
-            <a href="index.jsp"><img alt="logo-rest" src="resources/images/icons/logo.png"/></a>
+            <a href="user_create_order"><img alt="logo-epam" src="resources/images/icons/logo.png"/></a>
         </div>
         <!-- Menu -->
         <div class="main_nav">
@@ -95,7 +95,7 @@
                     <li><a href="user_done_orders">Paid orders</a>
                     </li>
 
-                    <li><a href="about.jsp">About</a>
+                    <li><a href="about">About</a>
                     </li>
 
 
@@ -123,7 +123,7 @@
 
         <!-- Logo moblie -->
         <div class="logo-mobile">
-            <a href="index.jsp"><img alt="logo-deli" src="resources/images/icons/logo-mobile.png"/></a>
+            <a href="user_create_order"><img alt="logo-epam" src="resources/images/icons/logo-mobile.png"/></a>
         </div>
 
         <!-- Button show menu -->
