@@ -1,20 +1,16 @@
 package com.controller.filters;
 
-import com.dao.UserDAO;
-import com.model.User;
-import com.mysql.jdbc.Driver;
 import com.service.UserService;
-import org.springframework.jdbc.datasource.SimpleDriverDataSource;
+import org.apache.log4j.Logger;
 
 import javax.servlet.*;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.List;
 
 public class SecurityFilter implements Filter {
+
+    private static final Logger log = Logger.getLogger(SecurityFilter.class);
 
     private UserService userService = UserService.getInstance();
 
@@ -37,6 +33,7 @@ public class SecurityFilter implements Filter {
             }
         }
 
+        log.debug("Not logged in");
         res.sendRedirect("session_login_error");
     }
 
