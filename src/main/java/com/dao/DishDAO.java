@@ -2,6 +2,7 @@ package com.dao;
 
 import com.connectionpool.ConnectionPoolManager;
 import com.model.Dish;
+import org.apache.log4j.Logger;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -11,6 +12,8 @@ import java.util.Optional;
 
 
 public class DishDAO implements RegularDAO<Dish> {
+
+    private static final Logger log = Logger.getLogger(DishDAO.class);
 
     private boolean isTestMode = false;
     private DataSource dataSource;
@@ -71,6 +74,8 @@ public class DishDAO implements RegularDAO<Dish> {
     @Override
     public Optional<Dish> getById(long id) {
 
+        log.info("getById() " + id);
+
         if (!isTestMode)
             connection = connectionPool.getConnectionFromPool();
 
@@ -88,6 +93,7 @@ public class DishDAO implements RegularDAO<Dish> {
         } catch (SQLException e) {
 
             e.printStackTrace();
+            log.error("getById() " + id);
         }
 
         if (!isTestMode)
@@ -98,6 +104,8 @@ public class DishDAO implements RegularDAO<Dish> {
 
     @Override
     public List<Dish> getAll() {
+
+        log.info("getAll()");
 
         if (!isTestMode)
             connection = connectionPool.getConnectionFromPool();
@@ -115,6 +123,7 @@ public class DishDAO implements RegularDAO<Dish> {
 
         } catch (SQLException e) {
 
+            log.error("getAll()");
             e.printStackTrace();
         }
 
@@ -127,6 +136,8 @@ public class DishDAO implements RegularDAO<Dish> {
 
     @Override
     public boolean create(Dish dish) {
+
+        log.info("create() " + dish.getDishname());
 
         if (!isTestMode)
             connection = connectionPool.getConnectionFromPool();
@@ -146,6 +157,7 @@ public class DishDAO implements RegularDAO<Dish> {
 
         } catch (SQLException e) {
 
+            log.error("create() " + dish.getDishname());
             e.printStackTrace();
         }
 
@@ -157,6 +169,8 @@ public class DishDAO implements RegularDAO<Dish> {
 
     @Override
     public boolean remove(long id) {
+
+        log.info("remove() " + id);
 
         if (!isTestMode)
             connection = connectionPool.getConnectionFromPool();
@@ -172,6 +186,8 @@ public class DishDAO implements RegularDAO<Dish> {
             result = true;
 
         } catch (SQLException e) {
+
+            log.error("remove() " + id);
             e.printStackTrace();
         }
 
@@ -183,6 +199,8 @@ public class DishDAO implements RegularDAO<Dish> {
 
     @Override
     public boolean update(Dish dish) {
+
+        log.info("update() " + dish.getDishname());
 
         if (!isTestMode)
             connection = connectionPool.getConnectionFromPool();
@@ -201,6 +219,8 @@ public class DishDAO implements RegularDAO<Dish> {
             result = true;
 
         } catch (SQLException e) {
+
+            log.error("update() " + dish.getDishname());
             e.printStackTrace();
         }
 
@@ -221,6 +241,8 @@ public class DishDAO implements RegularDAO<Dish> {
 
     public Optional<Dish> getByName(String name) {
 
+        log.info("getByName() " + name);
+
         if (!isTestMode)
             connection = connectionPool.getConnectionFromPool();
 
@@ -235,6 +257,8 @@ public class DishDAO implements RegularDAO<Dish> {
                 dish = Optional.of(createDishEntity(rs));
 
         } catch (SQLException e) {
+
+            log.error("getByName() " + name);
             e.printStackTrace();
         }
 

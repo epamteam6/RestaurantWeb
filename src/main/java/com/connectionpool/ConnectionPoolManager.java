@@ -40,10 +40,10 @@ public class ConnectionPoolManager {
 
     private void initializeConnectionPool() {
         while (checkIfConnectionPoolIsFull()) {
-            System.out.println("Connection Pool is NOT full. Proceeding with adding new connections");
+//            System.out.println("Connection Pool is NOT full. Proceeding with adding new connections");
             connectionPool.add(createNewConnectionForPool());
         }
-        System.out.println("Connection Pool is full.");
+        log.debug("Connection Pool is full");
     }
 
     private synchronized boolean checkIfConnectionPoolIsFull() {
@@ -75,6 +75,8 @@ public class ConnectionPoolManager {
 
         synchronized (connectionPool) {
 
+            log.debug("Getting connection from pool");
+
             while (connectionPool.isEmpty()) {
 
                 try {
@@ -92,6 +94,8 @@ public class ConnectionPoolManager {
     public void returnConnectionToPool(Connection connection) {
 
         synchronized (connectionPool) {
+
+            log.debug("Returning connection to pool");
 
             connectionPool.offer(connection);
             connectionPool.notify();
