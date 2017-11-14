@@ -17,7 +17,7 @@ public class AboutServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        log.info("(session) Initializing...");
+        log.info("(user) Initializing...");
 
         request.setAttribute("username", (String) request.getSession().getAttribute("loggedInUser"));
 
@@ -31,7 +31,7 @@ public class AboutServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        log.info("(session) Processing...");
+        log.info("(user) Processing...");
 
         request.setAttribute("username", (String) request.getSession().getAttribute("loggedInUser"));
         request.getRequestDispatcher("about.jsp").include(request, response);
