@@ -32,7 +32,7 @@ public class RestrictionSecurityFilter implements Filter {
             }
         }
 
-        res.sendRedirect("404.jsp");
+        res.sendRedirect("/404.jsp");
     }
 
     @Override
