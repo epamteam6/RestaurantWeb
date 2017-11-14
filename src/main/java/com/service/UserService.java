@@ -10,10 +10,10 @@ import java.util.Optional;
 public class UserService {
 
     private UserDAO userDAO = UserDAO.getInstance();
+
     private static UserService instance;
 
     private UserService() {
-        userDAO = UserDAO.getInstance();
     }
 
     public static UserService getInstance() {

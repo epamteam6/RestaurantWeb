@@ -7,12 +7,11 @@ import lombok.Data;
 @Data
 public class AuthorisationService {
 
+    private UserDAO userDAO = UserDAO.getInstance();
 
-    private UserDAO userDAO;
     private static AuthorisationService instance;
 
     private AuthorisationService() {
-        userDAO = UserDAO.getInstance();
     }
 
     public static AuthorisationService getInstance() {
