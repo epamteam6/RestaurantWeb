@@ -19,7 +19,7 @@ import java.util.Map;
 
 public class BillCreationServlet extends HttpServlet {
 
-    private static final Logger log = Logger.getLogger(AllReadyOrdersServlet.class);
+    private static final Logger log = Logger.getLogger(BillCreationServlet.class);
 
     private Map<String, Map<String, Long>> menu;
     private UserService userService = UserService.getInstance();

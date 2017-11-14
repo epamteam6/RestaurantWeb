@@ -8,6 +8,7 @@ import com.service.MenuService;
 import com.service.OrderService;
 import com.service.OrderStatusService;
 import com.service.UserService;
+import org.apache.log4j.Logger;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 
 import javax.servlet.RequestDispatcher;
@@ -25,6 +26,8 @@ import java.util.Map;
 
 public class ConfirmationServlet extends HttpServlet {
 
+    private static final Logger log = Logger.getLogger(ConfirmationServlet.class);
+
     private UserService userService = UserService.getInstance();
     private OrderService orderService = OrderService.getInstance();
     private OrderStatusService orderStatusService = OrderStatusService.getInstance();
@@ -36,6 +39,8 @@ public class ConfirmationServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        log.info("Initializing...");
 
         allUsers = userService.getUserDAO().getAll();
         System.out.println(allUsers);
@@ -56,6 +61,9 @@ public class ConfirmationServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        log.info("Processing...");
+
         request.getRequestDispatcher("admin_confirmation.jsp").include(request, response);
 
 
