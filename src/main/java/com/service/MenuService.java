@@ -4,12 +4,15 @@ import com.dao.*;
 import com.model.Dish;
 import com.model.DishType;
 import lombok.Data;
+import org.apache.log4j.Logger;
 
 import java.util.*;
 
 
 @Data
 public class MenuService {
+
+    private static final Logger log = Logger.getLogger(MenuService.class);
 
     private DishTypeDAO dishTypeDAO = DishTypeDAO.getInstance();
     private DishDAO dishDAO = DishDAO.getInstance();
@@ -28,6 +31,8 @@ public class MenuService {
 
     public Map<String, Map<String, Long>> getMenu() {
 
+        log.info("getMenu()");
+
         List<DishType> allDishTypes = dishTypeDAO.getAll();
         Set<Long> allDishTypesNumbers = new HashSet<>();
         for (DishType dishType : allDishTypes) {
@@ -40,7 +45,11 @@ public class MenuService {
             Optional<DishType> dishType = dishTypeDAO.getById(type);
             if (dishType.isPresent()) {
                 menu.put(dishType.get().getDishType(), submenu);
-            } else throw new NoSuchElementException("There is no such dish type!");
+            } else {
+
+                log.error("getMenu() - dish type error");
+                throw new NoSuchElementException("There is no such dish type!");
+            }
         }
 
         List<Dish> allDishes = dishDAO.getAll();
@@ -51,7 +60,11 @@ public class MenuService {
                 Map<String, Long> submenu = menu.get(dishTypeName);
                 submenu.put(dish.getDishname(), dish.getPrice());
                 menu.put(dishTypeName, submenu);
-            } else throw new NoSuchElementException("There is no such dish type!");
+            } else {
+
+                log.error("getMenu() - dish type error");
+                throw new NoSuchElementException("There is no such dish type!");
+            }
         }
         return menu;
     }
