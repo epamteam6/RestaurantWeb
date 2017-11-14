@@ -13,6 +13,7 @@
 <html lang="${lang}">
 <head>
     <title>Restaurant</title>
+    <meta charset="utf-8">
 
     <link rel="stylesheet" type="text/css" href="resources/vendor/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/main.css" />
