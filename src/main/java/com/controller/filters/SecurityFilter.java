@@ -34,6 +34,7 @@ public class SecurityFilter implements Filter {
         }
 
         log.debug("Not logged in");
+
         res.sendRedirect("session_login_error");
     }
 
