@@ -1,9 +1,13 @@
 package com.connectionpool;
 
+import org.apache.log4j.Logger;
+
 import java.util.*;
 import java.sql.*;
 
 public class ConnectionPoolManager {
+
+    private static final Logger log = Logger.getLogger(ConnectionPoolManager.class);
 
     private String databaseUrl = "jdbc:mysql://localhost:3306/food?serverTimezone=UTC&verifyServerCertificate=false&useSSL=true";
     private String userName = "root";
@@ -28,6 +32,9 @@ public class ConnectionPoolManager {
 //    }
 
     private void initialize() {
+
+        log.info("Initialising connections in ConnectionPoolManager");
+
         initializeConnectionPool();
     }
 
