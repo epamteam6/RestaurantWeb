@@ -89,12 +89,9 @@
                     <li><a href="admin_ready_orders">Ready orders</a>
                     </li>
 
-                    <li><a href="admin_paid_orders ">Paid orders</a>
+                    <li><a href="admin_paid_orders">Paid orders</a>
                     </li>
-
-                    <li><a href="about">About us</a>
-                    </li>
-
+                    
                     <li><a href="#">${username}</a>
                         <ul class="sub_menu">
                                 <li><a href="session_logout" >Log Out</a></li>

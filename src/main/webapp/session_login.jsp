@@ -6,7 +6,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <head>
-    <title>Join us</title>
+    <title>Log in</title>
 
     <link rel="stylesheet" type="text/css" href="resources/vendor/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/main.css" />
@@ -23,7 +23,7 @@
     <div id="wrap_header">
         <!-- Logo -->
         <div class="logo col_header">
-            <a href="index.jsp"><img alt="logo-deli" src="resources/images/icons/logo.png"/></a>
+            <a href="${pageContext.request.contextPath}"><img alt="logo-epam" src="resources/images/icons/logo.png"/></a>
         </div>
         <!-- language -->
         <div class="icon-header col_header">
