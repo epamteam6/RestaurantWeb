@@ -13,16 +13,16 @@ import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 public class DishOrderDAOTest {
 
-    DishOrderDAO dishOrderDAO = DishOrderDAO.getInstance();
+    private DishOrderDAO dishOrderDAO = DishOrderDAO.getInstance();
 
     @Before
     public void init() throws Exception {
 
         dishOrderDAO.setDataSource(getDataSource());
+        dishOrderDAO.setTestMode(true);
     }
 
     public DataSource getDataSource() {
