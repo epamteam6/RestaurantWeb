@@ -5,6 +5,7 @@ import com.model.User;
 import com.service.OrderService;
 import com.service.OrderStatusService;
 import com.service.UserService;
+import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,11 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class BillCreationServlet extends HttpServlet {
+
+    private static final Logger log = Logger.getLogger(AllReadyOrdersServlet.class);
 
     private Map<String, Map<String, Long>> menu;
     private UserService userService = UserService.getInstance();
@@ -31,6 +33,8 @@ public class BillCreationServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        log.info("Initializing...");
 
         allUsers = userService.getUserDAO().getAll();
         System.out.println(allUsers);
@@ -50,6 +54,9 @@ public class BillCreationServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        log.info("Processing...");
+
         request.getRequestDispatcher("admin_bill_creation.jsp").include(request, response);
 
 
@@ -96,6 +103,7 @@ public class BillCreationServlet extends HttpServlet {
     }
 
     private void getConfirmedOrders() {
+
         usersOrders = new ArrayList<>();
         orderNumbers = new ArrayList<>();
 
