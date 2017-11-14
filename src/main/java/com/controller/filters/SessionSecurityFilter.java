@@ -1,17 +1,16 @@
 package com.controller.filters;
 
-import com.dao.UserDAO;
-import com.mysql.jdbc.Driver;
 import com.service.UserService;
-import org.springframework.jdbc.datasource.SimpleDriverDataSource;
+import org.apache.log4j.Logger;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 
 public class SessionSecurityFilter implements Filter {
+
+    private static final Logger log = Logger.getLogger(SessionSecurityFilter.class);
 
     private UserService userService = UserService.getInstance();
 
@@ -33,6 +32,8 @@ public class SessionSecurityFilter implements Filter {
                 //return;
 
                 req.setAttribute("username", username);
+
+                log.debug("Attempt to system entry during not closed session, by " + username);
 
                 req.getRequestDispatcher("/session_error.jsp").forward(req, res);
             }
