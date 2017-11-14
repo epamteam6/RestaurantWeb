@@ -34,7 +34,7 @@ public class BillCreationServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        log.info("Initializing...");
+        log.info("(admin) Initializing...");
 
         allUsers = userService.getUserDAO().getAll();
         System.out.println(allUsers);
@@ -55,7 +55,7 @@ public class BillCreationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        log.info("Processing...");
+        log.info("(admin) Processing...");
 
         request.getRequestDispatcher("admin_bill_creation.jsp").include(request, response);
 

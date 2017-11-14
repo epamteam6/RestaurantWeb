@@ -31,7 +31,7 @@ public class AllReadyOrdersServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        log.info("Initializing...");
+        log.info("(admin) Initializing...");
 
         allUsers = userService.getUserDAO().getAll();
         System.out.println(allUsers);
@@ -52,7 +52,7 @@ public class AllReadyOrdersServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        log.info("Processing...");
+        log.info("(admin) Processing...");
 
         request.getRequestDispatcher("admin_ready_orders.jsp").include(request, response);
 

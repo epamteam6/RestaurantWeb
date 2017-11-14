@@ -40,7 +40,7 @@ public class ConfirmationServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        log.info("Initializing...");
+        log.info("(admin) Initializing...");
 
         allUsers = userService.getUserDAO().getAll();
         System.out.println(allUsers);
@@ -62,7 +62,7 @@ public class ConfirmationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        log.info("Processing...");
+        log.info("(admin) Processing...");
 
         request.getRequestDispatcher("admin_confirmation.jsp").include(request, response);
 
