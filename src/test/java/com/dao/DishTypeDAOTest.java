@@ -18,10 +18,10 @@ public class DishTypeDAOTest {
 
     private DishTypeDAO dishTypeDAO = DishTypeDAO.getInstance();
 
-
     @Before
     public void init() throws Exception {
         dishTypeDAO.setDataSource(getDataSource());
+        dishTypeDAO.setTestMode(true);
     }
 
     @Test
