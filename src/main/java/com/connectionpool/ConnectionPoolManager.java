@@ -1,9 +1,13 @@
 package com.connectionpool;
 
+import org.apache.log4j.Logger;
+
 import java.util.*;
 import java.sql.*;
 
 public class ConnectionPoolManager {
+
+    private static final Logger log = Logger.getLogger(ConnectionPoolManager.class);
 
     private String databaseUrl = "jdbc:mysql://localhost:3306/food?serverTimezone=UTC&verifyServerCertificate=false&useSSL=true";
     private String userName = "root";
@@ -28,15 +32,18 @@ public class ConnectionPoolManager {
 //    }
 
     private void initialize() {
+
+        log.info("Initialising connections in ConnectionPoolManager");
+
         initializeConnectionPool();
     }
 
     private void initializeConnectionPool() {
         while (checkIfConnectionPoolIsFull()) {
-            System.out.println("Connection Pool is NOT full. Proceeding with adding new connections");
+//            System.out.println("Connection Pool is NOT full. Proceeding with adding new connections");
             connectionPool.add(createNewConnectionForPool());
         }
-        System.out.println("Connection Pool is full.");
+        log.debug("Connection Pool is full");
     }
 
     private synchronized boolean checkIfConnectionPoolIsFull() {
@@ -68,6 +75,8 @@ public class ConnectionPoolManager {
 
         synchronized (connectionPool) {
 
+            log.debug("Getting connection from pool");
+
             while (connectionPool.isEmpty()) {
 
                 try {
@@ -85,6 +94,8 @@ public class ConnectionPoolManager {
     public void returnConnectionToPool(Connection connection) {
 
         synchronized (connectionPool) {
+
+            log.debug("Returning connection to pool");
 
             connectionPool.offer(connection);
             connectionPool.notify();

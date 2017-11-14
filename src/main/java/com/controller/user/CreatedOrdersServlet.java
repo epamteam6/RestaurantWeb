@@ -3,8 +3,8 @@ package com.controller.user;
 import com.model.Order;
 import com.model.User;
 import com.service.OrderService;
-import com.service.OrderStatusService;
 import com.service.UserService;
+import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,10 +16,10 @@ import java.util.*;
 
 public class CreatedOrdersServlet extends HttpServlet {
 
-    private Map<String, Map<String, Long>> menu;
+    private static final Logger log = Logger.getLogger(CreatedOrdersServlet.class);
+
     private UserService userService = UserService.getInstance();
     private OrderService orderService = OrderService.getInstance();
-    private OrderStatusService orderStatusService = OrderStatusService.getInstance();
     private List<List> usersOrders;
     private List<Long> orderNumbers;
     private User user;
@@ -28,6 +28,8 @@ public class CreatedOrdersServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        log.info("(user) Initializing...");
 
         String username = (String) request.getSession().getAttribute("loggedInUser");
         Optional<User> optional = userService.getUserByName(username);
@@ -52,13 +54,13 @@ public class CreatedOrdersServlet extends HttpServlet {
     }
 
 
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("user_created_orders.jsp").include(request, response);
 
+        log.info("(user) Processing...");
 
-        System.out.println(orderNumbers);
+//        System.out.println(orderNumbers);
 
         Boolean isDeleteButtonClicked = request.getParameter("Delete") != null;
 

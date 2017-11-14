@@ -2,10 +2,13 @@ package com.service;
 
 import com.dao.UserDAO;
 import lombok.Data;
+import org.apache.log4j.Logger;
 
 
 @Data
 public class AuthorisationService {
+
+    private static final Logger log = Logger.getLogger(AuthorisationService.class);
 
     private UserDAO userDAO = UserDAO.getInstance();
 
@@ -23,6 +26,8 @@ public class AuthorisationService {
     }
 
     public boolean singIn(String userName, String password) {
+
+        log.info("singIn() " + userName);
 
         if (userDAO.validate(userName, password))
             return true;

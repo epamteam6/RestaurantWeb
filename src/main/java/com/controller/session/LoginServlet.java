@@ -2,6 +2,7 @@ package com.controller.session;
 
 import com.service.AuthorisationService;
 import com.service.UserService;
+import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import java.io.IOException;
 
 public class LoginServlet extends HttpServlet {
 
+    private static final Logger log = Logger.getLogger(LoginServlet.class);
 
     private AuthorisationService authorisationService = AuthorisationService.getInstance();
     private UserService userService = UserService.getInstance();
@@ -20,6 +22,8 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        log.info("(session) Initializing...");
 
         RequestDispatcher dispatcher = request
                 .getRequestDispatcher("session_login.jsp");
@@ -30,6 +34,9 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        log.info("(session) Processing...");
+
         request.getRequestDispatcher("session_login.jsp").include(request, response);
         String username = request.getParameter("username");
         String password = request.getParameter("password");

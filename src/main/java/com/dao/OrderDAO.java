@@ -2,6 +2,7 @@ package com.dao;
 
 import com.connectionpool.ConnectionPoolManager;
 import com.model.Order;
+import org.apache.log4j.Logger;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -11,6 +12,8 @@ import java.util.Optional;
 
 
 public class OrderDAO implements RegularDAO<Order> {
+
+    private static final Logger log = Logger.getLogger(OrderDAO.class);
 
     private boolean isTestMode = false;
     private DataSource dataSource;
@@ -71,6 +74,8 @@ public class OrderDAO implements RegularDAO<Order> {
     @Override
     public Optional<Order> getById(long id) {
 
+        log.info("getById() " + id);
+
         if (!isTestMode)
             connection = connectionPool.getConnectionFromPool();
 
@@ -88,6 +93,7 @@ public class OrderDAO implements RegularDAO<Order> {
 
         } catch (SQLException e) {
 
+            log.error("getById() " + id);
             e.printStackTrace();
         }
 
@@ -100,6 +106,8 @@ public class OrderDAO implements RegularDAO<Order> {
 
     @Override
     public List<Order> getAll() {
+
+        log.info("getAll()");
 
         if (!isTestMode)
             connection = connectionPool.getConnectionFromPool();
@@ -116,6 +124,7 @@ public class OrderDAO implements RegularDAO<Order> {
 
         } catch (SQLException e) {
 
+            log.error("getAll()");
             e.printStackTrace();
         }
 
@@ -128,6 +137,8 @@ public class OrderDAO implements RegularDAO<Order> {
 
     @Override
     public boolean create(Order order) {
+
+        log.info("create() " + order);
 
         if (!isTestMode)
             connection = connectionPool.getConnectionFromPool();
@@ -147,6 +158,7 @@ public class OrderDAO implements RegularDAO<Order> {
 
         } catch (SQLException e) {
 
+            log.error("create() " + order);
             e.printStackTrace();
         }
 
@@ -158,6 +170,8 @@ public class OrderDAO implements RegularDAO<Order> {
 
     @Override
     public boolean remove(long id) {
+
+        log.info("remove() " + id);
 
         if (!isTestMode)
             connection = connectionPool.getConnectionFromPool();
@@ -173,6 +187,7 @@ public class OrderDAO implements RegularDAO<Order> {
 
         } catch (SQLException e) {
 
+            log.error("remove() " + id);
             e.printStackTrace();
         }
 
@@ -185,6 +200,8 @@ public class OrderDAO implements RegularDAO<Order> {
 
     @Override
     public boolean update(Order order) {
+
+        log.info("update() " + order);
 
         if (!isTestMode)
             connection = connectionPool.getConnectionFromPool();
@@ -204,6 +221,7 @@ public class OrderDAO implements RegularDAO<Order> {
 
         } catch (SQLException e) {
 
+            log.error("update() " + order);
             e.printStackTrace();
         }
 
@@ -215,6 +233,8 @@ public class OrderDAO implements RegularDAO<Order> {
 
 
     public List<Order> getByUserAndStatus(long userId, Order.Status status) {
+
+        log.info("getByUserAndStatus(userId, Status) " + userId + ", " + status);
 
         if (!isTestMode)
             connection = connectionPool.getConnectionFromPool();
@@ -233,6 +253,7 @@ public class OrderDAO implements RegularDAO<Order> {
 
         } catch (SQLException e) {
 
+            log.error("getByUserAndStatus(userId, Status) " + userId + ", " + status);
             e.printStackTrace();
         }
 

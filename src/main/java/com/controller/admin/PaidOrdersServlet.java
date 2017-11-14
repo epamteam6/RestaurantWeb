@@ -3,8 +3,8 @@ package com.controller.admin;
 import com.model.Order;
 import com.model.User;
 import com.service.OrderService;
-import com.service.OrderStatusService;
 import com.service.UserService;
+import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,11 +13,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class PaidOrdersServlet extends HttpServlet {
+
+    private static final Logger log = Logger.getLogger(PaidOrdersServlet.class);
 
     private UserService userService = UserService.getInstance();
     private OrderService orderService = OrderService.getInstance();
@@ -30,14 +31,16 @@ public class PaidOrdersServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        log.info("(admin) Initializing...");
+
         allUsers = userService.getUserDAO().getAll();
-        System.out.println(allUsers);
+//        System.out.println(allUsers);
 
         getPaidOrders();
 
         request.setAttribute("usersOrders", usersOrders);
         request.setAttribute("orderNumbers", orderNumbers);
-        request.setAttribute("username", (String) request.getSession().getAttribute("loggedInUser"));
+        request.setAttribute("username", request.getSession().getAttribute("loggedInUser"));
 
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("admin_paid_orders.jsp");
@@ -51,9 +54,12 @@ public class PaidOrdersServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        log.info("(admin) Processing...");
+
         request.getRequestDispatcher("admin_paid_orders.jsp").include(request, response);
 
-        System.out.println(orderNumbers);
+//        System.out.println(orderNumbers);
 
         Boolean isAnyOptionChosen = false;
         for (Long number : orderNumbers) {

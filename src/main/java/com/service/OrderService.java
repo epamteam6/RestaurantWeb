@@ -3,6 +3,7 @@ package com.service;
 import com.dao.*;
 import com.model.*;
 import lombok.Data;
+import org.apache.log4j.Logger;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -10,6 +11,8 @@ import java.util.*;
 
 @Data
 public class OrderService {
+
+    private static final Logger log = Logger.getLogger(OrderService.class);
 
     private OrderDAO orderDAO = OrderDAO.getInstance();
     private UserDAO userDAO = UserDAO.getInstance();
@@ -33,7 +36,12 @@ public class OrderService {
     }
 
     public void makeOrder(String userName, Map<String, Long> dishNamesAndAmount) {
+
+        log.info("makeOrder(userName, dishes) " + userName);
+
         if (!userDAO.getByName(userName).isPresent()) {
+
+            log.error("no such user - makeOrder(userName, dishes) " + userName);
             throw new NoSuchElementException("There is no such user!");
         }
         long userID = userDAO.getByName(userName).get().getId();
@@ -58,7 +66,11 @@ public class OrderService {
                 dishOrderDAO.create(new DishOrder(0, orderID,
                         dishId, amount, amount * price));
 
-            } else throw new NoSuchElementException("There is no such dishname!");
+            } else {
+
+                log.error("no such dishName - makeOrder(userName, dishes)");
+                throw new NoSuchElementException("There is no such dishName!");
+            }
         }
 
         Order order = orderDAO.getById(orderID).get();
@@ -68,9 +80,14 @@ public class OrderService {
 
 
     public Map<Long, Map<String, Long>> orderDetails(String username, Order.Status status) {
+
+        log.info("orderDetails(userName, status) " + username + ", " + status);
+
         Map<Long, Map<String, Long>> result = new HashMap<>();
         Optional<User> user = userDAO.getByName(username);
         if (!user.isPresent()) {
+
+            log.error("no such user - orderDetails(userName, status) " + username);
             throw new NoSuchElementException("There is no such user!");
         }
 
