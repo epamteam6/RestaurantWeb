@@ -2,6 +2,7 @@ package com.controller.filters;
 
 import com.model.User;
 import com.service.UserService;
+import org.apache.log4j.Logger;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +11,8 @@ import java.io.IOException;
 import java.util.Optional;
 
 public class RestrictionSecurityFilter implements Filter {
+
+    private static final Logger log = Logger.getLogger(RestrictionSecurityFilter.class);
 
     private UserService userService = UserService.getInstance();
 
@@ -32,6 +35,7 @@ public class RestrictionSecurityFilter implements Filter {
             }
         }
 
+        log.debug("Forbidden attempt to use the control panel by " + (String) o);
         res.sendRedirect("/404.jsp");
     }
 
