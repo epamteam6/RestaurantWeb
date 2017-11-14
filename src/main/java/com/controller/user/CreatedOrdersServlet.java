@@ -22,14 +22,12 @@ public class CreatedOrdersServlet extends HttpServlet {
     private OrderStatusService orderStatusService = OrderStatusService.getInstance();
     private List<List> usersOrders;
     private List<Long> orderNumbers;
+    private User user;
 
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        usersOrders = new ArrayList<>();
-        orderNumbers = new ArrayList<>();
 
         String username = (String) request.getSession().getAttribute("loggedInUser");
         Optional<User> optional = userService.getUserByName(username);
@@ -39,7 +37,64 @@ public class CreatedOrdersServlet extends HttpServlet {
             return;
         }
 
-        User user = optional.get();
+        user = optional.get();
+        getUserOrders();
+
+        request.setAttribute("usersOrders", usersOrders);
+        request.setAttribute("orderNumbers", orderNumbers);
+        request.setAttribute("username", (String) request.getSession().getAttribute("loggedInUser"));
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher("user_created_orders.jsp");
+        if (dispatcher != null) {
+            dispatcher.forward(request, response);
+        }
+
+    }
+
+
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("user_created_orders.jsp").include(request, response);
+
+
+        System.out.println(orderNumbers);
+
+        Boolean isDeleteButtonClicked = request.getParameter("Delete") != null;
+
+        Boolean isAnyOptionChosen = false;
+        for (Long number : orderNumbers) {
+            Boolean checked = request.getParameter(number.toString()) != null;
+            if (checked) {
+                if (isDeleteButtonClicked) {
+                    isAnyOptionChosen = true;
+                    orderService.cancelOrder(number);
+                }
+            }
+        }
+
+        getUserOrders();
+
+        request.setAttribute("usersOrders", usersOrders);
+        request.setAttribute("orderNumbers", orderNumbers);
+        request.setAttribute("username", (String) request.getSession().getAttribute("loggedInUser"));
+
+        if(!isAnyOptionChosen){
+            request.setAttribute("message", "You didn't choose any orders!");
+        }
+        else {
+            request.setAttribute("message", "You deleted selected orders!");
+        }
+
+        getServletContext().getRequestDispatcher("/user_created_orders.jsp").forward(request, response);
+
+
+    }
+
+    private void getUserOrders() {
+        usersOrders = new ArrayList<>();
+        orderNumbers = new ArrayList<>();
+
         Map<Long, Map<String, Long>> ordersDetails = orderService.orderDetails(user.getUserName(), Order.Status.CREATED);
         if (!ordersDetails.isEmpty()) {
             for (Long number : ordersDetails.keySet()) {
@@ -51,19 +106,5 @@ public class CreatedOrdersServlet extends HttpServlet {
                 usersOrders.add(details);
             }
         }
-
-        request.setAttribute("usersOrders", usersOrders);
-        request.setAttribute("username", (String) request.getSession().getAttribute("loggedInUser"));
-
-        RequestDispatcher dispatcher = request.getRequestDispatcher("user_created_orders.jsp");
-        if (dispatcher != null) {
-            dispatcher.forward(request, response);
-        }
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        request.getRequestDispatcher("user_created_orders.jsp").include(request, response);
     }
 }

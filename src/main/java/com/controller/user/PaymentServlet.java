@@ -29,9 +29,6 @@ public class PaymentServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        usersOrders = new ArrayList<>();
-        orderNumbers = new ArrayList<>();
-
         String username = (String) request.getSession().getAttribute("loggedInUser");
         Optional<User> optional = userService.getUserByName(username);
 
@@ -44,6 +41,7 @@ public class PaymentServlet extends HttpServlet {
         getUserOrders();
 
         request.setAttribute("usersOrders", usersOrders);
+        request.setAttribute("orderNumbers", orderNumbers);
         request.setAttribute("username", (String) request.getSession().getAttribute("loggedInUser"));
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("user_payment.jsp");
@@ -84,6 +82,9 @@ public class PaymentServlet extends HttpServlet {
         if(!isAnyOptionChosen){
             request.setAttribute("message", "You didn't choose any orders!");
         }
+        else {
+            request.setAttribute("message", "You paid selected orders!");
+        }
 
         getServletContext().getRequestDispatcher("/user_payment.jsp").forward(request, response);
 
@@ -91,6 +92,9 @@ public class PaymentServlet extends HttpServlet {
     }
 
     private void getUserOrders() {
+        usersOrders = new ArrayList<>();
+        orderNumbers = new ArrayList<>();
+
         Map<Long, Map<String, Long>> ordersDetails = orderService.orderDetails(user.getUserName(), Order.Status.READY);
         if (!ordersDetails.isEmpty()) {
             for (Long number : ordersDetails.keySet()) {

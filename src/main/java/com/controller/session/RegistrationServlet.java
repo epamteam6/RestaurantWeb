@@ -45,7 +45,12 @@ public class RegistrationServlet extends HttpServlet {
             response.addCookie(user);
             response.sendRedirect("user_create_order");
 
-        } else response.sendRedirect("session_login_error");
+        } else {
+
+            request.setAttribute("message", "Error! User with this name exists! <br>Enter another username!");
+            request.getRequestDispatcher("session_join.jsp").forward(request, response);
+            //response.sendRedirect("session_login_error");
+        }
 
 //        System.out.println(isValid);
 

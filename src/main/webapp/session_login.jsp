@@ -60,6 +60,7 @@
 <section class="content-checkout-page">
     <div class="container">
 
+        <h6 class="title-s">${message}</h6>
         <!-- 01/Check out method -->
         <form method="post" action="session_login">
             <div class="wrap-check-out-method">

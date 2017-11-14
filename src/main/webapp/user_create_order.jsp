@@ -9,12 +9,13 @@
         <div class="wrap-title-sub-page">
             <h2 class="title-l">Create Order</h2>
             <h6 class="title-s">Home / Create Order</h6>
-            <h6 class="title-s">${message}</h6>
+
         </div>
     </div>
 </section>
 
 <section class="restyle-menu-03 home-onepage-menu content-reservation-03 pad-bt-80">
+    <h6 class="title-s">${message}</h6>
 <form method="post" action="user_create_order">
 
     <!-- Our menu 1-->

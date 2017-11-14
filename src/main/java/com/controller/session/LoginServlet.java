@@ -54,9 +54,12 @@ public class LoginServlet extends HttpServlet {
             }
 
 
-        } else response.sendRedirect("session_login_error");
+        } else {
+            request.setAttribute("message", "Error! Enter correct Username and Password!");
+            request.getRequestDispatcher("session_login.jsp").forward(request, response);
+        }
 
-        System.out.println(isValid);
+       // System.out.println(isValid);
 
     }
 }

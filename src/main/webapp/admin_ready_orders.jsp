@@ -63,8 +63,8 @@
             <div class="wrap-total clearfix" >
 
 
-                <div class="style-pos col-right" style="padding-right: 25px">
-                    <input class="btn-with-bg-white" name="Cancel" type="submit" value="Delete">
+                <div class="style-pos col-right">
+                    <input class="btn-with-bg" name="Cancel" type="submit" value="Delete">
 
                 </div>
 
