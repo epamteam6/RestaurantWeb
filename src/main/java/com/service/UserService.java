@@ -16,20 +16,6 @@ public class UserService {
         userDAO = UserDAO.getInstance();
     }
 
-//    {
-//        try {
-//            SimpleDriverDataSource dataSource = new SimpleDriverDataSource(new Driver(),
-//                    "jdbc:mysql://localhost:3306/food?serverTimezone=UTC&verifyServerCertificate=false&useSSL=true", "root", "root");
-//
-//
-//            userDAO.setDataSource(dataSource);
-//            setUserDAO(userDAO);
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
     public static UserService getInstance() {
         if (instance == null)
             instance = new UserService();

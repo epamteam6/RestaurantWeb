@@ -19,19 +19,6 @@ public class AuthorisationService {
         userDAO = UserDAO.getInstance();
     }
 
-//    {
-//        try {
-//            SimpleDriverDataSource dataSource = new SimpleDriverDataSource(new Driver(),
-//                    "jdbc:mysql://localhost:3306/food?serverTimezone=UTC&verifyServerCertificate=false&useSSL=true", "root", "root");
-//
-//            userDAO = UserDAO.getInstance();
-//            userDAO.setDataSource(dataSource);
-//            setUserDAO(userDAO);
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
     public static AuthorisationService getInstance() {
 
         if (instance == null)
