@@ -1,5 +1,6 @@
 package com.dao;
 
+import com.connectionpool.ConnectionPoolManager;
 import com.model.User;
 
 import javax.sql.DataSource;
@@ -12,9 +13,11 @@ import java.util.Optional;
 public class UserDAO implements DAO<User> {
 
     private boolean isTestMode = false;
-
     private DataSource dataSource;
+
+    private ConnectionPoolManager connectionPool = new ConnectionPoolManager();
     private Connection connection;
+
     private static UserDAO instance;
 
     private static final String VALIDATION_QUERY = "SELECT * FROM users WHERE user_name = ? AND password_hash = ?";
@@ -37,6 +40,23 @@ public class UserDAO implements DAO<User> {
         return instance;
     }
 
+    // For tests only
+    @Override
+    public void setDataSource(DataSource dataSource) {
+
+        this.dataSource = dataSource;
+
+        if (isTestMode) {
+
+            try {
+                this.connection = dataSource.getConnection();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    // For tests only
     public void setTestMode(boolean testMode) {
 
         if (dataSource != null && testMode) {
@@ -53,22 +73,10 @@ public class UserDAO implements DAO<User> {
 
 
     @Override
-    public void setDataSource(DataSource dataSource) {
-
-        this.dataSource = dataSource;
-
-        if (isTestMode) {
-
-            try {
-                this.connection = dataSource.getConnection();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    @Override
     public Optional<User> getById(long id) {
+
+        if (!isTestMode)
+            connection = connectionPool.getConnectionFromPool();
 
         User user = null;
 
@@ -87,11 +95,17 @@ public class UserDAO implements DAO<User> {
             e.printStackTrace();
         }
 
+        if (!isTestMode)
+            connectionPool.returnConnectionToPool(connection);
+
         return Optional.ofNullable(user);
     }
 
     @Override
     public List<User> getAll() {
+
+        if (!isTestMode)
+            connection = connectionPool.getConnectionFromPool();
 
         List<User> users = new ArrayList<>();
 
@@ -109,11 +123,19 @@ public class UserDAO implements DAO<User> {
             e.printStackTrace();
         }
 
+        if (!isTestMode)
+            connectionPool.returnConnectionToPool(connection);
+
         return users;
     }
 
 
     public boolean add(String userName, String password, boolean isAdmin) {
+
+        boolean result = false;
+
+        if (!isTestMode)
+            connection = connectionPool.getConnectionFromPool();
 
         try {
 
@@ -124,17 +146,25 @@ public class UserDAO implements DAO<User> {
 
             sql.executeUpdate();
 
-            return true;
+            result = true;
 
         } catch (SQLException e) {
 
             e.printStackTrace();
         }
 
-        return false;
+        if (!isTestMode)
+            connectionPool.returnConnectionToPool(connection);
+
+        return result;
     }
 
     public boolean remove(String userName) {
+
+        boolean result = false;
+
+        if (!isTestMode)
+            connection = connectionPool.getConnectionFromPool();
 
         try {
 
@@ -143,17 +173,25 @@ public class UserDAO implements DAO<User> {
 
             sql.executeUpdate();
 
-            return true;
+            result = true;
 
         } catch (SQLException e) {
 
             e.printStackTrace();
         }
 
-        return false;
+        if (!isTestMode)
+            connectionPool.returnConnectionToPool(connection);
+
+        return result;
     }
 
     public boolean update(String userName, String password, boolean isAdmin) {
+
+        boolean result = false;
+
+        if (!isTestMode)
+            connection = connectionPool.getConnectionFromPool();
 
         try {
 
@@ -164,36 +202,49 @@ public class UserDAO implements DAO<User> {
 
             sql.executeUpdate();
 
-            return true;
+            result = true;
 
         } catch (SQLException e) {
 
             e.printStackTrace();
         }
 
-        return false;
+        if (!isTestMode)
+            connectionPool.returnConnectionToPool(connection);
+
+        return result;
     }
 
     public boolean validate(String userName, String password) {
 
-        try {
+        boolean result = false;
 
+        if (!isTestMode)
+            connection = connectionPool.getConnectionFromPool();
+
+        try {
             PreparedStatement sql = connection.prepareStatement(VALIDATION_QUERY);
             sql.setString(1, userName);
             sql.setString(2, password);
             ResultSet rs = sql.executeQuery();
 
-            return rs.next();
+            result = rs.next();
 
         } catch (SQLException e) {
 
             e.printStackTrace();
         }
 
-        return false;
+        if (!isTestMode)
+            connectionPool.returnConnectionToPool(connection);
+
+        return result;
     }
 
     public Optional<User> getByName(String userName) {
+
+        if (!isTestMode)
+            connection = connectionPool.getConnectionFromPool();
 
         User user = null;
 
@@ -211,6 +262,9 @@ public class UserDAO implements DAO<User> {
 
             e.printStackTrace();
         }
+
+        if (!isTestMode)
+            connectionPool.returnConnectionToPool(connection);
 
         return Optional.ofNullable(user);
     }

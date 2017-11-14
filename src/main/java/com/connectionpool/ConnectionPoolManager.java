@@ -9,7 +9,7 @@ public class ConnectionPoolManager {
     private String userName = "root";
     private String password = "root";
 
-    private Queue<Connection> connectionPool = new LinkedList<>();
+    private static final Queue<Connection> connectionPool = new LinkedList<>();
     private final int MAX_POOL_SIZE = 5;
 
     public ConnectionPoolManager() {
@@ -32,7 +32,7 @@ public class ConnectionPoolManager {
     }
 
     private void initializeConnectionPool() {
-        while (!checkIfConnectionPoolIsFull()) {
+        while (checkIfConnectionPoolIsFull()) {
             System.out.println("Connection Pool is NOT full. Proceeding with adding new connections");
             connectionPool.add(createNewConnectionForPool());
         }
@@ -46,15 +46,15 @@ public class ConnectionPoolManager {
     }
 
     //Creating a connection
-    private Connection createNewConnectionForPool() {
+    private synchronized Connection createNewConnectionForPool() {
         Connection connection;
 
         try {
-//            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(databaseUrl, userName, password);
             System.out.println("Connection: " + connection);
 
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
 
             e.printStackTrace();
 
@@ -69,8 +69,9 @@ public class ConnectionPoolManager {
         synchronized (connectionPool) {
 
             while (connectionPool.isEmpty()) {
+                System.out.println(connectionPool.size());
                 try {
-                    connectionPool.wait();
+                    connectionPool.wait(100);
 
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -81,8 +82,10 @@ public class ConnectionPoolManager {
         }
     }
 
-    public synchronized void returnConnectionToPool(Connection connection) {
+    public void returnConnectionToPool(Connection connection) {
+
         synchronized (connectionPool) {
+
             connectionPool.offer(connection);
             connectionPool.notify();
         }
