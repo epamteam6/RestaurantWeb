@@ -1,11 +1,7 @@
 package com.service;
 
 import com.dao.UserDAO;
-import com.mysql.jdbc.Driver;
 import lombok.Data;
-import org.springframework.jdbc.datasource.SimpleDriverDataSource;
-
-import java.sql.SQLException;
 
 
 @Data

@@ -188,7 +188,7 @@ public class DishDAO implements RegularDAO<Dish> {
 
         boolean result = false;
 
-        try (Connection connection = dataSource.getConnection()) {
+        try {
 
             PreparedStatement sql = connection.prepareStatement(UPDATE_QUERY);
             sql.setString(1, dish.getDishname());
@@ -224,7 +224,7 @@ public class DishDAO implements RegularDAO<Dish> {
             connection = connectionPool.getConnectionFromPool();
 
         Optional<Dish> dish = Optional.empty();
-        try (Connection connection = dataSource.getConnection()) {
+        try {
 
             PreparedStatement sql = connection.prepareStatement(SELECT_BY_NAME_QUERY);
             sql.setString(1, name);
