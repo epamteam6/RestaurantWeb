@@ -5,85 +5,89 @@ import java.sql.*;
 
 public class ConnectionPoolManager {
 
-    String databaseUrl = "jdbc:mysql://localhost:3306/food?serverTimezone=UTC&verifyServerCertificate=false&useSSL=true";
-    String userName = "root";
-    String password = "root";
+    private String databaseUrl = "jdbc:mysql://localhost:3306/food?serverTimezone=UTC&verifyServerCertificate=false&useSSL=true";
+    private String userName = "root";
+    private String password = "root";
 
-    Vector connectionPool = new Vector();
+    private static final Queue<Connection> connectionPool = new LinkedList<>();
+    private final int MAX_POOL_SIZE = 5;
 
     public ConnectionPoolManager() {
         initialize();
     }
 
-    public ConnectionPoolManager(
-            String databaseUrl,
-            String userName,
-            String password
-    ) {
-        this.databaseUrl = databaseUrl;
-        this.userName = userName;
-        this.password = password;
-        initialize();
-    }
+//    public ConnectionPoolManager(
+//            String databaseUrl,
+//            String userName,
+//            String password
+//    ) {
+//        this.databaseUrl = databaseUrl;
+//        this.userName = userName;
+//        this.password = password;
+//        initialize();
+//    }
 
     private void initialize() {
         initializeConnectionPool();
     }
 
     private void initializeConnectionPool() {
-        while (!checkIfConnectionPoolIsFull()) {
+        while (checkIfConnectionPoolIsFull()) {
             System.out.println("Connection Pool is NOT full. Proceeding with adding new connections");
-            connectionPool.addElement(createNewConnectionForPool());
+            connectionPool.add(createNewConnectionForPool());
         }
         System.out.println("Connection Pool is full.");
     }
 
     private synchronized boolean checkIfConnectionPoolIsFull() {
-        final int MAX_POOL_SIZE = 5;
 
         //Check if the pool size
-        if (connectionPool.size() < 5) {
-            return false;
-        }
-
-        return true;
+        return (connectionPool.size() < MAX_POOL_SIZE);
     }
 
     //Creating a connection
-    private Connection createNewConnectionForPool() {
-        Connection connection = null;
+    private synchronized Connection createNewConnectionForPool() {
+        Connection connection;
 
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(databaseUrl, userName, password);
             System.out.println("Connection: " + connection);
-        } catch (SQLException sqle) {
-            System.err.println("SQLException: " + sqle);
-            return null;
-        } catch (ClassNotFoundException cnfe) {
-            System.err.println("ClassNotFoundException: " + cnfe);
+
+        } catch (SQLException | ClassNotFoundException e) {
+
+            e.printStackTrace();
+
             return null;
         }
 
         return connection;
     }
 
-    public synchronized Connection getConnectionFromPool() {
-        Connection connection = null;
+    public Connection getConnectionFromPool() {
 
-        if (connectionPool.size() > 0) {
-            connection = (Connection) connectionPool.firstElement();
-            connectionPool.removeElementAt(0);
+        synchronized (connectionPool) {
+
+            while (connectionPool.isEmpty()) {
+                System.out.println(connectionPool.size());
+                try {
+                    connectionPool.wait(100);
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return connectionPool.poll();
         }
-        return connection;
     }
 
-    public synchronized void returnConnectionToPool(Connection connection) {
-        connectionPool.addElement(connection);
-    }
+    public void returnConnectionToPool(Connection connection) {
 
-    public static void main(String args[]) {
-        ConnectionPoolManager ConnectionPoolManager = new ConnectionPoolManager();
-    }
+        synchronized (connectionPool) {
 
+            connectionPool.offer(connection);
+            connectionPool.notify();
+        }
+    }
 }

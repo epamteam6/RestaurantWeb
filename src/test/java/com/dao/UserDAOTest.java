@@ -21,6 +21,7 @@ public class UserDAOTest {
     public void init() throws Exception {
 
         userDAO.setDataSource(getDataSource());
+        userDAO.setTestMode(true);
     }
 
     @Test
