@@ -1,26 +1,19 @@
 package com.controller.admin;
 
-import com.dao.*;
 import com.model.Order;
 import com.model.User;
-import com.mysql.jdbc.Driver;
-import com.service.MenuService;
 import com.service.OrderService;
 import com.service.OrderStatusService;
 import com.service.UserService;
 import org.apache.log4j.Logger;
-import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,11 +36,11 @@ public class ConfirmationServlet extends HttpServlet {
         log.info("(admin) Initializing...");
 
         allUsers = userService.getUserDAO().getAll();
-        System.out.println(allUsers);
+//        System.out.println(allUsers);
 
         getCreatedOrders();
 
-        System.out.println(usersOrders);
+//        System.out.println(usersOrders);
         request.setAttribute("usersOrders", usersOrders);
         request.setAttribute("orderNumbers", orderNumbers);
         request.setAttribute("username", (String) request.getSession().getAttribute("loggedInUser"));
@@ -67,7 +60,7 @@ public class ConfirmationServlet extends HttpServlet {
         request.getRequestDispatcher("admin_confirmation.jsp").include(request, response);
 
 
-        System.out.println(orderNumbers);
+//        System.out.println(orderNumbers);
 
         Boolean isConfirmButtonClicked = request.getParameter("Confirm") != null;
         Boolean isCancelButtonClicked = request.getParameter("Cancel") != null;

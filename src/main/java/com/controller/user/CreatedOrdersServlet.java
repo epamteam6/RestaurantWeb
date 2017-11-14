@@ -60,7 +60,7 @@ public class CreatedOrdersServlet extends HttpServlet {
 
         log.info("(user) Processing...");
 
-        System.out.println(orderNumbers);
+//        System.out.println(orderNumbers);
 
         Boolean isDeleteButtonClicked = request.getParameter("Delete") != null;
 

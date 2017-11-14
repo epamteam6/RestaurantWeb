@@ -34,7 +34,7 @@ public class AllReadyOrdersServlet extends HttpServlet {
         log.info("(admin) Initializing...");
 
         allUsers = userService.getUserDAO().getAll();
-        System.out.println(allUsers);
+//        System.out.println(allUsers);
 
         getReadyOrders();
 
@@ -57,7 +57,7 @@ public class AllReadyOrdersServlet extends HttpServlet {
         request.getRequestDispatcher("admin_ready_orders.jsp").include(request, response);
 
 
-        System.out.println(orderNumbers);
+//        System.out.println(orderNumbers);
 
         Boolean isAnyOptionChosen = false;
         for (Long number : orderNumbers) {

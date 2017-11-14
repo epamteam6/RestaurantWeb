@@ -34,7 +34,7 @@ public class PaidOrdersServlet extends HttpServlet {
         log.info("(admin) Initializing...");
 
         allUsers = userService.getUserDAO().getAll();
-        System.out.println(allUsers);
+//        System.out.println(allUsers);
 
         getPaidOrders();
 
@@ -59,7 +59,7 @@ public class PaidOrdersServlet extends HttpServlet {
 
         request.getRequestDispatcher("admin_paid_orders.jsp").include(request, response);
 
-        System.out.println(orderNumbers);
+//        System.out.println(orderNumbers);
 
         Boolean isAnyOptionChosen = false;
         for (Long number : orderNumbers) {

@@ -60,7 +60,7 @@ public class CreateOrderServlet extends HttpServlet {
                 Long amount = Long.parseLong(number);
                 if (amount > 0) {
                     dishNamesAndAmount.put(subPair.getKey(), amount);
-                    System.out.println(subPair.getKey() + " " + amount);
+//                    System.out.println(subPair.getKey() + " " + amount);
                 }
             }
 

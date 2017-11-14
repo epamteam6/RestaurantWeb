@@ -37,7 +37,7 @@ public class BillCreationServlet extends HttpServlet {
         log.info("(admin) Initializing...");
 
         allUsers = userService.getUserDAO().getAll();
-        System.out.println(allUsers);
+//        System.out.println(allUsers);
 
         getConfirmedOrders();
 
@@ -60,7 +60,7 @@ public class BillCreationServlet extends HttpServlet {
         request.getRequestDispatcher("admin_bill_creation.jsp").include(request, response);
 
 
-        System.out.println(orderNumbers);
+//        System.out.println(orderNumbers);
 
         Boolean isBillButtonClicked = request.getParameter("Bill") != null;
         Boolean isCancelButtonClicked = request.getParameter("Cancel") != null;
