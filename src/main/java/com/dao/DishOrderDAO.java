@@ -142,7 +142,7 @@ public class DishOrderDAO implements RegularDAO<DishOrder> {
     @Override
     public boolean create(DishOrder dishOrder) {
 
-        log.info("create() " + dishOrder.getId());
+        log.info("create() " + dishOrder);
 
         if (!isTestMode)
             connection = connectionPool.getConnectionFromPool();
@@ -163,7 +163,7 @@ public class DishOrderDAO implements RegularDAO<DishOrder> {
 
         } catch (SQLException e) {
 
-            log.error("create() " + dishOrder.getId());
+            log.error("create() " + dishOrder);
             e.printStackTrace();
         }
 
@@ -207,7 +207,7 @@ public class DishOrderDAO implements RegularDAO<DishOrder> {
     @Override
     public boolean update(DishOrder dishOrder) {
 
-        log.info("update() " + dishOrder.getId());
+        log.info("update() " + dishOrder);
 
         if (!isTestMode)
             connection = connectionPool.getConnectionFromPool();
@@ -229,7 +229,7 @@ public class DishOrderDAO implements RegularDAO<DishOrder> {
 
         } catch (SQLException e) {
 
-            log.error("update() " + dishOrder.getId());
+            log.error("update() " + dishOrder);
             e.printStackTrace();
         }
 
