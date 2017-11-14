@@ -24,6 +24,7 @@ public class OrderDAOTest {
     @Before
     public void init() {
         orderDAO.setDataSource(getDataSource());
+        orderDAO.setTestMode(true);
     }
 
 

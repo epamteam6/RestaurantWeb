@@ -1,5 +1,6 @@
 package com.dao;
 
+import com.connectionpool.ConnectionPoolManager;
 import com.model.Order;
 
 import javax.sql.DataSource;
@@ -11,7 +12,12 @@ import java.util.Optional;
 
 public class OrderDAO implements RegularDAO<Order> {
 
+    private boolean isTestMode = false;
     private DataSource dataSource;
+
+    private ConnectionPoolManager connectionPool = new ConnectionPoolManager();
+    private Connection connection;
+
     private static OrderDAO instance;
 
     private static final String UPDATE_QUERY = "UPDATE orders SET user_id=?, date_time=?, total_sum=?, status=? WHERE id=?";
@@ -31,17 +37,46 @@ public class OrderDAO implements RegularDAO<Order> {
         return instance;
     }
 
-
+    // For tests only
     @Override
     public void setDataSource(DataSource dataSource) {
+
         this.dataSource = dataSource;
+
+        if (isTestMode && dataSource != null) {
+
+            try {
+                this.connection = dataSource.getConnection();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    // For tests only
+    public void setTestMode(boolean testMode) {
+
+        if (dataSource != null && testMode) {
+
+            try {
+                this.connection = dataSource.getConnection();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        isTestMode = testMode;
     }
 
     @Override
     public Optional<Order> getById(long id) {
+
+        if (!isTestMode)
+            connection = connectionPool.getConnectionFromPool();
+
         Order order = null;
 
-        try (Connection connection = dataSource.getConnection()) {
+        try {
             PreparedStatement sql = connection.prepareStatement(SELECT_QUERY);
             sql.setLong(1, id);
 
@@ -55,15 +90,22 @@ public class OrderDAO implements RegularDAO<Order> {
             e.printStackTrace();
         }
 
+        if (!isTestMode)
+            connectionPool.returnConnectionToPool(connection);
+
         return Optional.ofNullable(order);
 
     }
 
     @Override
     public List<Order> getAll() {
+
+        if (!isTestMode)
+            connection = connectionPool.getConnectionFromPool();
+
         List<Order> res = new ArrayList<>();
         Statement statement;
-        try (Connection connection = dataSource.getConnection()) {
+        try {
             statement = connection.createStatement();
 
             ResultSet rs = statement.executeQuery(SELECT_ALL_QUERY);
@@ -71,15 +113,26 @@ public class OrderDAO implements RegularDAO<Order> {
                 res.add(createOrderEntity(rs));
             }
         } catch (SQLException e) {
+
             e.printStackTrace();
         }
+
+        if (!isTestMode)
+            connectionPool.returnConnectionToPool(connection);
+
         return res;
     }
 
 
     @Override
     public boolean create(Order order) {
-        try (Connection connection = dataSource.getConnection()) {
+
+        if (!isTestMode)
+            connection = connectionPool.getConnectionFromPool();
+
+        boolean result = false;
+
+        try {
 
             PreparedStatement sql = connection.prepareStatement(INSERT_QUERY);
             sql.setLong(1, order.getUserId());
@@ -87,32 +140,56 @@ public class OrderDAO implements RegularDAO<Order> {
             sql.setLong(3, order.getTotalSum());
             sql.setString(4, order.getStatus().toString());
             sql.executeUpdate();
-            return true;
+
+            result = true;
 
         } catch (SQLException e) {
+
             e.printStackTrace();
         }
-        return false;
+
+        if (!isTestMode)
+            connectionPool.returnConnectionToPool(connection);
+
+        return result;
     }
 
     @Override
     public boolean remove(long id) {
-        try (Connection connection = dataSource.getConnection()) {
+
+        if (!isTestMode)
+            connection = connectionPool.getConnectionFromPool();
+
+        boolean result = false;
+
+        try {
             PreparedStatement sql = connection.prepareStatement(DELETE_QUERY);
             sql.setLong(1, id);
             sql.executeUpdate();
-            return true;
+
+            result = true;
 
         } catch (SQLException e) {
+
             e.printStackTrace();
         }
-        return false;
+
+        if (!isTestMode)
+            connectionPool.returnConnectionToPool(connection);
+
+        return result;
 
     }
 
     @Override
     public boolean update(Order order) {
-        try (Connection connection = dataSource.getConnection()) {
+
+        if (!isTestMode)
+            connection = connectionPool.getConnectionFromPool();
+
+        boolean result = false;
+
+        try {
             PreparedStatement sql = connection.prepareStatement(UPDATE_QUERY);
             sql.setLong(1, order.getUserId());
             sql.setTimestamp(2, Timestamp.valueOf(order.getDateTime()));
@@ -120,18 +197,28 @@ public class OrderDAO implements RegularDAO<Order> {
             sql.setString(4, order.getStatus().toString());
             sql.setLong(5, order.getId());
             sql.executeUpdate();
-            return true;
+
+            result = true;
 
         } catch (SQLException e) {
+
             e.printStackTrace();
         }
-        return false;
+
+        if (!isTestMode)
+            connectionPool.returnConnectionToPool(connection);
+
+        return result;
     }
 
 
     public List<Order> getByUserAndStatus(long userId, Order.Status status) {
+
+        if (!isTestMode)
+            connection = connectionPool.getConnectionFromPool();
+
         List<Order> res = new ArrayList<>();
-        try (Connection connection = dataSource.getConnection()) {
+        try {
             PreparedStatement sql = connection.prepareStatement(SELECT_BY_USERS_STATUS_QUERY);
             sql.setLong(1, userId);
             sql.setString(2, status.toString());
@@ -141,9 +228,15 @@ public class OrderDAO implements RegularDAO<Order> {
             while (rs.next()) {
                 res.add(createOrderEntity(rs));
             }
+
         } catch (SQLException e) {
+
             e.printStackTrace();
         }
+
+        if (!isTestMode)
+            connectionPool.returnConnectionToPool(connection);
+
         return res;
     }
 
