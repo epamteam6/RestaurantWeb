@@ -1,5 +1,6 @@
 package com.dao;
 
+import com.connectionpool.ConnectionPoolManager;
 import com.model.DishOrder;
 
 import javax.sql.DataSource;
@@ -14,7 +15,12 @@ import java.util.Optional;
 
 public class DishOrderDAO implements RegularDAO<DishOrder> {
 
+    private boolean isTestMode = false;
     private DataSource dataSource;
+
+    private ConnectionPoolManager connectionPool = new ConnectionPoolManager();
+    private Connection connection;
+
     private static DishOrderDAO instance;
 
     private static final String SELECT_BY_ORDER_ID_QUERY = "SELECT * FROM dishes_orders WHERE order_id = ?";
@@ -35,20 +41,48 @@ public class DishOrderDAO implements RegularDAO<DishOrder> {
         return instance;
     }
 
-
+    // For tests only
     @Override
     public void setDataSource(DataSource dataSource) {
+
         this.dataSource = dataSource;
+
+        if (isTestMode && dataSource != null) {
+
+            try {
+                this.connection = dataSource.getConnection();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    // For tests only
+    public void setTestMode(boolean testMode) {
+
+        if (dataSource != null && testMode) {
+
+            try {
+                this.connection = dataSource.getConnection();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        isTestMode = testMode;
     }
 
     @Override
     public Optional<DishOrder> getById(long id) {
 
+        if (!isTestMode)
+            connection = connectionPool.getConnectionFromPool();
+
         DishOrder dishOrder = null;
 
-        try (Connection con = dataSource.getConnection()) {
+        try {
 
-            PreparedStatement sql = con.prepareStatement(SELECT_BY_ID_QUERY);
+            PreparedStatement sql = connection.prepareStatement(SELECT_BY_ID_QUERY);
             sql.setLong(1, id);
             ResultSet rs = sql.executeQuery();
 
@@ -60,15 +94,21 @@ public class DishOrderDAO implements RegularDAO<DishOrder> {
             e.printStackTrace();
         }
 
+        if (!isTestMode)
+            connectionPool.returnConnectionToPool(connection);
+
         return Optional.ofNullable(dishOrder);
     }
 
     @Override
     public List<DishOrder> getAll() {
 
+        if (!isTestMode)
+            connection = connectionPool.getConnectionFromPool();
+
         List<DishOrder> dishOrders = new ArrayList<>();
 
-        try (Connection connection = dataSource.getConnection()) {
+        try {
 
             PreparedStatement sql = connection.prepareStatement(SELECT_ALL_QUERY);
 
@@ -82,6 +122,9 @@ public class DishOrderDAO implements RegularDAO<DishOrder> {
             e.printStackTrace();
         }
 
+        if (!isTestMode)
+            connectionPool.returnConnectionToPool(connection);
+
         return dishOrders;
     }
 
@@ -89,7 +132,12 @@ public class DishOrderDAO implements RegularDAO<DishOrder> {
     @Override
     public boolean create(DishOrder dishOrder) {
 
-        try (Connection connection = dataSource.getConnection()) {
+        if (!isTestMode)
+            connection = connectionPool.getConnectionFromPool();
+
+        boolean result = false;
+
+        try {
 
             PreparedStatement sql = connection.prepareStatement(INSERT_QUERY);
             sql.setLong(1, dishOrder.getOrderId());
@@ -99,40 +147,56 @@ public class DishOrderDAO implements RegularDAO<DishOrder> {
 
             sql.executeUpdate();
 
-            return true;
+            result = true;
 
         } catch (SQLException e) {
 
             e.printStackTrace();
         }
 
-        return false;
+        if (!isTestMode)
+            connectionPool.returnConnectionToPool(connection);
+
+        return result;
     }
 
     @Override
     public boolean remove(long id) {
 
-        try (Connection connection = dataSource.getConnection()) {
+        if (!isTestMode)
+            connection = connectionPool.getConnectionFromPool();
+
+        boolean result = false;
+
+        try {
 
             PreparedStatement sql = connection.prepareStatement(REMOVE_QUERY);
             sql.setLong(1, id);
 
             sql.executeUpdate();
 
-            return true;
+            result = true;
 
         } catch (SQLException e) {
 
             e.printStackTrace();
         }
 
-        return false;
+        if (!isTestMode)
+            connectionPool.returnConnectionToPool(connection);
+
+        return result;
     }
 
     @Override
     public boolean update(DishOrder dishOrder) {
 
-        try (Connection connection = dataSource.getConnection()) {
+        if (!isTestMode)
+            connection = connectionPool.getConnectionFromPool();
+
+        boolean result = false;
+
+        try {
 
             PreparedStatement sql = connection.prepareStatement(UPDATE_QUERY);
             sql.setLong(1, dishOrder.getOrderId());
@@ -143,24 +207,30 @@ public class DishOrderDAO implements RegularDAO<DishOrder> {
 
             sql.executeUpdate();
 
-            return true;
+            result = true;
 
         } catch (SQLException e) {
 
             e.printStackTrace();
         }
 
-        return false;
+        if (!isTestMode)
+            connectionPool.returnConnectionToPool(connection);
+
+        return result;
     }
 
 
     public List<DishOrder> getByOrderId(long id) {
 
+        if (!isTestMode)
+            connection = connectionPool.getConnectionFromPool();
+
         List<DishOrder> dishOrders = new ArrayList<>();
 
-        try (Connection con = dataSource.getConnection()) {
+        try {
 
-            PreparedStatement sql = con.prepareStatement(SELECT_BY_ORDER_ID_QUERY);
+            PreparedStatement sql = connection.prepareStatement(SELECT_BY_ORDER_ID_QUERY);
             sql.setLong(1, id);
             ResultSet rs = sql.executeQuery();
 
@@ -171,6 +241,9 @@ public class DishOrderDAO implements RegularDAO<DishOrder> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        if (!isTestMode)
+            connectionPool.returnConnectionToPool(connection);
 
         return dishOrders;
     }

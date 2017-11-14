@@ -3,43 +3,20 @@ package com.service;
 import com.dao.*;
 import com.model.Dish;
 import com.model.DishType;
-import com.mysql.jdbc.Driver;
-import org.springframework.jdbc.datasource.SimpleDriverDataSource;
+import lombok.Data;
 
-import java.sql.SQLException;
 import java.util.*;
 
-public class MenuService {
 
+@Data
+public class MenuService {
 
     private DishTypeDAO dishTypeDAO = DishTypeDAO.getInstance();
     private DishDAO dishDAO = DishDAO.getInstance();
+
     private static MenuService instance;
 
     private MenuService() {
-    }
-
-    {
-        try {
-            SimpleDriverDataSource dataSource = new SimpleDriverDataSource(new Driver(),
-                    "jdbc:mysql://localhost:3306/food?serverTimezone=UTC&verifyServerCertificate=false&useSSL=true", "root", "root");
-
-            dishDAO.setDataSource(dataSource);
-            dishTypeDAO.setDataSource(dataSource);
-            setDishDAO(dishDAO);
-            setDishTypeDAO(dishTypeDAO);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    public void setDishTypeDAO(DishTypeDAO dishTypeDAO) {
-        this.dishTypeDAO = dishTypeDAO;
-    }
-
-    public void setDishDAO(DishDAO dishDAO) {
-        this.dishDAO = dishDAO;
     }
 
     public static MenuService getInstance() {

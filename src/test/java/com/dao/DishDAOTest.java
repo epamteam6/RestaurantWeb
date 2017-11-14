@@ -16,13 +16,12 @@ import static org.junit.Assert.*;
 
 public class DishDAOTest {
 
-
     private DishDAO dishDAO = DishDAO.getInstance();
-
 
     @Before
     public void init() throws Exception {
         dishDAO.setDataSource(getDataSource());
+        dishDAO.setTestMode(true);
     }
 
     @Test

@@ -1,5 +1,6 @@
 package com.dao;
 
+import com.connectionpool.ConnectionPoolManager;
 import com.model.DishType;
 
 import javax.sql.DataSource;
@@ -11,7 +12,12 @@ import java.util.Optional;
 
 public class DishTypeDAO implements RegularDAO<DishType> {
 
+    private boolean isTestMode = false;
     private DataSource dataSource;
+
+    private ConnectionPoolManager connectionPool = new ConnectionPoolManager();
+    private Connection connection;
+
     private static DishTypeDAO instance;
 
     private static final String UPDATE_QUERY = "UPDATE Dish_Types SET dish_type=? WHERE id=?";
@@ -30,17 +36,45 @@ public class DishTypeDAO implements RegularDAO<DishType> {
         return instance;
     }
 
-
+    // For tests only
     @Override
     public void setDataSource(DataSource dataSource) {
+
         this.dataSource = dataSource;
+
+        if (isTestMode && dataSource != null) {
+
+            try {
+                this.connection = dataSource.getConnection();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    // For tests only
+    public void setTestMode(boolean testMode) {
+
+        if (dataSource != null && testMode) {
+
+            try {
+                this.connection = dataSource.getConnection();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        isTestMode = testMode;
     }
 
     @Override
     public Optional<DishType> getById(long id) {
 
+        if (!isTestMode)
+            connection = connectionPool.getConnectionFromPool();
+
         Optional<DishType> dishType = Optional.empty();
-        try (Connection connection = dataSource.getConnection()) {
+        try {
             PreparedStatement sql = connection.prepareStatement(SELECT_QUERY);
             sql.setLong(1, id);
 
@@ -48,72 +82,124 @@ public class DishTypeDAO implements RegularDAO<DishType> {
             if (rs.next()) {
                 dishType = Optional.of(createDishTypeEntity(rs));
             }
+
         } catch (SQLException e) {
+
             e.printStackTrace();
         }
+
+        if (!isTestMode)
+            connectionPool.returnConnectionToPool(connection);
+
         return dishType;
     }
 
     @Override
     public List<DishType> getAll() {
+
+        if (!isTestMode)
+            connection = connectionPool.getConnectionFromPool();
+
         List<DishType> res = new ArrayList<>();
-        try (Connection connection = dataSource.getConnection()) {
+        try {
             Statement statement = connection.createStatement();
 
             ResultSet rs = statement.executeQuery(SELECT_ALL_QUERY);
             while (rs.next()) {
                 res.add(createDishTypeEntity(rs));
             }
+
         } catch (SQLException e) {
+
             e.printStackTrace();
         }
+
+        if (!isTestMode)
+            connectionPool.returnConnectionToPool(connection);
+
         return res;
     }
 
 
     @Override
     public boolean create(DishType dishType) {
-        try (Connection connection = dataSource.getConnection()) {
+
+        if (!isTestMode)
+            connection = connectionPool.getConnectionFromPool();
+
+        boolean result = false;
+
+        try {
 
             PreparedStatement sql = connection.prepareStatement(INSERT_QUERY);
             sql.setLong(1, dishType.getId());
             sql.setString(2, dishType.getDishType());
             sql.executeUpdate();
-            return true;
+
+            result = true;
 
         } catch (SQLException e) {
+
             e.printStackTrace();
         }
-        return false;
+
+        if (!isTestMode)
+            connectionPool.returnConnectionToPool(connection);
+
+        return result;
     }
 
     @Override
     public boolean remove(long id) {
-        try (Connection connection = dataSource.getConnection()) {
+
+        if (!isTestMode)
+            connection = connectionPool.getConnectionFromPool();
+
+        boolean result = false;
+
+        try {
             PreparedStatement sql = connection.prepareStatement(DELETE_QUERY);
             sql.setLong(1, id);
             sql.executeUpdate();
-            return true;
+
+            result = true;
 
         } catch (SQLException e) {
+
             e.printStackTrace();
         }
-        return false;
+
+        if (!isTestMode)
+            connectionPool.returnConnectionToPool(connection);
+
+        return result;
     }
 
     @Override
     public boolean update(DishType dishType) {
-        try (Connection connection = dataSource.getConnection()) {
+
+        if (!isTestMode)
+            connection = connectionPool.getConnectionFromPool();
+
+        boolean result = false;
+
+        try {
             PreparedStatement sql = connection.prepareStatement(UPDATE_QUERY);
             sql.setString(1, dishType.getDishType());
             sql.setLong(2, dishType.getId());
             sql.executeUpdate();
-            return true;
+
+            result = true;
 
         } catch (SQLException e) {
+
             e.printStackTrace();
         }
-        return false;
+
+        if (!isTestMode)
+            connectionPool.returnConnectionToPool(connection);
+
+        return result;
     }
 
 
