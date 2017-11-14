@@ -15,6 +15,8 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
     </servlet-mapping>
 
 
+
+
     <!--SESSION-->
     <servlet>
         <servlet-name>RegistrationServlet</servlet-name>
@@ -245,5 +247,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
         <url-pattern>/admin_paid_orders</url-pattern>
         <url-pattern>/admin_paid_orders.jsp</url-pattern>
     </filter-mapping>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/404.jsp</location>
+    </error-page>
 
 </web-app>

@@ -29,8 +29,12 @@ public class SessionSecurityFilter implements Filter {
             boolean logged = userService.getUserByName(username).isPresent();
 
             if (logged) {
-                res.sendRedirect("session_error.jsp");
-                return;
+                //res.sendRedirect("session_error.jsp");
+                //return;
+
+                req.setAttribute("username", username);
+
+                req.getRequestDispatcher("/session_error.jsp").forward(req, res);
             }
         }
 
