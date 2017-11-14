@@ -24,7 +24,7 @@
     <div id="wrap_header">
         <!-- Logo -->
         <div class="logo col_header">
-            <a href="index.jsp"><img alt="logo-deli" src="resources/images/icons/logo.png"/></a>
+            <a href="${pageContext.request.contextPath}"><img alt="logo-epam" src="resources/images/icons/logo.png"/></a>
         </div>
         <!-- language -->
         <div class="icon-header col_header">
@@ -37,7 +37,7 @@
 
         <!-- Logo moblie -->
         <div class="logo-mobile">
-            <a href="index.jsp"><img alt="logo-deli" src="resources/images/icons/logo-mobile.png"/></a>
+            <a href="${pageContext.request.contextPath}"><img alt="logo-epam" src="resources/images/icons/logo-mobile.png"/></a>
         </div>
 
     </div>
