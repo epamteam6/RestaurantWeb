@@ -2,6 +2,7 @@ package com.dao;
 
 import com.connectionpool.ConnectionPoolManager;
 import com.model.User;
+import org.apache.log4j.Logger;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -11,6 +12,8 @@ import java.util.Optional;
 
 
 public class UserDAO implements DAO<User> {
+
+    private static final Logger log = Logger.getLogger(UserDAO.class);
 
     private boolean isTestMode = false;
     private DataSource dataSource;
@@ -75,6 +78,8 @@ public class UserDAO implements DAO<User> {
     @Override
     public Optional<User> getById(long id) {
 
+        log.info("getById() " + id);
+
         if (!isTestMode)
             connection = connectionPool.getConnectionFromPool();
 
@@ -92,6 +97,7 @@ public class UserDAO implements DAO<User> {
 
         } catch (SQLException e) {
 
+            log.error("getById() " + id);
             e.printStackTrace();
         }
 
@@ -103,6 +109,8 @@ public class UserDAO implements DAO<User> {
 
     @Override
     public List<User> getAll() {
+
+        log.info("getAll()");
 
         if (!isTestMode)
             connection = connectionPool.getConnectionFromPool();
@@ -120,6 +128,7 @@ public class UserDAO implements DAO<User> {
 
         } catch (SQLException e) {
 
+            log.error("getAll()");
             e.printStackTrace();
         }
 
@@ -131,6 +140,8 @@ public class UserDAO implements DAO<User> {
 
 
     public boolean add(String userName, String password, boolean isAdmin) {
+
+        log.info("add() " + userName);
 
         boolean result = false;
 
@@ -150,6 +161,7 @@ public class UserDAO implements DAO<User> {
 
         } catch (SQLException e) {
 
+            log.error("add() " + userName);
             e.printStackTrace();
         }
 
@@ -160,6 +172,8 @@ public class UserDAO implements DAO<User> {
     }
 
     public boolean remove(String userName) {
+
+        log.info("remove() " + userName);
 
         boolean result = false;
 
@@ -177,6 +191,7 @@ public class UserDAO implements DAO<User> {
 
         } catch (SQLException e) {
 
+            log.error("remove() " + userName);
             e.printStackTrace();
         }
 
@@ -187,6 +202,8 @@ public class UserDAO implements DAO<User> {
     }
 
     public boolean update(String userName, String password, boolean isAdmin) {
+
+        log.info("update() " + userName);
 
         boolean result = false;
 
@@ -206,6 +223,7 @@ public class UserDAO implements DAO<User> {
 
         } catch (SQLException e) {
 
+            log.error("update() " + userName);
             e.printStackTrace();
         }
 
@@ -216,6 +234,8 @@ public class UserDAO implements DAO<User> {
     }
 
     public boolean validate(String userName, String password) {
+
+        log.info("validate() " + userName);
 
         if (!isTestMode)
             connection = connectionPool.getConnectionFromPool();
@@ -232,6 +252,7 @@ public class UserDAO implements DAO<User> {
 
         } catch (SQLException e) {
 
+            log.error("validate() " + userName);
             e.printStackTrace();
         }
 
@@ -242,6 +263,8 @@ public class UserDAO implements DAO<User> {
     }
 
     public Optional<User> getByName(String userName) {
+
+        log.info("getByName() " + userName);
 
         if (!isTestMode)
             connection = connectionPool.getConnectionFromPool();
@@ -260,6 +283,7 @@ public class UserDAO implements DAO<User> {
 
         } catch (SQLException e) {
 
+            log.error("getByName() " + userName);
             e.printStackTrace();
         }
 
