@@ -18,7 +18,7 @@ public class MainServlet extends HttpServlet {
             throws ServletException, IOException {
 
         log.info("Initializing MainServlet");
-        
+
         RequestDispatcher dispatcher = request
                 .getRequestDispatcher("index.jsp");
         if (dispatcher != null){
