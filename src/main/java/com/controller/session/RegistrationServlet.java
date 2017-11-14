@@ -1,9 +1,7 @@
 package com.controller.session;
 
-import com.dao.UserDAO;
-import com.mysql.jdbc.Driver;
 import com.service.UserService;
-import org.springframework.jdbc.datasource.SimpleDriverDataSource;
+import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,15 +10,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 
 public class RegistrationServlet extends HttpServlet {
+
+    private static final Logger log = Logger.getLogger(RegistrationServlet.class);
 
     private UserService userService = UserService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        log.info("(session) Initializing...");
 
         RequestDispatcher dispatcher = request
                 .getRequestDispatcher("session_join.jsp");
@@ -31,6 +31,9 @@ public class RegistrationServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        log.info("(session) Processing...");
+
         request.getRequestDispatcher("session_join.jsp").include(request, response);
         String username = request.getParameter("username");
         String password = request.getParameter("password");
@@ -51,8 +54,5 @@ public class RegistrationServlet extends HttpServlet {
             request.getRequestDispatcher("session_join.jsp").forward(request, response);
             //response.sendRedirect("session_login_error");
         }
-
-//        System.out.println(isValid);
-
     }
 }
