@@ -4,7 +4,6 @@ import com.controller.admin.ConfirmationServlet;
 import com.model.Order;
 import com.model.User;
 import com.service.OrderService;
-import com.service.OrderStatusService;
 import com.service.UserService;
 import org.apache.log4j.Logger;
 
@@ -25,7 +24,6 @@ public class ConfirmedOrdersServlet extends HttpServlet {
 
     private UserService userService = UserService.getInstance();
     private OrderService orderService = OrderService.getInstance();
-    private OrderStatusService orderStatusService = OrderStatusService.getInstance();
     private List<List> usersOrders;
     private List<Long> orderNumbers;
 
