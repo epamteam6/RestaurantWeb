@@ -95,7 +95,7 @@
                     <li><a href="user_done_orders">Paid orders</a>
                     </li>
 
-                    <li><a href="about.jsp">About</a>
+                    <li><a href="about">About</a>
                     </li>
 
 

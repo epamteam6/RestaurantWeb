@@ -100,6 +100,15 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
         <url-pattern>/user_payment</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>AboutServlet</servlet-name>
+        <servlet-class>com.controller.user.AboutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AboutServlet</servlet-name>
+        <url-pattern>/about</url-pattern>
+    </servlet-mapping>
+
 
     <!--ADMIN-->
     <servlet>
