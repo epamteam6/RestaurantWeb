@@ -43,7 +43,7 @@ public class DishDAO implements RegularDAO<Dish> {
 
         this.dataSource = dataSource;
 
-        if (isTestMode) {
+        if (isTestMode && dataSource != null) {
 
             try {
                 this.connection = dataSource.getConnection();

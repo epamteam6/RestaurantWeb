@@ -46,7 +46,7 @@ public class UserDAO implements DAO<User> {
 
         this.dataSource = dataSource;
 
-        if (isTestMode) {
+        if (isTestMode && dataSource != null) {
 
             try {
                 this.connection = dataSource.getConnection();
