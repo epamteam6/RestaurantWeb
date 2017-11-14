@@ -34,7 +34,8 @@
         </div>
         <!-- language -->
         <div class="icon-header col_header">
-            <a href="#">Ru</a> <a href="#">Eng</a>
+            <a href="${pageContext.request.contextPath}?lang=ru">Ru</a>
+            <a href="${pageContext.request.contextPath}?lang=en">Eng</a>
         </div>
     </div>
 
@@ -56,10 +57,10 @@
         <!-- Slider -->
         <div id="btn-slide-index">
             <h2 class="title-l"><fmt:message key="epam.title" /></h2>
-            <h6 class="title-s">the most delicious dishes you've ever enjoyed</h6>
+            <h6 class="title-s"><fmt:message key="epam.welcome_title" /></h6>
             <h6>&nbsp;</h6>
-            <a href="session_join" class="btn1">JOIN</a>
-            <a href="session_login" class="btn2">LOG IN</a>
+            <a href="session_join" class="btn1"><fmt:message key="epam.join" /></a>
+            <a href="session_login" class="btn2"><fmt:message key="epam.signin" /></a>
 
         </div>
         <form>
