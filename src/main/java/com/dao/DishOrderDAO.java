@@ -2,6 +2,7 @@ package com.dao;
 
 import com.connectionpool.ConnectionPoolManager;
 import com.model.DishOrder;
+import org.apache.log4j.Logger;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -14,6 +15,8 @@ import java.util.Optional;
 
 
 public class DishOrderDAO implements RegularDAO<DishOrder> {
+
+    private static final Logger log = Logger.getLogger(DishOrderDAO.class);
 
     private boolean isTestMode = false;
     private DataSource dataSource;
@@ -75,6 +78,8 @@ public class DishOrderDAO implements RegularDAO<DishOrder> {
     @Override
     public Optional<DishOrder> getById(long id) {
 
+        log.info("getById() " + id);
+
         if (!isTestMode)
             connection = connectionPool.getConnectionFromPool();
 
@@ -91,6 +96,8 @@ public class DishOrderDAO implements RegularDAO<DishOrder> {
             }
 
         } catch (SQLException e) {
+
+            log.error("getById() " + id);
             e.printStackTrace();
         }
 
@@ -102,6 +109,8 @@ public class DishOrderDAO implements RegularDAO<DishOrder> {
 
     @Override
     public List<DishOrder> getAll() {
+
+        log.info("getAll()");
 
         if (!isTestMode)
             connection = connectionPool.getConnectionFromPool();
@@ -119,6 +128,7 @@ public class DishOrderDAO implements RegularDAO<DishOrder> {
 
         } catch (SQLException e) {
 
+            log.error("getAll()");
             e.printStackTrace();
         }
 
@@ -131,6 +141,8 @@ public class DishOrderDAO implements RegularDAO<DishOrder> {
 
     @Override
     public boolean create(DishOrder dishOrder) {
+
+        log.info("create() " + dishOrder.getId());
 
         if (!isTestMode)
             connection = connectionPool.getConnectionFromPool();
@@ -151,6 +163,7 @@ public class DishOrderDAO implements RegularDAO<DishOrder> {
 
         } catch (SQLException e) {
 
+            log.error("create() " + dishOrder.getId());
             e.printStackTrace();
         }
 
@@ -162,6 +175,8 @@ public class DishOrderDAO implements RegularDAO<DishOrder> {
 
     @Override
     public boolean remove(long id) {
+
+        log.info("remove() " + id);
 
         if (!isTestMode)
             connection = connectionPool.getConnectionFromPool();
@@ -179,6 +194,7 @@ public class DishOrderDAO implements RegularDAO<DishOrder> {
 
         } catch (SQLException e) {
 
+            log.error("remove() " + id);
             e.printStackTrace();
         }
 
@@ -190,6 +206,8 @@ public class DishOrderDAO implements RegularDAO<DishOrder> {
 
     @Override
     public boolean update(DishOrder dishOrder) {
+
+        log.info("update() " + dishOrder.getId());
 
         if (!isTestMode)
             connection = connectionPool.getConnectionFromPool();
@@ -211,6 +229,7 @@ public class DishOrderDAO implements RegularDAO<DishOrder> {
 
         } catch (SQLException e) {
 
+            log.error("update() " + dishOrder.getId());
             e.printStackTrace();
         }
 
@@ -222,6 +241,8 @@ public class DishOrderDAO implements RegularDAO<DishOrder> {
 
 
     public List<DishOrder> getByOrderId(long id) {
+
+        log.info("getByOrderId() " + id);
 
         if (!isTestMode)
             connection = connectionPool.getConnectionFromPool();
@@ -239,6 +260,8 @@ public class DishOrderDAO implements RegularDAO<DishOrder> {
             }
 
         } catch (SQLException e) {
+
+            log.error("getByOrderId() " + id);
             e.printStackTrace();
         }
 
