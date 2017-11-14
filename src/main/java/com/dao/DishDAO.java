@@ -168,6 +168,7 @@ public class DishDAO implements RegularDAO<Dish> {
             PreparedStatement sql = connection.prepareStatement(DELETE_QUERY);
             sql.setLong(1, id);
             sql.executeUpdate();
+
             result = true;
 
         } catch (SQLException e) {

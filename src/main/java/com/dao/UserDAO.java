@@ -217,10 +217,10 @@ public class UserDAO implements DAO<User> {
 
     public boolean validate(String userName, String password) {
 
-        boolean result = false;
-
         if (!isTestMode)
             connection = connectionPool.getConnectionFromPool();
+
+        boolean result = false;
 
         try {
             PreparedStatement sql = connection.prepareStatement(VALIDATION_QUERY);

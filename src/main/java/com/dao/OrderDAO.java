@@ -87,6 +87,7 @@ public class OrderDAO implements RegularDAO<Order> {
 
 
         } catch (SQLException e) {
+
             e.printStackTrace();
         }
 
@@ -112,6 +113,7 @@ public class OrderDAO implements RegularDAO<Order> {
             while (rs.next()) {
                 res.add(createOrderEntity(rs));
             }
+
         } catch (SQLException e) {
 
             e.printStackTrace();

@@ -82,7 +82,9 @@ public class DishTypeDAO implements RegularDAO<DishType> {
             if (rs.next()) {
                 dishType = Optional.of(createDishTypeEntity(rs));
             }
+
         } catch (SQLException e) {
+
             e.printStackTrace();
         }
 
@@ -106,7 +108,9 @@ public class DishTypeDAO implements RegularDAO<DishType> {
             while (rs.next()) {
                 res.add(createDishTypeEntity(rs));
             }
+
         } catch (SQLException e) {
+
             e.printStackTrace();
         }
 
@@ -135,6 +139,7 @@ public class DishTypeDAO implements RegularDAO<DishType> {
             result = true;
 
         } catch (SQLException e) {
+
             e.printStackTrace();
         }
 
@@ -160,6 +165,7 @@ public class DishTypeDAO implements RegularDAO<DishType> {
             result = true;
 
         } catch (SQLException e) {
+
             e.printStackTrace();
         }
 
@@ -186,6 +192,7 @@ public class DishTypeDAO implements RegularDAO<DishType> {
             result = true;
 
         } catch (SQLException e) {
+
             e.printStackTrace();
         }
 
