@@ -3,8 +3,8 @@ package com.controller.user;
 import com.model.Order;
 import com.model.User;
 import com.service.OrderService;
-import com.service.OrderStatusService;
 import com.service.UserService;
+import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,10 +16,10 @@ import java.util.*;
 
 public class DoneOrdersServlet extends HttpServlet {
 
-    private Map<String, Map<String, Long>> menu;
+    private static final Logger log = Logger.getLogger(CreateOrderServlet.class);
+
     private UserService userService = UserService.getInstance();
     private OrderService orderService = OrderService.getInstance();
-    private OrderStatusService orderStatusService = OrderStatusService.getInstance();
     private List<List> usersOrders;
     private List<Long> orderNumbers;
 
@@ -27,6 +27,8 @@ public class DoneOrdersServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        log.info("(user) Initializing...");
 
         usersOrders = new ArrayList<>();
         orderNumbers = new ArrayList<>();
@@ -65,6 +67,8 @@ public class DoneOrdersServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        log.info("(user) Processing...");
 
         request.getRequestDispatcher("user_done_orders.jsp").include(request, response);
     }
