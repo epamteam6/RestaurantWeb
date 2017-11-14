@@ -1,6 +1,5 @@
 package com.controller.user;
 
-import com.controller.admin.ConfirmationServlet;
 import com.model.Order;
 import com.model.User;
 import com.service.OrderService;
@@ -20,7 +19,7 @@ import java.util.Optional;
 
 public class ConfirmedOrdersServlet extends HttpServlet {
 
-    private static final Logger log = Logger.getLogger(ConfirmationServlet.class);
+    private static final Logger log = Logger.getLogger(ConfirmedOrdersServlet.class);
 
     private UserService userService = UserService.getInstance();
     private OrderService orderService = OrderService.getInstance();

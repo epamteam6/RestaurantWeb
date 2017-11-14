@@ -1,23 +1,21 @@
 package com.controller.user;
 
-import com.dao.*;
-import com.mysql.jdbc.Driver;
 import com.service.MenuService;
 import com.service.OrderService;
-import org.springframework.jdbc.datasource.SimpleDriverDataSource;
+import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class CreateOrderServlet extends HttpServlet {
+
+    private static final Logger log = Logger.getLogger(CreateOrderServlet.class);
 
     private Map<String, Map<String, Long>> menu;
     private MenuService menuService = MenuService.getInstance();
@@ -27,6 +25,8 @@ public class CreateOrderServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        log.info("(user) Initializing...");
 
         userName = (String) request.getSession().getAttribute("loggedInUser");
 
@@ -45,6 +45,9 @@ public class CreateOrderServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        log.info("(user) Processing...");
+
         request.getRequestDispatcher("user_create_order.jsp").include(request, response);
         Map<String, Long> dishNamesAndAmount = new HashMap<>();
 
