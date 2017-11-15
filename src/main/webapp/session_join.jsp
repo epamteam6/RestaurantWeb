@@ -5,9 +5,16 @@
 <%@ page isELIgnored="false" %>
 <%@ page session="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<html>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<c:set var="lang" value="${not empty param.lang ? param.lang : not empty lang ? lang : 'en'}" scope="session"/>
+<fmt:setLocale value="${lang}"/>
+<fmt:setBundle basename="lang.lang" scope="session"/>
+
+<html lang="${lang}" style="height: 100%;">
+
 <head>
-    <title>Join us</title>
+    <title><fmt:message key="registration.title" /></title>
 
     <link rel="stylesheet" type="text/css" href="resources/vendor/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="resources/css/main.css" />
@@ -27,7 +34,8 @@
         </div>
         <!-- language -->
         <div class="icon-header col_header">
-            <a href="#">Ru</a> <a href="#">Eng</a>
+            <a href="${pageContext.request.contextPath}?lang=ru">Ru</a>
+            <a href="${pageContext.request.contextPath}?lang=en">Eng</a>
         </div>
     </div>
 
@@ -46,8 +54,8 @@
 <section>
     <div class="bg-title-sub-page bg-menu-page-02 ">
         <div class="wrap-title-sub-page">
-            <h2 class="title-l">Join</h2>
-            <h6 class="title-s">Home / Join</h6>
+            <h2 class="title-l"><fmt:message key="registration.title" /></h2>
+            <h6 class="title-s"><fmt:message key="registration.slide" /></h6>
         </div>
     </div>
 </section>
@@ -60,20 +68,20 @@
         <!-- 01/Check out method -->
         <form method="post" action="session_join">
             <div class="wrap-check-out-method">
-                <h4 class="medium-text-2">Join</h4>
+                <h4 class="medium-text-2"><fmt:message key="registration.title" /></h4>
                 <p>
-                    Enter your username and password to join us.
+                    <fmt:message key="registration.string" />
                 </p>
 
                 <div class="row">
                     <div class="col-res-check-out-method col-md-5">
-                        <input class="input-check-out small-text" type="text" name="username" placeholder="Username" />
+                        <input class="input-check-out small-text" type="text" name="username" placeholder="<fmt:message key="registration.user" />" />
                     </div>
                     <div class="col-res-check-out-method col-md-5">
-                        <input class="input-check-out small-text" type="password" name="password" placeholder="Password" />
+                        <input class="input-check-out small-text" type="password" name="password" placeholder="<fmt:message key="registration.password" />" />
                     </div>
                     <div class="wrap-btn-login col-md-2">
-                        <button class="btn-with-bg" type="submit">JOIN</button>
+                        <button class="btn-with-bg" type="submit"><fmt:message key="registration.title" /></button>
                     </div>
                 </div>
             </div>
@@ -85,8 +93,8 @@
 <div class="wrap-bottom-footer">
     <div class="container">
         <div class="bottom-footer row justify-content-between">
-            <div class="col-12 col-sm-7">© 2017 All rights reserved</div>
-            <div class="col-12 col-sm-5"><span>Privacy policy</span><span>Terms of use</span></div>
+            <div class="col-12 col-sm-7"><fmt:message key="registration.right" /></div>
+            <div class="col-12 col-sm-5"><span><fmt:message key="registration.left" /></span><span><fmt:message key="registration.terms" /></span></div>
         </div>
     </div>
 </div>
