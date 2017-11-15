@@ -69,21 +69,21 @@
             <nav class="menu col_header">
                 <ul class="main_menu">
 
-                    <li><a href="admin_confirmation">Confirmation</a>
+                    <li><a href="admin_confirmation"><fmt:message key="admin_header.confirm" /></a>
                     </li>
 
-                    <li><a href="admin_bill_creation">Bill Creation</a>
+                    <li><a href="admin_bill_creation"><fmt:message key="admin_header.create" /></a>
                     </li>
 
-                    <li><a href="admin_ready_orders">Payment Waiting</a>
+                    <li><a href="admin_ready_orders"><fmt:message key="admin_header.wait" /></a>
                     </li>
 
-                    <li><a href="admin_paid_orders">Paid orders</a>
+                    <li><a href="admin_paid_orders"><fmt:message key="admin_header.paid" /></a>
                     </li>
 
                     <li><a href="#">${username}</a>
                         <ul class="sub_menu">
-                            <li><a href="session_logout">Log Out</a></li>
+                            <li><a href="session_logout"><fmt:message key="admin_header.signout" /></a></li>
                         </ul>
                     </li>
 

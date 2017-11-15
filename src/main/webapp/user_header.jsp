@@ -54,25 +54,25 @@
             <nav class="menu col_header">
                 <ul class="main_menu">
 
-                    <li><a href="user_create_order">Create New Order</a>
+                    <li><a href="user_create_order"><fmt:message key="user_header.create" /></a>
                     </li>
 
-                    <li><a href="#">Check Your Orders</a>
+                    <li><a href="#"><fmt:message key="user_header.check" /></a>
                         <ul class="sub_menu">
-                            <li><a href="user_created_orders">Orders For Confirmation</a></li>
-                            <li><a href="user_confirmed_orders">Cooking Orders</a></li>
-                            <li><a href="user_payment">Waiting For Payment Orders</a></li>
-                            <li><a href="user_done_orders">Paid Orders</a></li>
+                            <li><a href="user_created_orders"><fmt:message key="user_header.confirm" /></a></li>
+                            <li><a href="user_confirmed_orders"><fmt:message key="user_header.cook" /></a></li>
+                            <li><a href="user_payment"><fmt:message key="user_header.ready" /></a></li>
+                            <li><a href="user_done_orders"><fmt:message key="user_header.paid" /></a></li>
                         </ul>
                     </li>
 
-                    <li><a href="about">About us</a>
+                    <li><a href="about"><fmt:message key="user_header.about" /></a>
                     </li>
 
 
-                    <li><a href="#">You are welcome,  ${username}!</a>
+                    <li><a href="#"><fmt:message key="user_header.welcome" />,  ${username}!</a>
                         <ul class="sub_menu">
-                            <li><a href="session_logout" onclick="">Log Out</a></li>
+                            <li><a href="session_logout" onclick=""><fmt:message key="user_header.signout" /></a></li>
                         </ul>
                     </li>
 
@@ -109,23 +109,23 @@
     <div class="wrap-side-menu">
         <nav class="side-menu">
             <ul class="main-menu">
-                <li><a href="user_create_order">Create New Order</a>
+                <li><a href="user_create_order"><fmt:message key="user_header.create" /></a>
                 </li>
                 <li>
-                    <a href="#">Check Your Orders</a>
+                    <a href="#"><fmt:message key="user_header.check" /></a>
                     <i class="arrow-main-menu fa fa-angle-right" aria-hidden="true"></i>
                     <ul class="sub-menu">
-                        <li><a href="user_created_orders">Orders For Confirmation</a></li>
-                        <li><a href="user_confirmed_orders">Cooking Orders</a></li>
-                        <li><a href="user_payment">Waiting For Payment Orders</a></li>
-                        <li><a href="user_done_orders">Paid Orders</a></li>
+                        <li><a href="user_created_orders"><fmt:message key="user_header.confirm" /></a></li>
+                        <li><a href="user_confirmed_orders"><fmt:message key="user_header.cook" /></a></li>
+                        <li><a href="user_payment"><fmt:message key="user_header.ready" /></a></li>
+                        <li><a href="user_done_orders"><fmt:message key="user_header.paid" /></a></li>
                     </ul>
-                <li><a href="about">About us</a>
+                <li><a href="about"><fmt:message key="user_header.about" /></a>
                 </li>
-                <li><a href="#">You are welcome, ${username}</a>
+                <li><a href="#"><fmt:message key="user_header.welcome" />, ${username}</a>
                     <i class="arrow-main-menu fa fa-angle-right" aria-hidden="true"></i>
                     <ul class="sub-menu">
-                        <li><a href="session_logout" onclick="">Log Out</a></li>
+                        <li><a href="session_logout" onclick=""><fmt:message key="user_header.signout" /></a></li>
                     </ul>
                 </li>
 
