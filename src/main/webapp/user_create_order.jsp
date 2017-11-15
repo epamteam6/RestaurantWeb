@@ -20,7 +20,7 @@
     <form method="post" action="user_create_order">
 
         <!-- Our menu 1-->
-        <c:forEach var="menu" items="${menu}">
+        <c:forEach var="menu" items="${menu}" varStatus="status">
 
 
             <section class="restyle-menu-03 home-onepage-menu content-reservation-03 pad-bt-80">
@@ -30,7 +30,7 @@
                     <div class="row">
                         <div class="col-content col-sm-10 col-md-8 col-lg-5">
                             <div class="img-reservation-03 hover-img">
-                                <img src="${pageContext.request.contextPath}/resources/images/menu-03-img-01.jpg"
+                                <img src="${pageContext.request.contextPath}/resources/images/shop-page-img-item-0${status.getIndex()}.jpg"
                                      alt="img-menu"/>
                             </div>
                         </div>
