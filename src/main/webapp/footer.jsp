@@ -4,7 +4,7 @@
             <div class="column-footer col-lg-5 col-md-8 col-sm-7">
                 <h3>Contact information</h3>
                 <ul>
-                    <li>ADDRESS: 22/2 Zastavskaya Street, 196084 Saint-Petersburg, Russia</li>
+                    <li>ADDRESS: Russia, Saint-Petersburg, Nab. Chyornoy rechki, 41</li>
                     <li>PHONE: +7-812-611-1094</li>
                     <li id="follow-us">FOLLOW US ON:
                         <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>

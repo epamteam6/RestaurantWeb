@@ -69,7 +69,7 @@
                    <img alt="picture-about-us" src="resources/images/menu02.jpg" />
                 </div>
                 <h3><a class="hover-link-color" >Iuliia Kliueva</a></h3>
-                <h6 class="medium-text">Main Mastermind</h6>
+                <h6 class="medium-text">Main Inspirer</h6>
                 <p>
                 </p>
             </div>

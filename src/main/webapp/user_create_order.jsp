@@ -16,7 +16,7 @@
 
 <section class="restyle-menu-03 home-onepage-menu content-reservation-03 pad-bt-80">
     <h6 class="title-s2">${message}</h6>
-    <h6 class="title-s3" style="font-size: 18px;">Dear ${username}! Choose all dishes, what you want.</h6>
+    <h6 class="title-s3" style="font-size: 18px;">Dear ${username}! Choose all the dishes you want.</h6>
     <form method="post" action="user_create_order">
 
         <!-- Our menu 1-->
@@ -30,7 +30,7 @@
                     <div class="row">
                         <div class="col-content col-sm-10 col-md-8 col-lg-5">
                             <div class="img-reservation-03 hover-img">
-                                <img src="${pageContext.request.contextPath}/resources/images/shop-page-img-item-0${status.getIndex()}.jpg"
+                                <img src="${pageContext.request.contextPath}/resources/images/img0${status.getIndex()}.jpg"
                                      alt="img-menu"/>
                             </div>
                         </div>
@@ -58,21 +58,20 @@
                                                         <div class="name-price row">
                                                             <div class="name-food col-12 col-sm-auto">
                                                                 <a class="hover-link-color"
-                                                                   href="./product-detail.html"><c:out value="${dishType.key}"/></a></div>
+                                                                   href=""><c:out value="${dishType.key}"/></a></div>
                                                             <div class="line-food col">
                                                                 <div class="add-line-run"></div>
                                                             </div>
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-12 col-sm-12 info-food">
-                                                                About
+                                                                <input type="number" name="${dishType.key}"
+                                                                       value="0" min="0" max="100" size="40" />
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="price-food col-12 col-sm-2">&#36;<c:out
+                                                    <div class="price-food col-12 col-sm-2">&#36; <c:out
                                                             value="${dishType.value}"/>
-                                                        <input type="number" name="${dishType.key}"
-                                                               value="0" min="0" max="100"/>
                                                     </div>
                                                 </div>
 
