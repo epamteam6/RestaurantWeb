@@ -5,8 +5,8 @@
 <section>
     <div class="bg-title-sub-page bg-menu-page-01">
         <div class="wrap-title-sub-page">
-            <h2 class="title-l">Paid Order</h2>
-            <h6 class="title-s">Home / Paid Order</h6>
+            <h2 class="title-l"><fmt:message key="admin_paid.title" /></h2>
+            <h6 class="title-s"><fmt:message key="admin_paid.slide" /></h6>
         </div>
     </div>
 </section>
@@ -14,7 +14,7 @@
 <section class="content-shopping-cart-page">
     <div class="container">
         <h6 class="title-s2">${message}</h6>
-        <h6 class="title-s3">Paid and closed orders.</h6>
+        <h6 class="title-s3"><fmt:message key="admin_paid.message" /></h6>
 
         <form method="post" action="admin_ready_orders">
             <div class="wrap-table-shopping-cart">
@@ -22,10 +22,10 @@
                 <table class="table-shopping-cart">
                     <tr class="table_head">
                         <th class="column-1"></th>
-                        <th class="column-3">Order Number</th>
-                        <th class="column-3">Client Name</th>
-                        <th class="column-2">Dish & Quantity</th>
-                        <th class="column-4">Total</th>
+                        <th class="column-3"><fmt:message key="admin_confirmation.number" /></th>
+                        <th class="column-3"><fmt:message key="admin_confirmation.name" /></th>
+                        <th class="column-2"><fmt:message key="admin_confirmation.desc" /></th>
+                        <th class="column-4"><fmt:message key="admin_confirmation.total" /></th>
                         <th class="column-6"></th>
                     </tr>
 
@@ -65,7 +65,7 @@
 
 
                 <div class="style-pos col-right" >
-                    <input class="btn-with-bg" name="Cancel" type="submit" value="Delete">
+                    <input class="btn-with-bg" name="Cancel" type="submit" value="<fmt:message key="admin_confirmation.delete" />">
 
                 </div>
 
