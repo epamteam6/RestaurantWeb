@@ -34,8 +34,8 @@
         </div>
         <!-- language -->
         <div class="icon-header col_header">
-            <a href="${pageContext.request.contextPath}?lang=ru">Ru</a>
-            <a href="${pageContext.request.contextPath}?lang=en">Eng</a>
+            <a href="${pageContext.request.contextPath}?lang=en">ENG</a>
+            <a href="${pageContext.request.contextPath}?lang=ru">RU</a>
         </div>
     </div>
 
