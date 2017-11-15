@@ -61,7 +61,7 @@
                         <ul class="sub_menu">
                             <li><a href="user_created_orders">Orders For Confirmation</a></li>
                             <li><a href="user_confirmed_orders">Cooking Orders</a></li>
-                            <li><a href="user_payment">Payment Waiting Orders</a></li>
+                            <li><a href="user_payment">Waiting For Payment Orders</a></li>
                             <li><a href="user_done_orders">Paid Orders</a></li>
                         </ul>
                     </li>
@@ -70,7 +70,7 @@
                     </li>
 
 
-                    <li><a href="#">You are welcome, ${username}</a>
+                    <li><a href="#">You are welcome,  ${username}!</a>
                         <ul class="sub_menu">
                             <li><a href="session_logout" onclick="">Log Out</a></li>
                         </ul>
@@ -117,7 +117,7 @@
                     <ul class="sub-menu">
                         <li><a href="user_created_orders">Orders For Confirmation</a></li>
                         <li><a href="user_confirmed_orders">Cooking Orders</a></li>
-                        <li><a href="user_payment">Payment Waiting Orders</a></li>
+                        <li><a href="user_payment">Waiting For Payment Orders</a></li>
                         <li><a href="user_done_orders">Paid Orders</a></li>
                     </ul>
                 <li><a href="about">About us</a>

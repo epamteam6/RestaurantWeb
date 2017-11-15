@@ -16,7 +16,7 @@
 
 <section class="restyle-menu-03 home-onepage-menu content-reservation-03 pad-bt-80">
     <h6 class="title-s2">${message}</h6>
-    <h6 class="title-s3">Dear ${username}! Choose all dishes, what you want.</h6>
+    <h6 class="title-s3" style="font-size: 18px;">Dear ${username}! Choose all dishes, what you want.</h6>
     <form method="post" action="user_create_order">
 
         <!-- Our menu 1-->

@@ -1,12 +1,12 @@
 <%@include file="user_header.jsp" %>
 
-<head><title>Payment Waiting Orders</title></head>
+<head><title>Waiting For Payment Orders</title></head>
 
 <section>
     <div class="bg-title-sub-page bg-menu-page-01">
         <div class="wrap-title-sub-page">
-            <h2 class="title-l">Payment Waiting Orders</h2>
-            <h6 class="title-s">Home / Payment Waiting Orders</h6>
+            <h2 class="title-l">Waiting For Payment Orders</h2>
+            <h6 class="title-s">Home / Waiting For Payment Orders</h6>
         </div>
     </div>
 </section>
