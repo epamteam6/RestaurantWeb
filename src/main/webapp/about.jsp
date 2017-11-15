@@ -21,18 +21,22 @@
         <div class="row">
             <div class="wrap-pic-intro col-sm-10 col-md-8 col-lg-5">
                 <div class="hover-img wrap-video-about-us">
-                    <img src="${pageContext.request.contextPath}/resources/images/img-our-food-about-us.jpg" alt="video-about-us" />
+                    <img src="${pageContext.request.contextPath}/resources/images/img-event-04.jpg" alt="video-about-us" />
                 </div>
             </div>
 
             <div class="text-intro col-sm-10 col-md-8 col-lg-7 wow fadeInDown">
                 <h3>introduction</h3>
-                <h2>Our Food</h2>
+                <h2>Epam Restraunt</h2>
                 <p>
-                    Donec quis euismod purus. Donec feugiat ligula rhoncus, varius nisl sed, tincidunt lectus. Nulla vulputate, lectus vel volutpat efficitur, orci lacus sodales sem, at interdum quam ligula sit amet quam.
+                    System Restaurant.
                 </p>
                 <p>
-                    Praesent laoreet malesuada ex, sed blandit sem dictum id. Donec vul-putate ultricies nibh, quis dapibus ex cursus sit amet. Duis non ex pel-lentesque, sollicitudin justo a, porttitor magna. Duis lorem velit, sodales eget posuere in, commodo dictum felis. Aenean leo neque, pharetra vitae dui et, pretium venenatis metus.
+                    The client performs ordering from Menu. </p>
+                <p>Administrator confirms odering and sends it on the kitchen for performance.
+                    </p>
+                <p>The administrator issues the invoice for the order. </p>
+                <p>The client produces it payment.
                 </p>
             </div>
 
@@ -49,36 +53,34 @@
                 <h6>Discover Our</h6>
                 <h2>Awesome Staffs</h2>
             </div>
+
             <div class="content-event col-sm-10 col-md-8 col-lg-4 wow fadeInUp" data-wow-delay="0.2s">
                 <div class="img-event">
-                    <a href="#"><img alt="picture-about-us" src="${pageContext.request.contextPath}/resources/images/img-about-us-01.jpg" /></a>
+                    <img alt="picture-about-us" src="resources/images/menu01.jpg" />
                 </div>
-                <h3><a class="hover-link-color" href="#">Harry Lucas</a></h3>
-                <h6 class="medium-text">dining room manager</h6>
+                <h3><a class="hover-link-color">Sergei Albrant</a></h3>
+                <h6 class="medium-text">Main Researcher</h6>
                 <p>
-                    Proin lacinia nisl ut ultricies posuere nulla ut imperdiet nunc. Quisque id tellus vitae mauris feugiat comodone, donec pretium odio nec sagittis euismod.
                 </p>
             </div>
 
             <div class="content-event col-sm-10 col-md-8 col-lg-4 wow fadeInUp" data-wow-delay="0.4s">
                 <div class="img-event">
-                    <a href="#"><img alt="picture-about-us" src="${pageContext.request.contextPath}/resources/images/img-about-us-02.jpg" /></a>
+                   <img alt="picture-about-us" src="resources/images/menu02.jpg" />
                 </div>
-                <h3><a class="hover-link-color" href="#">Matthew Robinson</a></h3>
-                <h6 class="medium-text">Executive Chef</h6>
+                <h3><a class="hover-link-color" >Iuliia Kliueva</a></h3>
+                <h6 class="medium-text">Main Mastermind</h6>
                 <p>
-                    Donec a fringilla tortor. Vestibulum viverra accumsan ipsum nec luctus. Integer tortor dolor, suscipit sed justo et, interdum dignissim arcu.
                 </p>
             </div>
 
             <div class="content-event col-sm-10 col-md-8 col-lg-4 wow fadeInUp" data-wow-delay="0.6s">
                 <div class="img-event">
-                    <a href="#"><img alt="picture-about-us" src="${pageContext.request.contextPath}/resources/images/img-about-us-03.jpg" /></a>
+                    <img alt="picture-about-us" src="resources/images/menu03.jpg" />
                 </div>
-                <h3><a class="hover-link-color" href="#">Angela Johnston</a></h3>
-                <h6 class="medium-text">Event Coordinator</h6>
+                <h3><a class="hover-link-color" >Agarustam Kurdov</a></h3>
+                <h6 class="medium-text">Main Innovator</h6>
                 <p>
-                    Duis lorem velit, sodales eget posuere in, commodo dictum felis. Aenean leo neque, pharetra vitae dui et, pretium venenatis metus.
                 </p>
             </div>
         </div>
