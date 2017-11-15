@@ -13,8 +13,8 @@
 
 <section class="content-shopping-cart-page">
     <div class="container">
-        <h6 class="title-s">${message}</h6>
-        <h6 class="title-s">Your closed orders.</h6>
+        <h6 class="title-s2">${message}</h6>
+        <h6 class="title-s3">Your closed paid orders.</h6>
 
         <form method="post" action="user_done_orders">
             <div class="wrap-table-shopping-cart">

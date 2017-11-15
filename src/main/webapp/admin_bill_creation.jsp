@@ -13,7 +13,8 @@
 
 <section class="content-shopping-cart-page">
     <div class="container">
-        <h6 class="title-s">${message}</h6>
+        <h6 class="title-s2">${message}</h6>
+        <h6 class="title-s3">Admin, make bill for this orders.</h6>
 
         <form method="post" action="admin_bill_creation">
             <div class="wrap-table-shopping-cart">

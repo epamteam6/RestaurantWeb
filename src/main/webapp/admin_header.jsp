@@ -13,15 +13,8 @@
 
     <script type="text/javascript" src="resources/vendor/jquery/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="resources/vendor/bootstrap/js/bootstrap.min.js"></script>
-
-
-    <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="resources/fonts/font-awesome-4.7.0/css/font-awesome.min.css" />
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="resources/vendor/revolution/css/layers.css" />
-    <link rel="stylesheet" type="text/css" href="resources/vendor/revolution/css/navigation.css" />
-    <link rel="stylesheet" type="text/css" href="resources/vendor/revolution/css/settings.css" />
-    <!--===============================================================================================-->
+
 
     <link rel="stylesheet" type="text/css" href="resources/vendor/select2/select2.min.css" />
     <!--===============================================================================================-->
@@ -31,9 +24,6 @@
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="resources/css/animate.css" />
 
-    <!--===============================================================================================-->
-
-    <!--===============================================================================================-->
     <script type="text/javascript" src="resources/vendor/wow/wow.min.js"></script>
 
     <!--===============================================================================================-->
@@ -41,17 +31,6 @@
     <!--===============================================================================================-->
     <script type="text/javascript" src="resources/vendor/bootstrap/js/popper.min.js"></script>
     <!--===============================================================================================-->
-    <script type="text/javascript" src="resources/vendor/revolution/js/jquery.themepunch.tools.min.js"></script>
-    <script type="text/javascript" src="resources/vendor/revolution/js/jquery.themepunch.revolution.min.js"></script>
-    <script type="text/javascript" src="resources/vendor/revolution/js/extensions/revolution.extension.video.min.js"></script>
-    <script type="text/javascript" src="resources/vendor/revolution/js/extensions/revolution.extension.carousel.min.js"></script>
-    <script type="text/javascript" src="resources/vendor/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
-    <script type="text/javascript" src="resources/vendor/revolution/js/extensions/revolution.extension.actions.min.js"></script>
-    <script type="text/javascript" src="resources/vendor/revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
-    <script type="text/javascript" src="resources/vendor/revolution/js/extensions/revolution.extension.kenburn.min.js"></script>
-    <script type="text/javascript" src="resources/vendor/revolution/js/extensions/revolution.extension.navigation.min.js"></script>
-    <script type="text/javascript" src="resources/vendor/revolution/js/extensions/revolution.extension.migration.min.js"></script>
-    <script type="text/javascript" src="resources/vendor/revolution/js/extensions/revolution.extension.parallax.min.js"></script>
     <script src="resources/js/slide-custom.js"></script>
     <!--===============================================================================================-->
     <script type="text/javascript" src="resources/vendor/select2/select2.min.js"></script>
@@ -80,13 +59,13 @@
             <nav class="menu col_header">
                 <ul class="main_menu">
 
-                    <li><a href="admin_confirmation">New orders</a>
+                    <li><a href="admin_confirmation">Confirmation</a>
                     </li>
 
-                    <li><a href="admin_bill_creation">Confirm orders</a>
+                    <li><a href="admin_bill_creation">Bill Creation</a>
                     </li>
 
-                    <li><a href="admin_ready_orders">Ready orders</a>
+                    <li><a href="admin_ready_orders">Payment Waiting</a>
                     </li>
 
                     <li><a href="admin_paid_orders">Paid orders</a>
@@ -94,8 +73,7 @@
 
                     <li><a href="#">${username}</a>
                         <ul class="sub_menu">
-                                <li><a href="session_logout" >Log Out</a></li>
-
+                            <li><a href="session_logout">Log Out</a></li>
                         </ul>
                     </li>
 
@@ -134,39 +112,19 @@
         <nav class="side-menu">
             <ul class="main-menu">
                 <li>
-                    <a href="index.html">Menu</a>
-                    <i class="arrow-main-menu fa fa-angle-right" aria-hidden="true"></i>
-                    <ul class="sub-menu">
-                        <li><a href="menu.html">Our Menu</a></li>
-                        <li><a href="product-detail.html">Product Detail</a></li>
-                        <li><a href="shop-page.html">Shop page</a></li>
-                    </ul>
+                    <a href="admin_confirmation">Confirmation</a>
+                </li>
+                <li><a href="admin_bill_creation">Bill Creation</a>
+                </li>
+                <li><a href="admin_ready_orders">Payment Waiting</a>
+                </li>
+                <li><a href="admin_paid_orders">Paid orders</a>
                 </li>
                 <li>
-                    <a href="shopping-cart.html">Shopping Cart</a>
+                    <a href="#">${username}</a>
                     <i class="arrow-main-menu fa fa-angle-right" aria-hidden="true"></i>
                     <ul class="sub-menu">
-                        <li><a href="check-out.html">Check Out</a></li>
-                        <li><a href="shopping-cart.html">Shopping Cart</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="new-order.html">Order</a>
-                    <i class="arrow-main-menu fa fa-angle-right" aria-hidden="true"></i>
-                    <ul class="sub-menu">
-                        <li><a href="new-order.html">New order</a></li>
-                        <li><a href="admin_bill_creation">Make bill</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="about.html">About us</a>
-                </li>
-                <li>
-                    <a href="index.html">Your account</a>
-                    <i class="arrow-main-menu fa fa-angle-right" aria-hidden="true"></i>
-                    <ul class="sub-menu">
-                        <li><a href="session_login">Login</a></li>
-                        <li><a href="session_join">Join</a></li>
+                        < <li><a href="session_logout" >Log Out</a></li>
                     </ul>
                 </li>
             </ul>

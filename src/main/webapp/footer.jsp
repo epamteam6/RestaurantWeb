@@ -4,8 +4,8 @@
             <div class="column-footer col-lg-5 col-md-8 col-sm-7">
                 <h3>Contact information</h3>
                 <ul>
-                    <li>ADDRESS: 100 Tenth Avenue, New York City, NY 1001</li>
-                    <li>FOR BOOKING: (044) 359 0173</li>
+                    <li>ADDRESS: 22/2 Zastavskaya Street, 196084 Saint-Petersburg, Russia</li>
+                    <li>PHONE: +7-812-611-1094</li>
                     <li id="follow-us">FOLLOW US ON:
                         <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
                         <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
@@ -45,29 +45,29 @@
                 <ul id="useful-links">
                     <li>
 							<span class="span-left">
-								<a href="index.html">Home</a>
+								<a href="index">Home</a>
 							</span>
                         <span class="span-right">
-								<a href="menu.html">Menu</a>
+								<a href="user_create_order.jsp">New Order</a>
 							</span>
                     </li>
                     <li>
 							<span class="span-left">
-								<a href="shop-page.html">Shop page</a>
+								<a href="session_login.jsp">Login</a>
 							</span>
                         <span class="span-right">
-								<a href="shopping-cart.html">Shopping Cart</a>
+								<a href="session_join.jsp">Join us</a>
 							</span>
                     </li>
                     <li>
 							<span class="span-left">
-								<a href="check-out.html">Check Out</a>
+								<a href="about">About us</a>
 							</span>
                         <span class="span-right">
-								<a href="product-detail.html">Product Detail</a>
+								<a href="admin_bill_creation.jsp">Admin</a>
 							</span>
                     </li>
-                    <li><a href="about.html">About us</a></li>
+
                 </ul>
                 <div class="line-divide second-line"></div>
             </div>
@@ -76,7 +76,7 @@
     <div class="wrap-bottom-footer">
         <div class="container">
             <div class="bottom-footer row justify-content-between">
-                <div class="col-12 col-sm-7">© 2017 All rights reserved</div>
+                <div class="col-12 col-sm-7">2017 All rights reserved</div>
                 <div class="col-12 col-sm-5"><span>Privacy policy</span><span>Terms of use</span></div>
             </div>
         </div>

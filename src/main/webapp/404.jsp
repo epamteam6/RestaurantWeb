@@ -22,6 +22,8 @@
             <h6 class="title-s">Epam Restaurant</h6>
 
             <h6>&nbsp;</h6>
+            <a href="admin_confirmation" class="btn1">ADMIN</a>
+            <a href="user_create_order" class="btn2">CLIENT</a>
         </div>
 
     </div>

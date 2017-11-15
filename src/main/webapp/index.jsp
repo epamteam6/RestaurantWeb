@@ -12,7 +12,7 @@
 
 <html lang="${lang}">
 <head>
-    <title>Restaurant</title>
+    <title><fmt:message key="epam.page_title" /></title>
     <meta charset="utf-8">
 
     <link rel="stylesheet" type="text/css" href="resources/vendor/bootstrap/css/bootstrap.min.css" />
@@ -63,22 +63,6 @@
             <a href="session_login" class="btn2"><fmt:message key="epam.signin" /></a>
 
         </div>
-        <form>
-            <select id="lang" name="lang" onchange="submit()">
-                <option value="en" ${lang == 'en' ? 'selected' : ''}>English</option>
-                <option value="ru" ${lang == 'ru' ? 'selected' : ''}>Русский</option>
-            </select>
-        </form>
-        <form method="post">
-            <label for="username"><fmt:message key="epam.title" />:</label>
-            <input type="text" id="username" name="username">
-            <br>
-            <label for="password"><fmt:message key="epam.title" />:</label>
-            <input type="password" id="password" name="password">
-            <br>
-            <fmt:message key="epam.title" var="buttonValue" />
-            <input type="submit" name="submit" value="${buttonValue}">
-        </form>
     </div>
 </section>
 

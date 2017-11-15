@@ -13,7 +13,8 @@
 
 <section class="content-shopping-cart-page">
     <div class="container">
-        <h6 class="title-s">${message}</h6>
+        <h6 class="title-s2">${message}</h6>
+        <h6 class="title-s3">Admin, confirm this orders.</h6>
         
         <form method="post" action="admin_confirmation">
         <div class="wrap-table-shopping-cart">

@@ -1580,6 +1580,28 @@ footer ul li a:hover {
 	margin-top: 18px;
 	margin-bottom: 0px;
 }
+
+.title-s2 {
+    font-family: OpenSans;
+    text-transform: none;
+    font-size: 14px;
+    line-height: 2.2;
+    color: #e52233;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    text-align: center;
+}
+
+.title-s3 {
+    font-family: OpenSans;
+    text-transform: none;
+    font-size: 14px;
+    line-height: 2.2;
+    color: #333333;
+    margin-top: 0px;
+    margin-bottom: 30px;
+    text-align: center;
+}
 /*===================================================================  ===*/
 
 .bg-menu-page-01 {

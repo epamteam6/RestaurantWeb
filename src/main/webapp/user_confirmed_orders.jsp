@@ -1,20 +1,20 @@
 <%@include file="user_header.jsp" %>
 
-<head><title>Confirmed Orders</title></head>
+<head><title>Cooking Orders</title></head>
 
 <section>
     <div class="bg-title-sub-page bg-menu-page-01">
         <div class="wrap-title-sub-page">
-            <h2 class="title-l">Confirmed Orders</h2>
-            <h6 class="title-s">Home / Confirmed Orders</h6>
+            <h2 class="title-l">Cooking Orders</h2>
+            <h6 class="title-s">Home / Cooking Orders</h6>
         </div>
     </div>
 </section>
 
 <section class="content-shopping-cart-page">
     <div class="container">
-        <h6 class="title-s">${message}</h6>
-        <h6 class="title-s">Your order is cooking now.</h6>
+        <h6 class="title-s2">${message}</h6>
+        <h6 class="title-s3">We are cooking your orders now.</h6>
 
         <form method="post" action="user_confirmed_orders">
             <div class="wrap-table-shopping-cart">

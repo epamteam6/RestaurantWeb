@@ -1,19 +1,20 @@
 <%@include file="admin_header.jsp" %>
 
-<head><title>Closed Order</title></head>
+<head><title>Paid Order</title></head>
 
 <section>
     <div class="bg-title-sub-page bg-menu-page-01">
         <div class="wrap-title-sub-page">
-            <h2 class="title-l">Closed Order</h2>
-            <h6 class="title-s">Home / Closed Order</h6>
+            <h2 class="title-l">Paid Order</h2>
+            <h6 class="title-s">Home / Paid Order</h6>
         </div>
     </div>
 </section>
 
 <section class="content-shopping-cart-page">
     <div class="container">
-        <h6 class="title-s">${message}</h6>
+        <h6 class="title-s2">${message}</h6>
+        <h6 class="title-s3">Paid and closed orders.</h6>
 
         <form method="post" action="admin_ready_orders">
             <div class="wrap-table-shopping-cart">

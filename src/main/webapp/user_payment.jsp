@@ -1,20 +1,20 @@
 <%@include file="user_header.jsp" %>
 
-<head><title>Pay Orders</title></head>
+<head><title>Payment Waiting Orders</title></head>
 
 <section>
     <div class="bg-title-sub-page bg-menu-page-01">
         <div class="wrap-title-sub-page">
-            <h2 class="title-l">Pay Orders</h2>
-            <h6 class="title-s">Home / Pay Orders</h6>
+            <h2 class="title-l">Payment Waiting Orders</h2>
+            <h6 class="title-s">Home / Payment Waiting Orders</h6>
         </div>
     </div>
 </section>
 
 <section class="content-shopping-cart-page">
     <div class="container">
-        <h6 class="title-s">${message}</h6>
-        <h6 class="title-s">Your order has been cooked. Please, pay for it.</h6>
+        <h6 class="title-s2">${message}</h6>
+        <h6 class="title-s3">Your orders have been cooked just now. Please, pay for that.</h6>
 
         <form method="post" action="user_payment">
             <div class="wrap-table-shopping-cart">

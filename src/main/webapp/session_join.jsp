@@ -5,7 +5,7 @@
 <%@ page isELIgnored="false" %>
 <%@ page session="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<html>
 <head>
     <title>Join us</title>
 
@@ -17,14 +17,13 @@
 </head>
 
 
-<body class="animsition">
-
+<body>
 <header>
     <!-- Header desktop -->
     <div id="wrap_header">
         <!-- Logo -->
         <div class="logo col_header">
-            <a href="${pageContext.request.contextPath}"><img alt="logo-epam" src="resources/images/icons/logo.png"/></a>
+            <a href="index"><img alt="logo-epam" src="resources/images/icons/logo.png"/></a>
         </div>
         <!-- language -->
         <div class="icon-header col_header">
@@ -37,7 +36,7 @@
 
         <!-- Logo moblie -->
         <div class="logo-mobile">
-            <a href="${pageContext.request.contextPath}"><img alt="logo-epam" src="resources/images/icons/logo-mobile.png"/></a>
+            <a href="index"><img alt="logo-epam" src="resources/images/icons/logo-mobile.png"/></a>
         </div>
 
     </div>
@@ -55,9 +54,9 @@
 
 
 
-<section class="content-checkout-page">
+<section class="content-checkout-page" >
     <div class="container">
-        <h6 class="title-s">${message}</h6>
+        <h6 class="title-s2">${message}</h6>
         <!-- 01/Check out method -->
         <form method="post" action="session_join">
             <div class="wrap-check-out-method">
@@ -74,7 +73,7 @@
                         <input class="input-check-out small-text" type="password" name="password" placeholder="Password" />
                     </div>
                     <div class="wrap-btn-login col-md-2">
-                        <button class="btn-login-extend btn-with-bg" type="submit">JOIN</button>
+                        <button class="btn-with-bg" type="submit">JOIN</button>
                     </div>
                 </div>
             </div>
@@ -92,6 +91,7 @@
     </div>
 </div>
 </footer>
+
 </body>
 </html>
 
