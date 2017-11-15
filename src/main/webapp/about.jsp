@@ -32,11 +32,11 @@
                     System Restaurant.
                 </p>
                 <p>
-                    The client performs ordering from Menu. </p>
-                <p>Administrator confirms odering and sends it on the kitchen for performance.
+                    The client makes orders from Menu. </p>
+                <p>Administrator confirms orders and sends them to the kitchen for performance.
                     </p>
-                <p>The administrator issues the invoice for the order. </p>
-                <p>The client produces it payment.
+                <p>Administrator makes bills for orders. </p>
+                <p>The client pays for his orders.
                 </p>
             </div>
 

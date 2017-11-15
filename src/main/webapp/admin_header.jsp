@@ -5,6 +5,16 @@
 <%@ page session="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<c:set var="lang" value="${not empty param.lang ? param.lang : not empty lang ? lang : 'en'}" scope="session"/>
+<fmt:setLocale value="${lang}"/>
+<fmt:setBundle basename="lang.lang" scope="session"/>
+
+<html lang="${lang}">
+
+
+
 
 <head>
     <link rel="stylesheet" type="text/css" href="resources/vendor/bootstrap/css/bootstrap.min.css"/>
@@ -83,9 +93,8 @@
 
         <!-- language -->
         <div class="icon-header col_header">
-            <a href="#">Ru</a> <a href="#">Eng</a>
-
-
+            <a href="${pageContext.request.contextPath}?lang=ru">Ru</a>
+            <a href="${pageContext.request.contextPath}?lang=en">Eng</a>
         </div>
     </div>
 
@@ -125,6 +134,14 @@
                     <i class="arrow-main-menu fa fa-angle-right" aria-hidden="true"></i>
                     <ul class="sub-menu">
                         < <li><a href="session_logout" >Log Out</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Language</a>
+                    <i class="arrow-main-menu fa fa-angle-right" aria-hidden="true"></i>
+                    <ul class="sub-menu">
+                         <li> <a href="${pageContext.request.contextPath}?lang=ru">Ru</a></li>
+                         <li><a href="${pageContext.request.contextPath}?lang=en">Eng</a></li>
                     </ul>
                 </li>
             </ul>
