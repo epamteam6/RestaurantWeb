@@ -57,7 +57,7 @@
                     <li><a href="user_create_order">Create New Order</a>
                     </li>
 
-                    <li><a href="#">Your Order Status</a>
+                    <li><a href="#">Your Orders Status</a>
                         <ul class="sub_menu">
                             <li><a href="user_created_orders">Orders For Confirmation</a></li>
                             <li><a href="user_confirmed_orders">Cooking Orders</a></li>
@@ -112,7 +112,7 @@
                 <li><a href="user_create_order">Create New Order</a>
                 </li>
                 <li>
-                    <a href="#">Your Order Status</a>
+                    <a href="#">Your Orders Status</a>
                     <i class="arrow-main-menu fa fa-angle-right" aria-hidden="true"></i>
                     <ul class="sub-menu">
                         <li><a href="user_created_orders">Orders For Confirmation</a></li>
