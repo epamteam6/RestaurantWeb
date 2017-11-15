@@ -50,7 +50,7 @@ public class RegistrationServlet extends HttpServlet {
 
         } else {
 
-            request.setAttribute("message", "Error! User with this name exists! <br>Enter another username!");
+            request.setAttribute("message", "Error! Enter your Username and Password!");
             request.getRequestDispatcher("session_join.jsp").forward(request, response);
             //response.sendRedirect("session_login_error");
         }
