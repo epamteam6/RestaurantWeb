@@ -4,6 +4,8 @@ import org.apache.log4j.Logger;
 
 import java.util.*;
 import java.sql.*;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
 public class ConnectionPoolManager {
 
@@ -13,8 +15,8 @@ public class ConnectionPoolManager {
     private String userName = "root";
     private String password = "root";
 
-    private static final Queue<Connection> connectionPool = new LinkedList<>();
-    private final int MAX_POOL_SIZE = 5;
+    private final BlockingQueue<Connection> connectionPool = new ArrayBlockingQueue<Connection>(MAX_POOL_SIZE);
+    private static final int MAX_POOL_SIZE = 5;
 
     public ConnectionPoolManager() {
         initialize();
